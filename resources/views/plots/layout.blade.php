@@ -19,7 +19,6 @@
     <link href="{{ asset('css/plot/tab.css') }}" rel="stylesheet">
 
     <script src="{{ asset('js/ajax.js') }}"></script>
-    <script src="{{ asset('js/savefile.js') }}"></script>
 
     <link href="{{ asset('/css/731bfdf3d0cb0f734453.css') }}" rel="stylesheet">
     <link href="{{ asset('/css/ab3606d21984a57939eb.css') }}" rel="stylesheet">

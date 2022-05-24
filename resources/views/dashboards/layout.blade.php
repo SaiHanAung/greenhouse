@@ -21,7 +21,7 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<link href="{{asset('assets/css/components.min.css')}}" rel="stylesheet" type="text/css">	
 	<script type="text/javascript" src="{{asset('assets/js/jquery.min.js')}}"></script>
-	<script type="text/javascript" src="{{asset('assets/js/bootstrap.bundle.min.js')}}"></script>	
+	<!-- <script type="text/javascript" src="{{asset('assets/js/bootstrap.bundle.min.js')}}"></script>	 -->
 	<script type="text/javascript" src="{{asset('assets/js/echarts.min.js')}}"></script>	
 
     <script src="{{ asset('js/ajax.js') }}"></script>
