@@ -1145,3 +1145,13 @@
 #53 C:\\greenhouse-app\\server.php(21): require_once('C:\\\\greenhouse-a...')
 #54 {main}
 "} 
+[2022-05-24 22:24:31] local.ERROR: There are no commands defined in the "generate" namespace. {"exception":"[object] (Symfony\\Component\\Console\\Exception\\NamespaceNotFoundException(code: 0): There are no commands defined in the \"generate\" namespace. at C:\\greenhouse-app\\vendor\\symfony\\console\\Application.php:639)
+[stacktrace]
+#0 C:\\greenhouse-app\\vendor\\symfony\\console\\Application.php(690): Symfony\\Component\\Console\\Application->findNamespace('generate')
+#1 C:\\greenhouse-app\\vendor\\symfony\\console\\Application.php(259): Symfony\\Component\\Console\\Application->find('generate:key')
+#2 C:\\greenhouse-app\\vendor\\symfony\\console\\Application.php(171): Symfony\\Component\\Console\\Application->doRun(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#3 C:\\greenhouse-app\\vendor\\laravel\\framework\\src\\Illuminate\\Console\\Application.php(93): Symfony\\Component\\Console\\Application->run(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#4 C:\\greenhouse-app\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\Kernel.php(129): Illuminate\\Console\\Application->run(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#5 C:\\greenhouse-app\\artisan(37): Illuminate\\Foundation\\Console\\Kernel->handle(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#6 {main}
+"} 
