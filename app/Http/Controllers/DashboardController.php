@@ -2,11 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Dashboard;
+use App\Switches;
 use Illuminate\Http\Request;
-use App\UserSystemInfoHelper;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\DB as FacadesDB;
 
 class DashboardController extends Controller
 {
@@ -15,17 +13,33 @@ class DashboardController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($datas)
     {
-        $getip = UserSystemInfoHelper::get_ip();
-        $getdevice = UserSystemInfoHelper::get_device();
-        $getbrowser = UserSystemInfoHelper::get_browsers();
-        $getos = UserSystemInfoHelper::get_os();
-        
-        $data = Dashboard::first()->paginate(5);
+        //
+        $data_plot = DB::table('plots')->get();
 
-        return view('dashboard.index', compact('data', 'getip', 'getdevice', 'getbrowser', 'getos'))
-                ->with('i', (request()->input('page', 1) - 1) * 5);
+        $get_plot_name = DB::table('plots')
+            ->select('name')
+            ->where('id', '=', $datas)->get();
+        foreach ($get_plot_name as $key_name => $value_name) {
+            foreach ($value_name as $key_name_sub => $value_name_sub) {
+            }
+        }
+        $get_host_topic = DB::table('plots')
+            ->select('host', 'topic_send', 'topic_sub')
+            ->where('id', '=', $datas)->get();
+        foreach ($get_host_topic as $keyht => $valueht) {
+        }
+
+        $seed = DB::table('traceability_factors')->select('total_price')->where('type', '=', 'เมล็ด')->where('plot_id','=',$datas)->get()->sum('total_price');
+        $fertilizer = DB::table('traceability_factors')->select('total_price')->where('type', '=', 'ปุ๋ย')->where('plot_id','=',$datas)->get()->sum('total_price');
+        $wage = DB::table('traceability_factors')->select('total_price')->where('type', '=', 'ค่าแรง')->where('plot_id','=',$datas)->get()->sum('total_price');
+        $etc = DB::table('traceability_factors')->select('total_price')->where('type', '=', 'ค่าอื่นๆ')->where('plot_id','=',$datas)->get()->sum('total_price');
+        // $a = $seed.$datas;
+        // dd($seed);
+        
+        return view('dashboards.index', compact('datas', 'value_name_sub', 'get_host_topic', 
+                                                'seed','fertilizer', 'wage' ,'etc'));
     }
 
     /**
@@ -36,12 +50,6 @@ class DashboardController extends Controller
     public function create()
     {
         //
-        $getip = UserSystemInfoHelper::get_ip();
-        $getdevice = UserSystemInfoHelper::get_device();
-        $getbrowser = UserSystemInfoHelper::get_browsers();
-        $getos = UserSystemInfoHelper::get_os();
-
-        return view('dashboard.create', compact('getip', 'getdevice', 'getbrowser', 'getos'));
     }
 
     /**
@@ -54,184 +62,96 @@ class DashboardController extends Controller
     {
         //
         $request->validate([
-            'device_id' => 'required',
-            'humid' => 'required',
-            'temp'  => 'required',
-            'port_1'  => 'required',
-            'port_2'  => 'required',
-            'port_3'  => 'required',
-            'port_4'  => 'required',
-            'port_5'  => 'required',
-            'port_6'  => 'required',
-            'port_7'  => 'required',
-            'port_8'  => 'required'
+            'name' => 'required'
         ]);
 
-        Dashboard::create($request->all());
+        // Dashboard_autorun::create($request->all());
 
-        return redirect()->route('dashboard.index')
-                         ->with('success', 'Post create successfully.');
+        return redirect()->route('dashboards.index')
+            ->with('success', 'Auto runs create successfully.');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Dashboard  $dashboard
+     * @param  \App\dashboard  $dashboard
      * @return \Illuminate\Http\Response
      */
-    public function show(Dashboard $dashboard)
+    public function show()
     {
         //
-        return view('dashboard.show', compact('dashboard'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Dashboard  $dashboard
+     * @param  \App\dashboard  $dashboard
      * @return \Illuminate\Http\Response
      */
-    public function edit(Dashboard $dashboard)
+    public function edit()
     {
         //
-        $getip = UserSystemInfoHelper::get_ip();
-        $getdevice = UserSystemInfoHelper::get_device();
-        $getbrowser = UserSystemInfoHelper::get_browsers();
-        $getos = UserSystemInfoHelper::get_os();
-
-        return view('dashboard.edit', compact('dashboard','getip', 'getdevice', 'getbrowser', 'getos'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Dashboard  $dashboard
+     * @param  \App\dashboard  $dashboard
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Dashboard $dashboard)
+    public function update(Request $request)
     {
         //
-        $request->validate([
-            'id' => '',
-            'device_id' => 'required',
-            'humid' => 'required',
-            'temp'  => 'required',
-            'port_1'  => 'required',
-            'port_2'  => 'required',
-            'port_3'  => 'required',
-            'port_4'  => 'required',
-            'port_5'  => 'required',
-            'port_6'  => 'required',
-            'port_7'  => 'required',
-            'port_8'  => 'required'
-        ]);
-
-        $dashboard->update($request->all());
-
-        return redirect()->route('dashboard.index')
-                         ->with('success', 'Post update successfully.');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Dashboard  $dashboard
+     * @param  \App\dashboard  $dashboard
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Dashboard $dashboard)
+    public function destroy()
     {
         //
-        $dashboard->delete();
-        return redirect()->route('dashboard.index')
-                         ->with('success', 'Post deleted successfully.');
     }
 
-    public function da(Request $request, $id)
+    public function settime($datas)
+    {
+        //
+        $get_plot_name = DB::table('plots')
+            ->select('name')
+            ->where('id', '=', $datas)->get();
+        foreach ($get_plot_name as $key_name => $value_name) {
+            foreach ($value_name as $key_name_sub => $value_name_sub) {
+            }
+        }
+
+
+        $get_data_settime = DB::table('settimes')
+            ->select('id', 'settime_value')
+            ->where('plot_id', '=', $datas)->get();
+
+        // dd($value_name_sub);
+        return view('settimes.index', compact('datas', 'value_name_sub', 'get_data_settime'));
+    }
+
+    public function st(Request $request, $id)
     {
         $newPermLevel = $request->input('value');
         $override = (int) $newPermLevel;
-    
-        DB::table('dashboards')
-            ->where('id', "$id")
-            ->update(array('port_1' =>$override,
-                            // 'port_2' =>$override,
-                            // 'port_3' =>$override,
-                            // 'port_4' =>$override,
-                            // 'port_5' =>$override,
-                            // 'port_6' =>$override,
-                            // 'port_7' =>$override,
-                            // 'port_8' =>$override
-                        ));
+
+        DB::table('settimes')
+            ->where('id', $id)
+            ->update(array('settime_value' => $override));
+
+        return back();
     }
 
-    public function da2(Request $request, $id)
+    public function destroySwitch(Switches $switches)
     {
-        $newPermLevel2 = $request->input('value');
-        $override2 = (int) $newPermLevel2;
-    
-        DB::table('dashboards')
-            ->where('id', "$id")
-            ->update(array('port_2' =>$override2));
-    }
-
-    public function da3(Request $request, $id)
-    {
-        $newPermLevel3 = $request->input('value');
-        $override3 = (int) $newPermLevel3;
-    
-        DB::table('dashboards')
-            ->where('id', "$id")
-            ->update(array('port_3' =>$override3));
-    }
-
-    public function da4(Request $request, $id)
-    {
-        $newPermLevel4 = $request->input('value');
-        $override4 = (int) $newPermLevel4;
-    
-        DB::table('dashboards')
-            ->where('id', "$id")
-            ->update(array('port_4' =>$override4));
-    }
-
-    public function da5(Request $request, $id)
-    {
-        $newPermLevel5 = $request->input('value');
-        $override5 = (int) $newPermLevel5;
-    
-        DB::table('dashboards')
-            ->where('id', "$id")
-            ->update(array('port_5' =>$override5));
-    }
-
-    public function da6(Request $request, $id)
-    {
-        $newPermLevel6 = $request->input('value');
-        $override6 = (int) $newPermLevel6;
-    
-        DB::table('dashboards')
-            ->where('id', "$id")
-            ->update(array('port_6' =>$override6));
-    }
-
-    public function da7(Request $request, $id)
-    {
-        $newPermLevel7 = $request->input('value');
-        $override7 = (int) $newPermLevel7;
-    
-        DB::table('dashboards')
-            ->where('id', "$id")
-            ->update(array('port_7' =>$override7));
-    }
-
-    public function da8(Request $request, $id)
-    {
-        $newPermLevel8 = $request->input('value');
-        $override8 = (int) $newPermLevel8;
-    
-        DB::table('dashboards')
-            ->where('id', "$id")
-            ->update(array('port_8' =>$override8));
+        //
+        $switches->delete();
+        return back()->with('success', 'ลบสวิตซ์สำเร็จแล้ว');
     }
 }

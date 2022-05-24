@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Autorun;
 use App\Plot;
+use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class PlotController extends Controller
 {
@@ -15,25 +18,17 @@ class PlotController extends Controller
      */
     public function index()
     {
-        //
-        // $plot = DB::table('plots')->get();
-        // $get_plot_id = $plot;
 
-        // $data = [];
+        $data = DB::table('plots')->get();
+
+        $userID = Auth::user()->id;
+
+        $get_data_plot = DB::table('plots')
+            ->select('id', 'name', 'host', 'topic_send', 'topic_sub', 'description','img_name', 'file_path')
+            ->where('user_id', '=', $userID)->get();
         
-
-        // foreach ( $get_plot_id as $key => $value )
-        // {
-        //     $get_plot[$key] = DB::table('plots')->select('user_id')->get();
-        //     $data[$value->user_id] = $get_plot[$key];
-
-        //     // dd($get_plot[$key]);
-        //     // dd($data);
-        // }
-
-        $data = Plot::first()->paginate(10);
-
-        return view('plots.index', compact('data'));
+        // dd($get_data_plot);
+        return view('plots.index', compact('data', 'get_data_plot'));
                 // ->with('i', (request()->input('page', 1) - 1) * 5);
     }
 
@@ -58,14 +53,41 @@ class PlotController extends Controller
     {
         //
         $request->validate([
-            'name' => 'required',
-            'hardware' => 'required'
+            'name' => 'required'
         ]);
 
-        Plot::create($request->all());
+        if ($request->hasFile('file')) {
+
+            $request->validate([
+                'image' => 'mimes:png,jpg,gif'
+            ]);
+
+            $request->file->store('plot_images','public');
+
+            $plot = new Plot([
+                "name" => $request->get('name'),
+                "img_name" => $request->get('file'),
+                "host" => $request->get('host'),
+                "topic_send" => $request->get('topic_send'),
+                "topic_sub" => $request->get('topic_sub'),
+                "description" => $request->get('description'),
+                "user_id" => $request->get('user_id'),
+                "img_name" => $request->file->getClientOriginalName(),
+                "file_path" => $request->file->hashName()
+            ]);
+            $plot->save();
+        }
+
+        // Plot::create($request->all());
+
+        $userID = Auth::user()->id;
+        $get_plot_id = DB::table('plots')
+            ->select('id')
+            ->where('user_id', '=', $userID)->get();
+            foreach($get_plot_id as $k_plot_id => $v_plot_id){}
 
         return redirect()->route('plots.index')
-                         ->with('success', 'Plot create successfully.');
+                         ->with('success', 'สร้างแปลงสำเร็จแล้ว');
     }
 
     /**
@@ -77,7 +99,20 @@ class PlotController extends Controller
     public function show(Plot $plot)
     {
         //
-        return view('plots.show', compact('plot'));
+        // $data = Plot::first()->paginate(10);
+        $userID = Auth::user()->id;
+
+        $get_data_plot = DB::table('plots')
+            ->select('id', 'name', 'host', 'topic_send', 'description')
+            ->where('user_id', '=', $userID)->get();
+
+        foreach($get_data_plot as $keydp => $valuedp){}
+        foreach($plot as $keypid => $valuepid){}
+        $tracUrl = "http://127.0.0.1:8000/traceability/".$plot->id;
+        $qrcode = "https://chart.googleapis.com/chart?cht=qr&chl=".$tracUrl."&chs=180x180&choe=UTF-8";
+
+        // dd($qrcode);
+        return view('plots.show', compact('plot', 'get_data_plot', 'qrcode'));
     }
 
     /**
@@ -102,30 +137,39 @@ class PlotController extends Controller
     public function update(Request $request, Plot $plot)
     {
         //
-        $request->validate([
-            'name' => 'required',
-            'hardware' => 'required'
-        ]);
-
+        
         $plot->update($request->all());
 
-        return redirect()->route('plots.index')
-                         ->with('success', 'Plot update successfully.');
+        return back()->with('success', 'แก้ไขแปลงสำเร็จแล้ว');
     }
 
     /**
      * Remove the specified resource from storage.
      *
      * @param  \App\Plot  $plot
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response 
      */
     public function destroy(Plot $plot)
     {
         //
+        $userID = Auth::user()->id;
+        $get_plot_id = DB::table('plots')
+            ->select('id')
+            ->where('user_id', '=', $userID)->get();
+        foreach($get_plot_id as $k_plot_id => $v_plot_id){}
+        // dd($v_plot_id);
+        DB::table('autoruns')->select('id')->where('plot_id', '=', $v_plot_id->id)->delete();
+        DB::table('switches')->select('id')->where('plot_id', '=', $v_plot_id->id)->delete();
+        DB::table('traceability_factors')->select('id')->where('plot_id', '=', $v_plot_id->id)->delete();
+        DB::table('traceability_harvests')->select('id')->where('plot_id', '=', $v_plot_id->id)->delete();
+        DB::table('traceability_use_factors')->select('id')->where('plot_id', '=', $v_plot_id->id)->delete();
+
         $plot->delete();
+        // dd($get_plot_id );
         return redirect()->route('plots.index')
-                         ->with('success', 'Plot deleted successfully.');
+                         ->with('success', 'ลบแปลงสำเร็จแล้ว');
     }
+
 
 
 }

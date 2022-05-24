@@ -24,7 +24,7 @@
 </head>
 <body style="background-color: #DFEEEA;">
 
-    <!-- <div class="container">
+    <div class="container">
         @guest
         <div class="row justify-content-center">
             <div class="col-md-8">
@@ -94,7 +94,7 @@
             </div>
         </div>
         @endguest
-    </div> -->
+    </div>
 
     @guest
     <div class="page">

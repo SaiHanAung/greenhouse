@@ -83,7 +83,7 @@
             margin-bottom: 40px
         }
 
-        .ant-menu-item + .tooltip > .tooltip-inner {
+        .ant-menu-item+.tooltip>.tooltip-inner {
             width: max-content;
             background-color: white;
             color: black;
@@ -94,7 +94,7 @@
             /* box-shadow: -5px 5px 20px 10px #000000; */
         }
 
-        .ant-menu-item + .tooltip.right > .tooltip-arrow {
+        .ant-menu-item+.tooltip.right>.tooltip-arrow {
             border-right: 10px solid white;
             /* border-right: 10px solid #dbf5ec; */
         }
@@ -120,6 +120,7 @@
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link href="{{ asset('css/waiting_loading_page.css') }}" rel="stylesheet">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
     <script src="{{ asset('js/e296e9cd6d84b73732b8.js') }}"></script>
@@ -191,66 +192,79 @@
 </head>
 
 <body>
-    <div id="app">
-        @if(Auth::check())
-        <div style="height: 100vh;">
-            <div class="layout">
-                <div></div>
-                <div></div>
-                <div class="layout-wrapper">
-                    <div class="user-layout">
-                        <div class="user-layout-left-navigation-stack user-layout-left-navigation-stack-fold">
-                            <div class="user-layout-left-navigation  user-layout-left-navigation-fold">
-                                <div class="user-layout-left-navigation-fold-company-logo" style="cursor: default;"><img src="../imgs/green-house.png" alt="Icon"></div>
-                                <ul class="ant-menu ant-menu-root ant-menu-vertical ant-menu-light user-layout-left-navigation-menu ant-menu-inline-collapsed" role="menu" tabindex="0" data-menu-list="true">
-                                    <li class="ant-menu-item" role="menuitem" tabindex="-1" data-menu-id="rc-menu-uuid-69146-1-/products" data-toggle="tooltip" data-placement="right" title="จัดการฟาร์ม"><span class="ant-menu-title-content"><a href="{{ route('plots.index') }}"></a><span class="linearicon linearicon-grid2 undefined"></span><span>ฟาร์ม</span></span></li>
-                                    <li class="ant-menu-item ant-menu-item-selected" role="menuitem" tabindex="-1" data-menu-id="rc-menu-uuid-69146-1-/settings" data-toggle="tooltip" data-placement="right" title="ตั้งค่า"><span class="ant-menu-title-content"><span class="linearicon linearicon-cog undefined"></span><span>Settings</span></span></li>
-                                    <li class="ant-menu-item" role="menuitem" data-menu-id="rc-menu-uuid-69146-1-/user-profile" data-toggle="tooltip" data-placement="right" title="โปรไฟล์ผู้ใช้"><a href="{{ route('profile') }}"></a><span class="ant-menu-title-content"><span class="linearicon linearicon-user undefined"></span><span>User Profile</span></span></li>
-                                    <script>
-                                        $(document).ready(function() {
-                                            $('[data-toggle="tooltip"]').tooltip();
-                                        });
-                                    </script>
-                                </ul>
-                                <div aria-hidden="true" style="display: none;">
-                                    <div class="user-layout-left-navigation-organization"></div>
-                                    <div class="user-layout__help-tooltip-wrapper"></div>
-                                </div>
-                            </div>
-                        </div>
-
-                        @yield('content')
-
-                    </div>
-                </div>
-            </div>
-            <!-- <div class="privacy-policy"><span class="privacy-policy__region">Region: sgp1</span><a href="/dashboard/privacy-policy" target="_blank">Privacy Policy</a></div> -->
-        </div>
-        @else
-
-        @guest
+    <div class="content">
         <div id="app">
+            @if(Auth::check())
             <div style="height: 100vh;">
                 <div class="layout">
                     <div></div>
                     <div></div>
-                    <div class="login-scene">
-                        <div class="login-logo-wrapper"><img class="login-logo" alt="LOGO" src="../imgs/green-house.png"></div>
-                        <div class="login-form-wrapper">
-                            <div class="alert alert-danger" role="alert">
-                                <strong>กรุณา</strong><a href="{{route('login') }}"> เข้าสู่ระบบ </a> ก่อนใช้งาน
+                    <div class="layout-wrapper">
+                        <div class="user-layout">
+                            <div class="user-layout-left-navigation-stack user-layout-left-navigation-stack-fold">
+                                <div class="user-layout-left-navigation  user-layout-left-navigation-fold">
+                                    <div class="user-layout-left-navigation-fold-company-logo" style="cursor: default;"><img src="../imgs/green-house.png" alt="Icon"></div>
+                                    <ul class="ant-menu ant-menu-root ant-menu-vertical ant-menu-light user-layout-left-navigation-menu ant-menu-inline-collapsed" role="menu" tabindex="0" data-menu-list="true">
+                                        <li class="ant-menu-item" role="menuitem" tabindex="-1" data-menu-id="rc-menu-uuid-69146-1-/products" data-toggle="tooltip" data-placement="right" title="จัดการฟาร์ม"><span class="ant-menu-title-content"><a href="{{ route('plots.index') }}"></a><span class="linearicon linearicon-grid2 undefined"></span><span>ฟาร์ม</span></span></li>
+                                        <li class="ant-menu-item ant-menu-item-selected" role="menuitem" tabindex="-1" data-menu-id="rc-menu-uuid-69146-1-/settings" data-toggle="tooltip" data-placement="right" title="ตั้งค่า"><span class="ant-menu-title-content"><span class="linearicon linearicon-cog undefined"></span><span>Settings</span></span></li>
+                                        <li class="ant-menu-item" role="menuitem" data-menu-id="rc-menu-uuid-69146-1-/user-profile" data-toggle="tooltip" data-placement="right" title="โปรไฟล์ผู้ใช้"><a href="{{ route('profile') }}"></a><span class="ant-menu-title-content"><span class="linearicon linearicon-user undefined"></span><span>User Profile</span></span></li>
+                                        <script>
+                                            $(document).ready(function() {
+                                                $('[data-toggle="tooltip"]').tooltip();
+                                            });
+                                        </script>
+                                    </ul>
+                                    <div aria-hidden="true" style="display: none;">
+                                        <div class="user-layout-left-navigation-organization"></div>
+                                        <div class="user-layout__help-tooltip-wrapper"></div>
+                                    </div>
+                                </div>
                             </div>
+
+                            @yield('content')
+
                         </div>
-                        <div class="login-bottom-label"></div>
                     </div>
                 </div>
-                <div class="privacy-policy"><a href="/dashboard/privacy-policy" target="_blank">Privacy Policy</a></div>
+                <!-- <div class="privacy-policy"><span class="privacy-policy__region">Region: sgp1</span><a href="/dashboard/privacy-policy" target="_blank">Privacy Policy</a></div> -->
             </div>
-        </div>
-        @endguest
+            @else
 
-        @endif
+            @guest
+            <div id="app">
+                <div style="height: 100vh;">
+                    <div class="layout">
+                        <div></div>
+                        <div></div>
+                        <div class="login-scene">
+                            <div class="login-logo-wrapper"><img class="login-logo" alt="LOGO" src="../imgs/green-house.png"></div>
+                            <div class="login-form-wrapper">
+                                <div class="alert alert-danger" role="alert">
+                                    <strong>กรุณา</strong><a href="{{route('login') }}"> เข้าสู่ระบบ </a> ก่อนใช้งาน
+                                </div>
+                            </div>
+                            <div class="login-bottom-label"></div>
+                        </div>
+                    </div>
+                    <div class="privacy-policy"><a href="/dashboard/privacy-policy" target="_blank">Privacy Policy</a></div>
+                </div>
+            </div>
+            @endguest
+
+            @endif
+        </div>
     </div>
+
+    <div class="loader-wrapper">
+        <div class="loader"></div>
+        <img class="greenhouse-loader" src="{{ asset('imgs/green-house.png') }}" width="100px" alt="Logo">
+    </div>
+
+    <script>
+        $(window).on("load", function() {
+            $(".loader-wrapper").fadeOut("slow");
+        });
+    </script>
 </body>
 
 </html>

@@ -4,17 +4,26 @@
     "description": "The Laravel Framework.",
     "keywords": [
         "framework",
-        "laravel"
+        "laravel",
+        "mqtt",
+        "client",
+        "publish",
+        "subscribe"
     ],
     "license": "MIT",
     "require": {
         "php": "^7.2.5",
+        "barryvdh/laravel-dompdf": "^1.0",
+        "consoletvs/charts": "7.*",
         "fideloper/proxy": "^4.2",
         "fruitcake/laravel-cors": "^1.0",
         "guzzlehttp/guzzle": "^6.3",
         "laravel/framework": "^7.0",
         "laravel/tinker": "^2.0",
-        "laravel/ui": "2.4"
+        "laravel/ui": "2.4",
+        "phattarachai/thaidate": "^12.1",
+        "php-mqtt/client": "^1.2",
+        "php-mqtt/laravel-client": "^1.0"
     },
     "require-dev": {
         "facade/ignition": "^2.0",

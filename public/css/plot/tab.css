@@ -1,0 +1,338 @@
+.clearfont {
+    color: #49cea1;
+    font-size: large;
+    font-family: 'Prompt', sans-serif;
+}
+
+.clearfonts {
+    font-size: large;
+    color: #000;
+    font-family: 'Prompt', sans-serif;
+}
+
+.clearfonts:hover {
+    color: #49cea1;
+}
+
+
+/* CSS for the main interaction */
+
+.tabset>input[type="radio"] {
+    position: absolute;
+    left: -200vw;
+}
+
+.tabset .tab-panel {
+    display: none;
+}
+
+.tabset>input:first-child:checked~.tab-panels>.tab-panel:first-child,
+.tabset>input:nth-child(3):checked~.tab-panels>.tab-panel:nth-child(2),
+.tabset>input:nth-child(5):checked~.tab-panels>.tab-panel:nth-child(3),
+.tabset>input:nth-child(7):checked~.tab-panels>.tab-panel:nth-child(4),
+.tabset>input:nth-child(9):checked~.tab-panels>.tab-panel:nth-child(5),
+.tabset>input:nth-child(11):checked~.tab-panels>.tab-panel:nth-child(6) {
+    display: block;
+}
+
+.tabset>label {
+    position: relative;
+    display: inline-block;
+    padding: 15px 15px;
+    /* border: 1px solid transparent; */
+    /* border-bottom: 5px; */
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.tabset>label::after {
+    content: "";
+    position: absolute;
+    left: 15px;
+    bottom: 10px;
+    width: 22px;
+    height: 4px;
+    /* background: #8d8d8d; */
+}
+
+.tabset>label:hover,
+.tabset>input:focus+label {
+    color: #24C48E;
+}
+
+.tabset>label:hover::after,
+.tabset>input:focus+label::after,
+.tabset>input:checked+label::after {
+    background: #24C48E;
+}
+
+.tab-panel {
+    padding: 30px 0;
+}
+
+.text-download {
+    background-color: #49cea1;
+    border: none;
+    color: white;
+    padding: 12px 30px;
+    border-radius: .3em;
+    cursor: pointer;
+    font-size: 20px;
+}
+
+.text-download:hover {
+    background-color: #24C48E;
+}
+
+.worko-tabs {
+    margin-left: 20px;
+    width: 95%;
+}
+
+.worko-tabs .state {
+    position: absolute;
+    left: -10000px;
+}
+
+.worko-tabs .flex-tabs .tab {
+    flex-grow: 1;
+    max-height: 10vh;
+    border-radius: 5px;
+    margin-right: 1rem;
+    padding: 0.5rem 1rem;
+}
+
+.worko-tabs .flex-tabs .panel {
+    background-color: #fff;
+    padding: 20px;
+    height: auto;
+    display: none;
+    width: 100%;
+    flex-basis: auto;
+}
+
+.worko-tabs .tab {
+    display: inline-block;
+    padding: 10px;
+    vertical-align: top;
+    background-color: #fff;
+    cursor: hand;
+    cursor: pointer;
+    border: 1px solid #24C48E;
+}
+
+.worko-tabs .tab:hover {
+    background-color: #24C48E;
+    box-shadow: 0px 0px 20px 5px #E8E8E8;
+}
+
+#tab-one:checked~.tabs #tab-one-label,
+#tab-two:checked~.tabs #tab-two-label,
+#tab-three:checked~.tabs #tab-three-label,
+#tab-four:checked~.tabs #tab-four-label,
+#tab-five:checked~.tabs #tab-five-label {
+    background-color: #24C48E;
+    cursor: default;
+    box-shadow: 0px 0px 20px 5px #e1e1e1;
+}
+
+#tab-one:checked~.tabs #tab-one-panel,
+#tab-two:checked~.tabs #tab-two-panel,
+#tab-three:checked~.tabs #tab-three-panel,
+#tab-four:checked~.tabs #tab-four-panel,
+#tab-five:checked~.tabs #tab-five-panel {
+    display: block;
+    border-bottom: 2px solid white;
+}
+
+.width-border {
+    max-width: 100%;
+    width: 100%;
+    border: 1px solid #24C48E;
+    border-radius: 5px;
+    margin-bottom: 3rem;
+}
+
+.width-border:hover {
+    box-shadow: 0px 0px 20px 5px #e8e8e8;
+    /* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); */
+}
+
+.center {
+    text-align: center;
+    position: relative;
+}
+
+.center-sub {
+    position: absolute;
+    margin: 0;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%)
+}
+
+.bt-start {
+    background-color: #24C48E;
+    border: 1px solid #24C48E;
+    /* max-width: 30%; */
+    width: fit-content;
+    height: 8vh;
+    border-radius: 5px;
+    /* font-weight: 600; */
+    font-size: 20px;
+}
+
+.bt-start:hover {
+    color: white;
+    border: 1px solid #fff;
+    box-shadow: 0px 0px 20px 5px #BABABA;
+}
+
+.tg {
+    color: #24C48E;
+}
+
+.bt-stop {
+    background-color: #BDBDBD;
+    border: 1px solid #BDBDBD;
+    /* max-width: 30%; */
+    width: fit-content;
+    height: 8vh;
+    border-radius: 5px;
+    /* font-weight: 600; */
+    font-size: 20px;
+}
+
+.bt-stop:hover {
+    color: white;
+    border: 1px solid #fff;
+    box-shadow: 0px 0px 20px 5px #BABABA;
+}
+
+
+/*============= CSS for Savenote Page =============*/
+
+.rounder-border {
+    border-right: 1px solid #e8e8e8;
+    padding: 1.5rem;
+    overflow: auto;
+}
+
+#customers {
+    font-family: Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+#customers td,
+#customers th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+#customers tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+#customers tr:hover {
+    background-color: #ddd;
+}
+
+#customers th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #04AA6D;
+    color: white;
+}
+
+#name-savenote {
+    font-weight: bolder;
+    font-size: medium;
+    padding-top: 12px;
+    padding-bottom: 12px;
+}
+
+.box-border-shadow {
+    padding: 10px;
+    border: 1px solid #e8e8e8;
+    box-shadow: 0px 0px 20px 5px #e8e8e8;
+    border-radius: 5px;
+}
+
+.bt-create-farm-record {
+    background-color: #24C48E;
+    border: 1px solid #24C48E;
+    color: #fff;
+    font-size: 18px;
+}
+
+.bt-edit-farm-record {
+    color: white;
+    background-color: #BDBDBD;
+    border: 1px solid #BDBDBD;
+    font-size: 18px;
+}
+
+.bt-delete-farm-record {
+    color: white;
+    background-color: #666666;
+    border: 1px solid #666666;
+    font-size: 18px;
+}
+
+.bt-create-farm-record,
+.bt-edit-farm-record,
+.bt-delete-farm-record {
+    max-width: fit-content;
+    width: fit-content;
+    height: fit-content;
+    border-radius: 5px;
+}
+
+.bt-create-farm-record:hover,
+.bt-edit-farm-record:hover,
+.bt-delete-farm-record:hover {
+    box-shadow: 0px 0px 20px 5px #e8e8e8;
+}
+
+.bt-create-farm-record:hover {
+    border: 1px solid #24C48E;
+    color: #24C48E;
+    background-color: white;
+}
+
+.bt-edit-farm-record:hover {
+    border: 1px solid #BDBDBD;
+    color: #BDBDBD;
+    background-color: white;
+}
+
+.bt-delete-farm-record:hover {
+    border: 1px solid #666666;
+    color: #666666;
+    background-color: white;
+}
+
+.bt-delete {
+    color: #000;
+    background-color: #666666;
+    border: 1px solid #666666;
+    font-size: 18px;
+}
+
+.bt-g-br {
+    position: fixed;
+    right: 10px;
+    bottom: 20px;
+}
+
+.bt-last {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.font-black {
+    color: #000;
+}

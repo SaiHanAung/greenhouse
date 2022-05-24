@@ -8,8 +8,10 @@ use Illuminate\Support\Facades\DB;
 class Plot extends Model
 {
     //
+    protected $table = 'plots';
     protected $fillable = [
-        'name', 'hardware', 'connection_type', 'description', 'user_id'
+        'name', 'host', 'topic_send', 'topic_sub', 'description', 'user_id', 'img_name', 'file_path'
     ];
 
 }
+

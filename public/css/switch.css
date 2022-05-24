@@ -33,6 +33,8 @@
     background-color: white;
     -webkit-transition: .4s;
     transition: .4s;
+    content: "ปิด";
+    line-height: 2.2;
 }
 
 input:checked+.slider {
@@ -47,6 +49,7 @@ input:checked+.slider:before {
     -webkit-transform: translateX(42px);
     -ms-transform: translateX(42px);
     transform: translateX(42px);
+    content: "เปิด";
 }
 
 

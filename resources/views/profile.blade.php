@@ -89,23 +89,21 @@
                     </div>
 
                     <div class="ant-row user-profile--languages" style="row-gap: 0px;">
-                        <div class="ant-col"><a class="user-profile--languages-item user-profile--languages-item--active">TH</a></div>
-                        <div class="ant-col"><a class="user-profile--languages-item">EN</a></div>
+                        <!-- <div class="ant-col"><a class="user-profile--languages-item user-profile--languages-item--active">TH</a></div>
+                        <div class="ant-col"><a class="user-profile--languages-item">EN</a></div> -->
                     </div>
                     <div class="settings-user-header__dark-mode">
-                        <button type="button" role="switch" aria-checked="false" class="ant-switch ant-switch-small">
+                        <!-- <button type="button" role="switch" aria-checked="false" class="ant-switch ant-switch-small">
                             <div class="ant-switch-handle"></div><span class="ant-switch-inner"></span>
                         </button>
-                        <span class="switch-label">โหมดมืด</span>
+                        <span class="switch-label">โหมดมืด</span> -->
                     </div>
-                    <a class="ant-btn settings-user-header__logout-button" href="{{ route('logout') }}"
-                        onclick="event.preventDefault();
-                        document.getElementById('logout-form').submit();">
-                        <span class="linearicon linearicon-exit undefined"></span>
-                        <span> ออกจากระบบ</span>
-                    </a>
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                         @csrf
+                        <a class="ant-btn settings-user-header__logout-button" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                            <span class="linearicon linearicon-exit undefined"></span>
+                            <span> ออกจากระบบ</span>
+                        </a>
                     </form>
                 </div>
                 <div></div>
