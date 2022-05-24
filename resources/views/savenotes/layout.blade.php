@@ -18,7 +18,6 @@
 
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
     <script src="{{ asset('js/ajax.js') }}"></script>
-    <script src="{{ asset('js/savefile.js') }}"></script>
     <link href="{{ asset('/css/731bfdf3d0cb0f734453.css') }}" rel="stylesheet">
     <link href="{{ asset('/css/ab3606d21984a57939eb.css') }}" rel="stylesheet">
 
@@ -648,7 +647,7 @@
         <img class="greenhouse-loader" src="{{ asset('imgs/green-house.png') }}" width="100px" alt="Logo">
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script> -->
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.min.js"></script>
 
