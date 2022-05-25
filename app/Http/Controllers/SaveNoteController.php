@@ -88,7 +88,7 @@ class SaveNoteController extends Controller
             'get_data_sell_produce',
             'received_date',
             'date_of_use',
-            'harvest_date'
+            'harvest_date',
         ));
     }
 
