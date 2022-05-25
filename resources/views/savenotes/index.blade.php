@@ -219,10 +219,10 @@
                                 @foreach($get_data_sell_produce as $key_sell_produce => $value_sell_produce)
                                 <tr>
                                     <?php
-                                    $sell_date = thaidate('d-m-Y', strtotime($value_sell_produce->harvest_date));
+                                    $sale_date = thaidate('d-m-Y', strtotime($value_sell_produce->sale_date));
                                     ?>
                                     <td class="font-prompt" style="text-align: center;">{{ ++$s }}</td>
-                                    <td class="font-prompt" style="text-align: center;">{{ $sell_date }}</td>
+                                    <td class="font-prompt" style="text-align: center;">{{ $sale_date }}</td>
                                     <td class="font-prompt">{{ $value_sell_produce->produce }}</td>
                                     <td class="font-prompt" style="text-align: center;">{{ $value_sell_produce->amount }}</td>
                                     <td class="font-prompt" style="text-align: center;">{{ $value_sell_produce->unit }}</td>
