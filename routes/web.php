@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Providers\ArtisanServiceProvider;
 use App\Http\Controllers\DataController;
 // use App\Http\Controllers\DashboardController;
+// use App\Http\Controllers\SavenoteController;
 
 /*
 |--------------------------------------------------------------------------
@@ -74,8 +75,6 @@ Route::resource('plots', PlotController::class);
 Route::resource('autoruns', AutorunController::class);
 
 Route::resource('switches', SwitchesController::class);
-
-Route::resource('savenotes', SavenoteController::class);
 
 
 // Route::get('/plots/{datas}/savenote', 'SavenoteController@index')->name('savenote.index');
