@@ -15,7 +15,7 @@
                 <nav>
                     <div class="nav nav-tabs" style="border-bottom-color: #49cea1;">
                         <label class="nav-link clearfont active" style="color: #49cea1;border-color: #49cea1;border-bottom-color:transparent;">แผงควบคุม</label>
-                        <button class="nav-link"><a href="{{ route('savenote.index', $datas) }}" class="clearfonts">จดบันทึก</a></button>
+                        <button class="nav-link"><a href="{{ route('savenotes.index', $datas) }}" class="clearfonts">จดบันทึก</a></button>
                         <!-- <button class="nav-link"><a href="{{ route('report.index', $datas) }}" class="clearfonts">รายงาน</a></button> -->
                         <button class="nav-link"><a href="{{ route('plots.show', $datas) }}" class="clearfonts">ตั้งค่า</a></button>
                         <button class="nav-link"><a href="{{ route('qrcode.index', $datas) }}" class="clearfonts">QR Code</a></button>
