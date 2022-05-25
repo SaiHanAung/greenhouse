@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
 
 class CreateSellProduceTbl extends Migration
 {
@@ -24,6 +25,17 @@ class CreateSellProduceTbl extends Migration
             $table->integer('plot_id');
             $table->timestamps();
         });
+        DB::table('sell_produce')->insert([
+            [
+                'sale_date' => '2022-05-21', 
+                'produce' => 'เมล็ด', 
+                'amount' => '1', 
+                'unit' => 'บาท/กิโลกรัม', 
+                'price' => '10', 
+                'recorder' => 'ซาย',
+                'plot_id' => '1',
+            ]
+        ]);
     }
 
     /**
