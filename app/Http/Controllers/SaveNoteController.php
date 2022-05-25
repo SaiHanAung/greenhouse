@@ -49,16 +49,32 @@ class SaveNoteController extends Controller
             ->where('plot_id', '=', $datas)->paginate(5);
         // dd($harvest_date);
 
-        foreach($get_data_trac as $key_data_trac_fact => $value_data_trac_fact){
-            $received_date = date('d-m-Y', strtotime($value_data_trac_fact->received_date));
+        // get date //
+        $get_date_trac = DB::table('traceability_factors')
+            ->select('received_date')
+            ->where('plot_id', '=', $datas)->get();
+        foreach($get_date_trac as $key_date_trac_fact => $value_date_trac_fact){
+            foreach ($value_date_trac_fact as $key_date_trac_sub => $value_date_trac_sub) {
+                $received_date = thaidate('d-m-Y', strtotime($value_date_trac_sub));
+            }
         }
 
-        foreach($get_data_trac_use_fact as $key_data_trac_use_fact => $value_data_trac_use_fact){
-            $date_of_use = date('d-m-Y', strtotime($value_data_trac_use_fact->date_of_use));
+        $get_date_trac_use_fact = DB::table('traceability_use_factors')
+            ->select('date_of_use')
+            ->where('plot_id', '=', $datas)->get();
+        foreach($get_date_trac_use_fact as $key_date_trac_use_fact => $value_date_trac_use_fact){
+            foreach ($value_date_trac_use_fact as $key_date_trac_use_sub => $value_date_trac_use_sub) {
+                $date_of_use = thaidate('d-m-Y', strtotime($value_date_trac_use_sub));
+            }
         }
 
-        foreach($get_data_trac_harv as $key_data_trac_harv => $value_data_trac_harv){
-            $harvest_date = date('d-m-Y', strtotime($value_data_trac_harv->harvest_date));
+        $get_date_trac_harv = DB::table('traceability_harvests')
+            ->select('harvest_date')
+            ->where('plot_id', '=', $datas)->get();
+        foreach($get_date_trac_harv as $key_date_trac_harv => $value_date_trac_harv){
+            foreach ($value_date_trac_harv as $key_date_trac_harv_sub => $value_date_trac_harv_sub) {
+                $harvest_date = thaidate('d-m-Y', strtotime($value_date_trac_harv_sub));
+            }
         }
 
         return view('savenotes.index', compact(
