@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Providers\ArtisanServiceProvider;
 use App\Http\Controllers\DataController;
 // use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\SavenoteController;
+// use App\Http\Controllers\SavenoteController;
 
 /*
 |--------------------------------------------------------------------------
