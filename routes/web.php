@@ -78,7 +78,8 @@ Route::resource('switches', SwitchesController::class);
 Route::resource('savenotes', SavenoteController::class);
 
 
-Route::get('/plots/{datas}/savenote', 'SavenoteController@index')->name('savenote.index');
+// Route::get('/plots/{datas}/savenote', 'SavenoteController@index')->name('savenote.index');
+Route::get('/plots/{datas}/savenote', 'App\Http\Controllers\SavenoteController@index')->name('savenote.index');
 
 Route::get('/plots/{datas}/report', 'ReportController@index')->name('report.index');
 
