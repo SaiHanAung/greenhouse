@@ -39,6 +39,7 @@ class RouteServiceProvider extends ServiceProvider
     public function boot()
     {
         //
+        parent::boot();
         $this->configureRateLimiting();
 
         $this->rout( function() {
@@ -47,7 +48,6 @@ class RouteServiceProvider extends ServiceProvider
              ->group(base_path('routes/web.php'));
         });
 
-        // parent::boot();
         
     }
 
