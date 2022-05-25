@@ -61,9 +61,11 @@
                                 @foreach($get_data_trac as $key_data_trac_fact => $value_data_trac_fact)
                                 <tr>
                                     <?php
+                                    // $received_date = thaidate('d-m-Y', strtotime($value_data_trac_fact->received_date));
                                     // dd($value_data_trac_fact);
                                     ?>
                                     <td class="font-prompt" style="text-align: center;">{{ ++$i }}</td>
+                                    <!-- <td class="font-prompt" style="text-align: center;">{{$received_date}}</td> -->
                                     <td class="font-prompt">{{ $value_data_trac_fact->name }}</td>
                                     <td class="font-prompt" style="text-align: center;">{{ $value_data_trac_fact->type }}</td>
                                     <td class="font-prompt" style="text-align: center;">{{ $value_data_trac_fact->amount }}</td>
@@ -126,8 +128,10 @@
                                 @foreach($get_data_trac_use_fact as $key_data_trac_use_fact => $value_data_trac_use_fact)
                                 <tr>
                                     <?php
+                                    // $date_of_use = thaidate('d-m-Y', strtotime($value_data_trac_use_fact->date_of_use));
                                     ?>
                                     <td class="font-prompt" style="text-align: center;">{{ ++$j }}</td>
+                                    <!-- <td class="font-prompt" style="text-align: center;">{{$date_of_use}}</td> -->
                                     <td class="font-prompt">{{ $value_data_trac_use_fact->name_of_use }}</td>
                                     <td class="font-prompt" style="text-align: center;">{{ $value_data_trac_use_fact->amount }}</td>
                                     <td class="font-prompt" style="text-align: center;">{{ $value_data_trac_use_fact->unit }}</td>
@@ -169,8 +173,10 @@
                                 @foreach($get_data_trac_harv as $key_data_trac_harv => $value_data_trac_harv)
                                 <tr>
                                     <?php
+                                    // $harvest_date = thaidate('d-m-Y', strtotime($value_data_trac_harv->harvest_date));
                                     ?>
                                     <td class="font-prompt" style="text-align: center;">{{ ++$k }}</td>
+                                    <!-- <td class="font-prompt" style="text-align: center;">{{ $harvest_date }}</td> -->
                                     <td class="font-prompt">{{ $value_data_trac_harv->product }}</td>
                                     <td class="font-prompt" style="text-align: center;">{{ $value_data_trac_harv->total_product }}</td>
                                     <td class="font-prompt" style="text-align: center;">{{ $value_data_trac_harv->unit }}</td>
@@ -213,10 +219,10 @@
                                 @foreach($get_data_sell_produce as $key_sell_produce => $value_sell_produce)
                                 <tr>
                                     <?php
-                                    $harvest_date = thaidate('d-m-Y', strtotime($value_sell_produce->harvest_date));
+                                    // $harvest_date = thaidate('d-m-Y', strtotime($value_sell_produce->harvest_date));
                                     ?>
                                     <td class="font-prompt" style="text-align: center;">{{ ++$s }}</td>
-                                    <td class="font-prompt" style="text-align: center;">{{ $harvest_date }}</td>
+                                    <!-- <td class="font-prompt" style="text-align: center;">{{ $harvest_date }}</td> -->
                                     <td class="font-prompt">{{ $value_sell_produce->produce }}</td>
                                     <td class="font-prompt" style="text-align: center;">{{ $value_sell_produce->amount }}</td>
                                     <td class="font-prompt" style="text-align: center;">{{ $value_sell_produce->unit }}</td>
