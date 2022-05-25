@@ -270,9 +270,6 @@
 </div>
 <script>
     $(document).ready(function() {
-        // $('.bt-create-farm-record').click(function() {
-        //     $('.ant-modal-root-3').show();
-        // });
         $('#cancelFormCreateFarmRecord').click(function() {
             $('.ant-modal-root-3').hide();
             $('.ant-modal-root-3-1').hide();
@@ -287,7 +284,6 @@
             $('.ant-modal-root-3-2').show();
             $('#cancelRecordOfFarmInputTheUtilization').click(function() {
                 $('.ant-modal-root-3-2').hide();
-                $('.ant-modal-root-3').hide();
             });
         });
         $('#OrganicProduceHarvestRecord').click(function() {

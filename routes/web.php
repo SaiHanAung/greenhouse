@@ -75,6 +75,8 @@ Route::resource('autoruns', AutorunController::class);
 
 Route::resource('switches', SwitchesController::class);
 
+Route::resource('savenotes', SavenoteController::class);
+
 
 Route::get('/plots/{datas}/savenote', 'SavenoteController@index')->name('savenote.index');
 
