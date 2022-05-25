@@ -86,9 +86,6 @@ class SaveNoteController extends Controller
             'tract_total_price',
             'check_tract_total_price',
             'get_data_sell_produce',
-            'received_date',
-            'date_of_use',
-            'harvest_date',
         ));
     }
 
