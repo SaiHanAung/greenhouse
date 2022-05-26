@@ -32,7 +32,7 @@ class QrcodeController extends Controller
             ->select('id', 'name', 'host', 'topic_send', 'description')
             ->where('user_id', '=', $userID)->get();
 
-        $tracUrl = "http://127.0.0.1:8000/traceability/" . $datas;
+        $tracUrl = "https://app-greenhouse-project.herokuapp.com/traceability/" . $datas;
         $qrcode = "https://chart.googleapis.com/chart?cht=qr&chl=" . $tracUrl . "&chs=360x360&choe=UTF-8";
 
         return view('qrcodes.index', compact(

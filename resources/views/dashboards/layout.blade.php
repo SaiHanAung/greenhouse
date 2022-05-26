@@ -168,9 +168,9 @@
         });
 
         function onConnect() {
-            client.subscribe("rmutl/gh4/send");
             message = new Paho.MQTT.Message("0");
             message.destinationName = document.getElementById("input_topic").value
+            client.subscribe(message.destinationName);
             client.send(message) // publish message
         }
 
