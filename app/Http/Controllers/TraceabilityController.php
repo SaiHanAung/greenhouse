@@ -27,12 +27,12 @@ class TraceabilityController extends Controller
 
         $get_data_trac_use_fact = DB::table('traceability_use_factors')
             ->select('date_of_use')
-            ->where('plot_id', '=', $datas)->first();
+            ->where('plot_id', '=', $datas)->get()->first();
             foreach($get_data_trac_use_fact as $key_data_trac_use_fact => $value_data_trac_use_fact){}
 
         $get_data_trac_harv = DB::table('traceability_harvests')
             ->select('harvest_date')
-            ->where('plot_id', '=', $datas)->first();
+            ->where('plot_id', '=', $datas)->get()->first();
             foreach($get_data_trac_harv as $key_data_trac_harv => $value_data_trac_harv){}
 
         // dd($get_data_trac_harv);
