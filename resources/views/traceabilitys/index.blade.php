@@ -15,8 +15,9 @@
             @endforeach
 
             <?php
-            $date_of_use = thaidate('d - m - Y', strtotime($get_data_trac_use_fact->date_of_use));
-            $harvest_date = thaidate('d - m - Y', strtotime($get_data_trac_harv->harvest_date));
+            $date_of_use = thaidate('d - m - Y', strtotime($value_data_trac_use_fact));
+            $harvest_date = thaidate('d - m - Y', strtotime($value_data_trac_harv));
+            // dd($date_of_use);
             ?>
             <div class="row">
                 <label>เริ่มปลูกตั้งแต่วันที่ : <span>{{ $date_of_use }}</span></label>
