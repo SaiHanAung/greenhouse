@@ -31,8 +31,6 @@
             font-family: 'Prompt', sans-serif;
         }
         .special {
-            color: #fff !important;
-            background: #49cea1 !important;
             font-size: large !important;
             border-top: #fff !important;
         }
@@ -321,46 +319,46 @@
                                             <div class="ant-form-item-control-input">
                                                 <div class="ant-select ant-select-single">
                                                     <select class="ant-select-selector font-prompt" name="unit" required>
-                                                        <option value="กิโลกรัม">
+                                                        <option class="special" value="กิโลกรัม">
                                                             <span class="">กิโลกรัม</span>
                                                         </option>
-                                                        <option value="กรัม">
+                                                        <option class="special" value="กรัม">
                                                             <span class="">กรัม</span>
                                                         </option>
-                                                        <option value="ขีด">
+                                                        <option class="special" value="ขีด">
                                                             <span class="">ขีด</span>
                                                         </option>
-                                                        <option value="ลิตร">
+                                                        <option class="special" value="ลิตร">
                                                             <span class="">ลิตร</span>
                                                         </option>
-                                                        <option value="ถัง">
+                                                        <option class="special" value="ถัง">
                                                             <span class="">ถัง</span>
                                                         </option>
-                                                        <option value="ถุง">
+                                                        <option class="special" value="ถุง">
                                                             <span class="">ถุง</span>
                                                         </option>
-                                                        <option value="ขวด">
+                                                        <option class="special" value="ขวด">
                                                             <span class="">ขวด</span>
                                                         </option>
-                                                        <option value="กล่อง">
+                                                        <option class="special" value="กล่อง">
                                                             <span class="">กล่อง</span>
                                                         </option>
-                                                        <option value="หน่อ">
+                                                        <option class="special" value="หน่อ">
                                                             <span class="">หน่อ</span>
                                                         </option>
-                                                        <option value="เครื่อง">
+                                                        <option class="special" value="เครื่อง">
                                                             <span class="">เครื่อง</span>
                                                         </option>
-                                                        <option value="ใบ">
+                                                        <option class="special" value="ใบ">
                                                             <span class="">ใบ</span>
                                                         </option>
-                                                        <option value="อัน">
+                                                        <option class="special" value="อัน">
                                                             <span class="">อัน</span>
                                                         </option>
-                                                        <option value="ด้าม">
+                                                        <option class="special" value="ด้าม">
                                                             <span class="">ด้าม</span>
                                                         </option>
-                                                        <option value="เมตร">
+                                                        <option class="special" value="เมตร">
                                                             <span class="">เมตร</span>
                                                         </option>
                                                     </select>
@@ -433,40 +431,40 @@
                                             <div class="ant-form-item-control-input">
                                                 <div class="ant-select ant-select-single">
                                                     <select class="ant-select-selector font-prompt" name="unit" required>
-                                                        <option value="กิโลกรัม">
+                                                        <option class="special" value="กิโลกรัม">
                                                             <span class="font-prompt">กิโลกรัม</span>
                                                         </option>
-                                                        <option value="กรัม">
+                                                        <option class="special" value="กรัม">
                                                             <span class="font-prompt">กรัม</span>
                                                         </option>
-                                                        <option value="ขีด">
+                                                        <option class="special" value="ขีด">
                                                             <span class="font-prompt">ขีด</span>
                                                         </option>
-                                                        <option value="ลิตร">
+                                                        <option class="special" value="ลิตร">
                                                             <span class="font-prompt">ลิตร</span>
                                                         </option>
-                                                        <option value="ถัง">
+                                                        <option class="special" value="ถัง">
                                                             <span class="font-prompt">ถัง</span>
                                                         </option>
-                                                        <option value="กระสอบ">
+                                                        <option class="special" value="กระสอบ">
                                                             <span class="font-prompt">กระสอบ</span>
                                                         </option>
-                                                        <option value="ถุง">
+                                                        <option class="special" value="ถุง">
                                                             <span class="font-prompt">ถุง</span>
                                                         </option>
-                                                        <option value="ขวด">
+                                                        <option class="special" value="ขวด">
                                                             <span class="font-prompt">ขวด</span>
                                                         </option>
-                                                        <option value="กล่อง">
+                                                        <option class="special" value="กล่อง">
                                                             <span class="font-prompt">กล่อง</span>
                                                         </option>
-                                                        <option value="หน่อ">
+                                                        <option class="special" value="หน่อ">
                                                             <span class="font-prompt">หน่อ</span>
                                                         </option>
-                                                        <option value="ใบ">
+                                                        <option class="special" value="ใบ">
                                                             <span class="font-prompt">ใบ</span>
                                                         </option>
-                                                        <option value="เมตร">
+                                                        <option class="special" value="เมตร">
                                                             <span class="font-prompt">เมตร</span>
                                                         </option>
                                                     </select>
@@ -539,43 +537,43 @@
                                             <div class="ant-form-item-control-input">
                                                 <div class="ant-select ant-select-single">
                                                     <select class="ant-select-selector font-prompt" name="unit" required>
-                                                        <option value="กิโลกรัม">
+                                                        <option class="special" value="กิโลกรัม">
                                                             <span class="font-prompt">กิโลกรัม</span>
                                                         </option>
-                                                        <option value="กรัม">
+                                                        <option class="special" value="กรัม">
                                                             <span class="font-prompt">กรัม</span>
                                                         </option>
-                                                        <option value="ขีด">
+                                                        <option class="special" value="ขีด">
                                                             <span class="font-prompt">ขีด</span>
                                                         </option>
-                                                        <option value="ตัน">
+                                                        <option class="special" value="ตัน">
                                                             <span class="font-prompt">ตัน</span>
                                                         </option>
-                                                        <option value="ลิตร">
+                                                        <option class="special" value="ลิตร">
                                                             <span class="font-prompt">ลิตร</span>
                                                         </option>
-                                                        <option value="ถัง">
+                                                        <option class="special" value="ถัง">
                                                             <span class="font-prompt">ถัง</span>
                                                         </option>
-                                                        <option value="กระสอบ">
+                                                        <option class="special" value="กระสอบ">
                                                             <span class="font-prompt">กระสอบ</span>
                                                         </option>
-                                                        <option value="ถุง">
+                                                        <option class="special" value="ถุง">
                                                             <span class="font-prompt">ถุง</span>
                                                         </option>
-                                                        <option value="ขวด">
+                                                        <option class="special" value="ขวด">
                                                             <span class="font-prompt">ขวด</span>
                                                         </option>
-                                                        <option value="กล่อง">
+                                                        <option class="special" value="กล่อง">
                                                             <span class="font-prompt">กล่อง</span>
                                                         </option>
-                                                        <option value="หน่อ">
+                                                        <option class="special" value="หน่อ">
                                                             <span class="font-prompt">หน่อ</span>
                                                         </option>
-                                                        <option value="ใบ">
+                                                        <option class="special" value="ใบ">
                                                             <span class="font-prompt">ใบ</span>
                                                         </option>
-                                                        <option value="เมตร">
+                                                        <option class="special" value="เมตร">
                                                             <span class="font-prompt">เมตร</span>
                                                         </option>
                                                     </select>

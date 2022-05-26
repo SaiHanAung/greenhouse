@@ -35,6 +35,14 @@
         .font-prompt {
             font-family: 'Prompt', sans-serif;
         }
+        .special {
+            font-size: large !important;
+            border-top: #fff !important;
+        }
+        .special:hover {
+            background: #fff !important;
+            color: #000 !important;
+        }
     </style>
 </head>
 

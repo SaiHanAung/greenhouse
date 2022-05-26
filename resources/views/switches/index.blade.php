@@ -150,28 +150,28 @@
                                 <div class="ant-form-item-control-input">
                                     <div class="ant-select ant-select-single">
                                         <select class="ant-select-selector font-prompt" name="port" required>
-                                            <option value="soc_1">
+                                            <option class="special" value="soc_1">
                                                 <span class="">soc 1</span>
                                             </option>
-                                            <option value="soc_2">
+                                            <option class="special" value="soc_2">
                                                 <span class="">soc 2</span>
                                             </option>
-                                            <option value="soc_3">
+                                            <option class="special" value="soc_3">
                                                 <span class="">soc 3</span>
                                             </option>
-                                            <option value="soc_4">
+                                            <option class="special" value="soc_4">
                                                 <span class="">soc 4</span>
                                             </option>
-                                            <option value="soc_5">
+                                            <option class="special" value="soc_5">
                                                 <span class="">soc 5</span>
                                             </option>
-                                            <option value="soc_6">
+                                            <option class="special" value="soc_6">
                                                 <span class="">soc 6</span>
                                             </option>
-                                            <option value="soc_7">
+                                            <option class="special" value="soc_7">
                                                 <span class="">soc 7</span>
                                             </option>
-                                            <option value="soc_8">
+                                            <option class="special" value="soc_8">
                                                 <span class="">soc 8</span>
                                             </option>
                                         </select>
