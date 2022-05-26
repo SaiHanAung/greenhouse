@@ -18,7 +18,7 @@ class TraceabilityController extends Controller
     {
         //
         $get_data_plot = DB::table('plots')
-            ->select('name', 'img_name', 'file_path')
+            ->select('name', 'file_path')
             ->where('id', '=', $datas)->get();
 
         $get_data_trac = DB::table('traceability_factors')
@@ -37,7 +37,7 @@ class TraceabilityController extends Controller
             ->where('plot_id', '=', $datas)->get()->first();
             // foreach($get_data_trac_harv as $key_data_trac_harv => $value_data_trac_harv){}
 
-        // dd($key_data_trac_use_fact);
+        // dd($get_data_plot);
 
         return view('traceabilitys.index', compact(
             'get_data_trac_use_fact',
