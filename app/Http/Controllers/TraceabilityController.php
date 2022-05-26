@@ -25,17 +25,19 @@ class TraceabilityController extends Controller
             ->select('id', 'received_date', 'name', 'amount', 'price', 'unit', 'source', 'total_price', 'recorder')
             ->where('plot_id', '=', $datas)->get();
 
+        $check_date_trac_use_fact = DB::table('traceability_use_factors')->select('date_of_use')->where('plot_id', '=', $datas)->count();
         $get_data_trac_use_fact = DB::table('traceability_use_factors')
             ->select('date_of_use')
             ->where('plot_id', '=', $datas)->get()->first();
-            // foreach($get_data_trac_use_fact as $key_data_trac_use_fact => $value_data_trac_use_fact){}
-
+        // foreach($get_data_trac_use_fact as $key_data_trac_use_fact){}
+        
+        $check_date_trac_harv = DB::table('traceability_harvests')->select('harvest_date')->where('plot_id', '=', $datas)->count();
         $get_data_trac_harv = DB::table('traceability_harvests')
             ->select('harvest_date')
             ->where('plot_id', '=', $datas)->get()->first();
             // foreach($get_data_trac_harv as $key_data_trac_harv => $value_data_trac_harv){}
 
-        // dd($value_data_trac_use_fact);
+        // dd($key_data_trac_use_fact);
 
         return view('traceabilitys.index', compact(
             'get_data_trac_use_fact',
@@ -43,6 +45,8 @@ class TraceabilityController extends Controller
             'get_data_trac',
             'datas',
             'get_data_plot',
+            'check_date_trac_use_fact',
+            'check_date_trac_harv'
             // 'value_data_trac_use_fact',
             // 'value_data_trac_harv'
         ));
