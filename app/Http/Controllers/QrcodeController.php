@@ -112,7 +112,7 @@ class QrcodeController extends Controller
     public function downloadPDF($datas, Request $request )
     {
 
-        $tracUrl = "http://127.0.0.1:8000/traceability/" . $datas;
+        $tracUrl = "https://app-greenhouse-project.herokuapp.com/traceability/" . $datas;
         $qrcode = "https://chart.googleapis.com/chart?cht=qr&chl=" . $tracUrl . "&chs=200x200&choe=UTF-8";
 
         $pdf = PDF::loadView('pdf', compact('qrcode'));
