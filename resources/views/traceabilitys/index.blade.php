@@ -6,9 +6,7 @@
     <div class="container-traceability">
         <div class="blur-box">
             @foreach($get_data_plot as $key_plot => $value_plot)
-            <center>
-                <img src="{{ asset('plot_images/'.$value_plot->file_path) }}" alt="Image" width="20%">
-            </center>
+            <img src="{{ asset('plot_images/'.$value_plot->file_path) }}" alt="Image" width="20%">
             <div class="row">
                 <label>แปลง : <span>{{ $value_plot->name }}</span></label>
             </div>
