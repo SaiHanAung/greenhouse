@@ -37,9 +37,13 @@ class DashboardController extends Controller
         $etc = DB::table('traceability_factors')->select('total_price')->where('type', '=', 'ค่าอื่นๆ')->where('plot_id','=',$datas)->get()->sum('total_price');
         // $a = $seed.$datas;
         // dd($seed);
+        $check_tract_total_price = DB::table('traceability_factors')->select('total_price')->where('plot_id', '=', $datas)->count();
+        $tract_total_price = DB::table('traceability_factors')->select('total_price')->where('plot_id', '=', $datas)->get()->sum('total_price');
+        // dd($check_tract_total_price);
         
         return view('dashboards.index', compact('datas', 'value_name_sub', 'get_host_topic', 
-                                                'seed','fertilizer', 'wage' ,'etc'));
+                                                'seed','fertilizer', 'wage' ,'etc', 'check_tract_total_price',
+                                            'tract_total_price'));
     }
 
     /**
