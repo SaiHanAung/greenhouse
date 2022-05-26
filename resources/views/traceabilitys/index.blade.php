@@ -13,7 +13,9 @@
                 <label>แปลง : <span>{{ $value_plot->name }}</span></label>
             </div>
             @endforeach
-
+            @if($check_date_trac_use_fact == 0 && $check_date_trac_harv == 0)
+            ยังไม่มีบันทึก
+            @else
             <div class="row">
                 <label>เริ่มปลูกตั้งแต่วันที่ :
                     <span>
@@ -42,6 +44,7 @@
                     </span>
                 </label>
             </div>
+            @endif
         </div>
     </div>
 
