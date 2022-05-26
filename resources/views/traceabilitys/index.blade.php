@@ -7,7 +7,7 @@
         <div class="blur-box">
             @foreach($get_data_plot as $key_plot => $value_plot)
             <center>
-                <img src="{{ asset('plot_images/'.$value_plot->file_path) }}" alt="Image" width="10%">
+                <img src="{{ asset('plot_images/'.$value_plot->file_path) }}" alt="Image" width="25%">
             </center>
             <div class="row">
                 <label>แปลง : <span>{{ $value_plot->name }}</span></label>
