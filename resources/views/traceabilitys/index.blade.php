@@ -3,7 +3,7 @@
 @section('content')
 
 <div class="wrapper">
-    <div class="container">
+    <div class="container-traceability">
         <div class="blur-box">
             @foreach($get_data_plot as $key_plot => $value_plot)
             <center>
