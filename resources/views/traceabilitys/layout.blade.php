@@ -11,8 +11,7 @@
 
     <style>
         .blur-box {
-            margin-top: auto;
-            margin-bottom: auto;
+            margin-top: 3rem;
             padding: 2em;
             border: 1px solid rgba(255, 255, 255, 0.4);
             background-color: rgba(255, 255, 255, 0.2);
