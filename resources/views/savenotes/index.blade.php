@@ -30,11 +30,15 @@
                         <span class="font-prompt" style="font-size: medium;">{{ $message }}</span>
                     </div>
                     @endif
+                    @php $i = 0; $j = 0; $k = 0; $s = 0;@endphp
                     <div class="box-border-shadow mb-4">
                         <div class="row">
                             <div class="col-sm-6">
                                 <label onclick="myFunction('Demo1')" id="name-savenote" class="ml-2" style="font-size:large;">ปัจจัยการผลิต</label>
+                                @if($check_tract_total_price == 0)
+                                @else
                                 <a href="{{ route('TracFactExcel') }}" class="ant-btn ml-3 font-prompt">ดาวน์โหลด Excel</a>
+                                @endif
                             </div>
                             <div class="col-sm-6">
                                 <div class="bt-last">
@@ -58,7 +62,6 @@
                                     <th style="text-align: center;">ผู้บันทึก</th>
                                     <th style="text-align: center;">ลบ</th>
                                 </tr>
-                                @php $i = 0; $j = 0; $k = 0; $s = 0;@endphp
                                 @foreach($get_data_trac as $key_data_trac_fact => $value_data_trac_fact)
                                 <tr>
                                     <?php
@@ -107,7 +110,10 @@
                         <div class="row">
                             <div class="col-sm-6">
                                 <label onclick="myFunction('Demo2')" id="name-savenote" class="ml-2" style="font-size:large;">การใช้ปัจจัยการผลิต</label>
+                                @if($check_data_trac_use_fact == 0)
+                                @else
                                 <a href="{{ route('TracUseFactExcel') }}" class="ant-btn ml-3 font-prompt">ดาวน์โหลด Excel</a>
+                                @endif
                             </div>
                             <div class="col-sm-6">
                                 <div class="bt-last">
@@ -153,7 +159,10 @@
                         <div class="row">
                             <div class="col-sm-6">
                                 <label onclick="myFunction('Demo3')" id="name-savenote" class="ml-2" style="font-size:large;">การเก็บเกี่ยวผลผลิต</label>
+                                @if($check_data_trac_harv == 0)
+                                @else
                                 <a href="{{ route('TracHarvExcel') }}" class="ant-btn ml-3 font-prompt">ดาวน์โหลด Excel</a>
+                                @endif
                             </div>
                             <div class="col-sm-6">
                                 <div class="bt-last">

@@ -41,10 +41,13 @@ class SaveNoteController extends Controller
         $check_tract_total_price = DB::table('traceability_factors')->select('total_price')->where('plot_id', '=', $datas)->count();
         $tract_total_price = DB::table('traceability_factors')->select('total_price')->where('plot_id', '=', $datas)->get()->sum('total_price');
         // dd($check_tract_total_price);
+
+        $check_data_trac_use_fact = DB::table('traceability_use_factors')->select('id')->where('plot_id', '=', $datas)->count();
         $get_data_trac_use_fact = DB::table('traceability_use_factors')
             ->select('id', 'date_of_use', 'name_of_use', 'amount', 'unit', 'recorder')
             ->where('plot_id', '=', $datas)->paginate(5);
 
+        $check_data_trac_harv = DB::table('traceability_harvests')->select('id')->where('plot_id', '=', $datas)->count();
         $get_data_trac_harv = DB::table('traceability_harvests')
             ->select('id', 'harvest_date', 'product', 'total_product', 'unit', 'recorder')
             ->where('plot_id', '=', $datas)->paginate(5);
@@ -62,6 +65,8 @@ class SaveNoteController extends Controller
             'get_data_trac',
             'tract_total_price',
             'check_tract_total_price',
+            'check_data_trac_use_fact',
+            'check_data_trac_harv',
             'get_data_sell_produce',
         ));
     }

@@ -23,42 +23,44 @@
             </div>
         </div>
         <div class="main-layout--content">
-            <section style="margin-top: 2rem;margin-left: 2rem;">
+            <section style="margin-top: 1.5rem;margin-left: 2rem;">
                 <div class="ant-col ant-col-24 product-details-info-col" style="padding-left: 16px; padding-right: 16px;">
-                    <div class="product-details-row">
-                        <div class="ant-row" style="margin-left: -4px; margin-right: -4px; row-gap: 0px;">
-                            <div class="ant-col ant-col-6" style="padding-left: 4px; padding-right: 4px;">
-                                <div class="form-item">
-                                    <div class="form-item-title">Host</div>
-                                    <div class="form-item-content offset-sm">{{ $plot->host }}</div>
+                    <div class="bt-last">
+                        <button class="bt-edit-farm-record btn-sm mr-2" id="openFormEditPlot">แก้ไข</button>
+                        <button type="button" onclick="document.getElementById('id01').style.display='block'" class="bt-delete-farm-record btn-sm">ลบแปลง</button>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-3"></div>
+                        <div class="col-sm-6">
+                            <div class="width-border p-5">
+                                <!-- <div class="row">
+                                    <center>
+                                        <label class="mb-2" style="font-size:large;"><strong>..</strong></label>
+                                    </center>
+                                </div> -->
+                                <!-- <hr> -->
+                                <div class="row">
+                                    <label class="mb-2" style="font-size:large;"><strong>Host : </strong><span style="font-size: medium;">{{ $plot->host }}</span></label>
                                 </div>
-                            </div>
-                            <div class="ant-col ant-col-6" style="padding-left: 4px; padding-right: 4px;">
-                                <div class="form-item">
-                                    <div class="form-item-title">Topic send</div>
-                                    <div class="form-item-content offset-sm">{{ $plot->topic_send }}</div>
+                                <div class="row">
+                                    <label class="mb-2" style="font-size:large;"><strong>Topic send : </strong><span style="font-size: medium;">{{ $plot->topic_send }}</span></label>
                                 </div>
-                            </div>
-                            <div class="ant-col ant-col-6" style="padding-left: 4px; padding-right: 4px;">
-                                <div class="form-item">
-                                    <div class="form-item-title">Topic sub</div>
-                                    <div class="form-item-content offset-sm">{{ $plot->topic_sub }}</div>
+                                <div class="row">
+                                    <label class="mb-2" style="font-size:large;"><strong>Topic sub : </strong><span style="font-size: medium;">{{ $plot->topic_sub }}</span></label>
                                 </div>
-                            </div>
-                            <div class="ant-col ant-col-6" style="padding-left: 4px; padding-right: 4px;">
-                                <div class="form-item">
-                                    <div class="form-item-title">คำอธิบาย</div>
-                                    <div class="form-item-content offset-sm">{{ $plot->description }}</div>
+                                <div class="row">
+                                    <label style="font-size:large;"><strong>คำอธิบาย : </strong><span style="font-size: medium;">{{ $plot->description }}</span></label>
                                 </div>
                             </div>
                         </div>
+                        <div class="col-sm-3"></div>
                     </div>
                     <div class="product-details-row">
                         <div class="ant-row row" style="margin-left: -16px; margin-right: -16px; row-gap: 0px;">
                             <div class="ant-col ant-col-24" style="padding-left: 16px; padding-right: 16px;">
                                 <div class="form-item">
-                                    <button class="bt-edit-farm-record btn-sm" id="openFormEditPlot">แก้ไข</button>
-                                    <button type="button" onclick="document.getElementById('id01').style.display='block'" class="bt-delete-farm-record btn-sm">ลบ</button>
+                                    <!-- <button class="bt-edit-farm-record btn-sm" id="openFormEditPlot">แก้ไข</button>
+                                    <button type="button" onclick="document.getElementById('id01').style.display='block'" class="bt-delete-farm-record btn-sm">ลบ</button> -->
                                 </div>
                                 <script>
                                     $(document).ready(function() {
@@ -187,7 +189,7 @@
                                                                     <div class="ant-col ant-form-item-control">
                                                                         <div class="ant-form-item-control-input">
                                                                             <div class="ant-form-item-control-input-content">
-                                                                            <input value="{{ $plot->name }}" name="name" type="text" class="ant-input @error('name') is-invalid @enderror" >
+                                                                                <input value="{{ $plot->name }}" name="name" type="text" class="ant-input @error('name') is-invalid @enderror">
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -199,7 +201,7 @@
                                                                     <div class="ant-col ant-form-item-control">
                                                                         <div class="ant-form-item-control-input">
                                                                             <div class="ant-form-item-control-input-content">
-                                                                                <input type="text" name="host" class="ant-input font-prompt" value="{{ $plot->host }}" >
+                                                                                <input type="text" name="host" class="ant-input font-prompt" value="{{ $plot->host }}">
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -213,7 +215,7 @@
                                                                     <div class="ant-col ant-form-item-control">
                                                                         <div class="ant-form-item-control-input">
                                                                             <div class="ant-form-item-control-input-content">
-                                                                                <input type="text" name="topic_send" class="ant-input font-prompt" value="{{ $plot->topic_send }}" >
+                                                                                <input type="text" name="topic_send" class="ant-input font-prompt" value="{{ $plot->topic_send }}">
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -225,7 +227,7 @@
                                                                     <div class="ant-col ant-form-item-control">
                                                                         <div class="ant-form-item-control-input">
                                                                             <div class="ant-form-item-control-input-content">
-                                                                                <input type="text" name="topic_sub" class="ant-input font-prompt" value="{{ $plot->topic_sub }}" placeholder="Topic ผู้ให้บริการ" >
+                                                                                <input type="text" name="topic_sub" class="ant-input font-prompt" value="{{ $plot->topic_sub }}" placeholder="Topic ผู้ให้บริการ">
                                                                             </div>
                                                                         </div>
                                                                     </div>

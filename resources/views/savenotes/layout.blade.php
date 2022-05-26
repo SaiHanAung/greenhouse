@@ -30,10 +30,12 @@
         .font-prompt {
             font-family: 'Prompt', sans-serif;
         }
+
         .special {
             font-size: large !important;
             border-top: #fff !important;
         }
+
         .special:hover {
             background: #fff !important;
             color: #000 !important;
@@ -582,7 +584,7 @@
                                         </div>
                                     </div>
                                     <div class="ant-row ant-form-item ant-form-item-with-help own-custom-form-field normal-offset normal-offset ant-form-item-has-success" style="row-gap: 0px;">
-                                        
+
                                         <div class="font-prompt">ราคา</div>
                                         <div class="ant-col ant-form-item-control">
                                             <div class="ant-form-item-control-input">
@@ -591,7 +593,7 @@
                                         </div>
                                     </div>
                                     <div class="ant-row ant-form-item ant-form-item-with-help own-custom-form-field normal-offset normal-offset ant-form-item-has-success" style="row-gap: 0px;">
-                                        
+
                                         <div class="font-prompt">ผู้บันทึก</div>
                                         <div class="ant-col ant-form-item-control">
                                             <div class="ant-form-item-control-input">
@@ -654,7 +656,11 @@
             $(".loader-wrapper").fadeOut("slow");
         });
     </script>
-
+    <script>
+        setTimeout(function() {
+            $('#alert').alert('close');
+        }, 3000);
+    </script>
 </body>
 
 </html>
