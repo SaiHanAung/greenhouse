@@ -115,6 +115,9 @@ Route::get('/clear-cache', function() {
 });
 
 Route::get('/downloadPDF/{datas}','QrcodeController@downloadPDF')->name('downloadPDF');
+Route::get('/downloadTracFactExcel','SaveNoteController@TracFactExcel')->name('TracFactExcel');
+Route::get('/downloadTracUseFactExcel','SaveNoteController@TracUseFactExcel')->name('TracUseFactExcel');
+Route::get('/downloadTracHarvExcel','SaveNoteController@TracHarvExcel')->name('TracHarvExcel');
 
 Route::get('/request-mqtt', 'DashboardController@reciveMqtt')->name('reciveMqtt');
 

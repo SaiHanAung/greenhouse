@@ -34,6 +34,7 @@
                         <div class="row">
                             <div class="col-sm-6">
                                 <label onclick="myFunction('Demo1')" id="name-savenote" class="ml-2" style="font-size:large;">ปัจจัยการผลิต</label>
+                                <a href="{{ route('TracFactExcel') }}" class="ant-btn ml-3 font-prompt">ดาวน์โหลด Excel</a>
                             </div>
                             <div class="col-sm-6">
                                 <div class="bt-last">
@@ -106,7 +107,7 @@
                         <div class="row">
                             <div class="col-sm-6">
                                 <label onclick="myFunction('Demo2')" id="name-savenote" class="ml-2" style="font-size:large;">การใช้ปัจจัยการผลิต</label>
-
+                                <a href="{{ route('TracUseFactExcel') }}" class="ant-btn ml-3 font-prompt">ดาวน์โหลด Excel</a>
                             </div>
                             <div class="col-sm-6">
                                 <div class="bt-last">
@@ -152,6 +153,7 @@
                         <div class="row">
                             <div class="col-sm-6">
                                 <label onclick="myFunction('Demo3')" id="name-savenote" class="ml-2" style="font-size:large;">การเก็บเกี่ยวผลผลิต</label>
+                                <a href="{{ route('TracHarvExcel') }}" class="ant-btn ml-3 font-prompt">ดาวน์โหลด Excel</a>
                             </div>
                             <div class="col-sm-6">
                                 <div class="bt-last">

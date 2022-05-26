@@ -10,6 +10,11 @@ use App\Traceability_use_factor;
 use App\Traceability_harvest;
 use Illuminate\Support\Facades\DB;
 
+use App\Exports\TracFactExport;
+use App\Exports\TracUseFactExport;
+use App\Exports\TracHarvExport;
+use Maatwebsite\Excel\Facades\Excel;
+
 use Illuminate\Http\Request;
 
 class SaveNoteController extends Controller
@@ -205,5 +210,20 @@ class SaveNoteController extends Controller
         $sell_produce->delete();
 
         return back()->with('success', 'ลบบันทึกการจำหน่ายผลผลิตที่เลือกสำเร็จแล้ว');
+    }
+
+    public function TracFactExcel()
+    {
+        return Excel::download(new TracFactExport, 'ปัจจัยการผลิต.xlsx');
+    }
+
+    public function TracUseFactExcel()
+    {
+        return Excel::download(new TracUseFactExport, 'การใช้ปัจจัยการผลิต.xlsx');
+    }
+
+    public function TracHarvExcel()
+    {
+        return Excel::download(new TracHarvExport, 'การเก็บเกี่ยวผลผลิต.xlsx');
     }
 }
