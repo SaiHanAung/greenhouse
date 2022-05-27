@@ -187,6 +187,11 @@
 
             document.getElementById("temp").innerHTML = obj.temp + " 'C";
             document.getElementById("humid").innerHTML = obj.humid + " %";
+            
+            if(obj.temp == undefined || obj.humid == undefined){
+                document.getElementById("temp").innerHTML = 'โหลดไม่สำเร็จ';
+                document.getElementById("humid").innerHTML = 'โหลดไม่สำเร็จ';
+            }
             // document.getElementById("mqtt-value").innerHTML = msg;
             // console.log(msg);
             const zeroFill = n => {
