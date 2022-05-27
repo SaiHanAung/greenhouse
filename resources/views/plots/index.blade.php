@@ -2,24 +2,37 @@
 
 @section('content')
 
+<style>
+    /* @media only screen and (max-width: 576px) {
+        .button {
+            width: 100%;
+        }
+    } */
+</style>
+
 <div class="user-layout-right-content user-layout-right-content-fold">
     <div></div>
     <div class="main-layout products-container">
-        <div class="main-layout--header" style="border-bottom-color:#49cea1;">
-            <div class="main-layout--header-name font-prompt">จัดการฟาร์ม</div>
-            <div class="main-layout--header-options">
-                <div>
+        <div class="mt-5 mb-3" style="padding-bottom: 1rem; border-bottom:#49cea1 1px solid;">
+            <!-- <div class="main-layout--header" style="border-bottom-color:#49cea1;"> -->
+            <div class="row">
+                <div class="col-12 col-sm-6 col-md-6 col-lg-6">
+                    <div class="main-layout--header-name font-prompt">จัดการฟาร์ม</div>
+                </div>
+                <div class="col-12 col-sm-6 col-md-6 col-lg-6" style="display: flex; justify-content:flex-end;">
                     <button type="button" id="openFormNewFarm" class="ant-btn ant-btn-primary">
                         <div class="row">
-                            <div class="col-sm-1">
+                            <div class="col-1">
                                 <span style="font-size: large;">+</span>
                             </div>
-                            <div class="col-sm-10">
+                            <div class="col-10">
                                 <span class="font-prompt" style="font-size: medium;">สร้างแปลงใหม่</span>
                             </div>
                         </div>
                     </button>
                 </div>
+            </div>
+            <div class="main-layout--header-options">
                 <script>
                     $(document).ready(function() {
                         $('#openFormNewFarm').click(function() {
@@ -48,19 +61,23 @@
             @endif
             <div class="settings-user-content main-list">
                 @foreach($get_data_plot as $key => $value)
-                <a href="{{ route('dashboard.index', ['datas'=>$value->id]) }}">
-                    <div class="main-list--item">
-                        <?php
-                        // dd($value);
-                        // echo asset('storage/');
-                        ?>
-                        <div class="main-list--item-preview main-list--item-preview--is-active"><img src="{{ asset('plot_images/'.$value->file_path) }}" alt="Image"></div>
-                        <div class="main-list--item-details">
-                            <div class="main-list--item-details-name font-prompt"><label class="font-prompt" style="font-size:large;">แปลง :</label> {{ $value->name }}</div>
-                            <div class="main-list--item-details-name font-prompt"><label class="font-prompt" style="font-size:large;">ไอดี :</label> {{ $value->id }}</div>
-                        </div>
+                <div class="row">
+                    <div class="col-4">
+                        <a href="{{ route('dashboard.index', ['datas'=>$value->id]) }}">
+                            <div class="main-list--item">
+                                <?php
+                                // dd($value);
+                                // echo asset('storage/');
+                                ?>
+                                <div class="main-list--item-preview main-list--item-preview--is-active"><img src="{{ asset('plot_images/'.$value->file_path) }}" alt="Image"></div>
+                                <div class="main-list--item-details">
+                                    <div class="main-list--item-details-name font-prompt"><label class="font-prompt" style="font-size:large;">แปลง :</label> {{ $value->name }}</div>
+                                    <div class="main-list--item-details-name font-prompt"><label class="font-prompt" style="font-size:large;">ไอดี :</label> {{ $value->id }}</div>
+                                </div>
+                            </div>
+                        </a>
                     </div>
-                </a>
+                </div>
                 @endforeach
                 <div class="row">
                     {{--
