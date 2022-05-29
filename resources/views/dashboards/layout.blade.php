@@ -143,8 +143,8 @@
                 </div>
                 @endif
                 @foreach($get_host_topic as $keyht => $valueht)
-                <input id="input_host_mobile" type="hidden" value="{{$valueht->host}}">
-                <input id="input_topic_mobile" type="hidden" value="{{$valueht->topic_send}}">
+                <input id="input_host_mobile" type="text" value="{{$valueht->host}}">
+                <input id="input_topic_mobile" type="text" value="{{$valueht->topic_send}}">
                 @endforeach
                 <div class="row">
                     <div class="col-1"></div>
