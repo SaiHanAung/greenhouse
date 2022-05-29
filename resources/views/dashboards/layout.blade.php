@@ -52,7 +52,7 @@
     </style>
 </head>
 
-<body>
+<body style="overflow-y:auto;">
     <div class="content">
         <div id="app">
             @if(Auth::check())
@@ -90,7 +90,7 @@
                 </div>
             </div>
 
-            <div class="side-mobile">
+            <div class="side-mobile" style="margin-bottom: 5em;">
                 <div id="mySidenav" class="sidenav">
                     <a href="{{ route('plots.index') }}" class="font-prompt">จัดการฟาร์ม</a>
                     <ul>
@@ -121,7 +121,7 @@
                 </div>
                 <div class="row" style="margin: -0.5em 0 2em 0;">
                     <hr>
-                    <div class="col-3">
+                    <div class="col-4" style="justify-content:flex-end">
                         <a href="javascript:void(0)" class="bt-green font-prompt btn-sm" style="font-size: medium;">
                             โดยรวม
                         </a>
@@ -219,7 +219,7 @@
                     </div>
                     <div class="col-1"></div>
                 </div>
-                <div class="row mb-4">
+                <div class="row">
                     <div class="col-1"></div>
                     <div class="col-10">
                         <div class="width-border">
