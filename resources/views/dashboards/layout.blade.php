@@ -282,6 +282,61 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.js" type="text/javascript"></script>
 
+    
+    <script>
+        var hostMobile = document.getElementById("input_host_mobile").value
+        var portMobile = 8000;
+        var xMobile = Math.floor(Math.random() * 10000);
+        var cnameMobile = "controlform-" + xMobile;
+        client = mqtt = new Paho.MQTT.Client(hostMobile, portMobile, cnameMobile);
+        client.onConnectionLostMobile = onConnectionLostMobile;
+        client.onMessageArrivedMobile = onMessageArrivedMobile;
+
+        client.connect({
+            onSuccess: onConnectMobile
+        });
+
+        function onConnectMobile() {
+            messageMobile = new Paho.MQTT.Message("0");
+            messageMobile.destinationName = document.getElementById("input_topic_mobile").value
+            client.subscribe(messageMobile.destinationName);
+            client.send(messageMobile) // publish message
+        }
+
+        function onConnectionLostMobile(responseObject) {
+            if (responseObject.errorCode !== 0) {
+                console.log("onConnectionLost:" + responseObject.errorMessage);
+            }
+        }
+
+        function onMessageArrivedMobile(message) {
+            sessionStorage.setItem("msgMobile", messageMobile.payloadString);
+            msgMobile = sessionStorage.getItem("msgMobile");
+            objMobile = eval("(function(){return " + msgMobile + ";})()");
+
+            document.getElementById("temp_mobile").innerHTML = obj.temp + " 'C";
+            document.getElementById("humid_mobile").innerHTML = obj.humid + " %";
+            
+            if(objMobile.temp == undefined || objMobile.humid == undefined){
+                document.getElementById("temp_mobile").innerHTML = 'รอโหลด';
+                document.getElementById("humid_mobile").innerHTML = 'รอโหลด';
+            }
+            // document.getElementById("mqtt-value").innerHTML = msg;
+            // console.log(msg);
+            const zeroFill = n => {
+                return ('0' + n).slice(-2);
+            }
+
+            const intervalMobile = setInterval(() => {
+                const nowMobile = new Date();
+                const dateTimeMobile = nowMobile.toLocaleDateString() + ' ' + zeroFill(nowMobile.getHours()) + ':' + zeroFill(nowMobile.getMinutes()) + ':' + zeroFill(nowMobile.getSeconds());
+
+                document.getElementById("date-time-humid-mobile").innerHTML = "อัพเดทล่าสุด : " + dateTimeMobile;
+                document.getElementById('date-time-temp-mobile').innerHTML = "อัพเดทล่าสุด : " + dateTimeMobile;
+
+            }, 1000);   
+        }
+    </script>
     <script>
         var host = document.getElementById("input_host").value
         var host = document.getElementById("input_host_mobile").value
