@@ -90,7 +90,7 @@
                 </div>
             </div>
 
-            <div class="side-mobile">
+            <div class="side-mobile" style="height: 100vh;">
                 <div id="mySidenav" class="sidenav">
                     <a href="{{ route('plots.index') }}" class="font-prompt">จัดการฟาร์ม</a>
                     <ul>
