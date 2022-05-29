@@ -62,6 +62,7 @@ Route::get('/farms/report', 'FarmsController@report')->name('farmReport');
 Route::get('/setting', 'SettingController@index')->name('setting');
 
 Route::get('/profile', 'ProfileController@index')->name('profile');
+Route::post('/profile.update', 'ProfileController@update')->name('profile.update');
 
 Route::get('/traceability', function () {
     return view('traceability');

@@ -117,7 +117,7 @@
                     <hr>
                     <div class="bt-last">
                         <button class="bt-edit-farm-record btn-sm mr-2" id="openFormEditPlotOnMobile">แก้ไข</button>
-                        <button type="button" onclick="document.getElementById('id01').style.display='block'" class="bt-delete-farm-record btn-sm">ลบแปลง</button>
+                        <button type="button" onclick="document.getElementById('delete-plot-mobile').style.display='block'" class="bt-delete-farm-record btn-sm">ลบแปลง</button>
                     </div>
                     <div class="col-1 mt-3">&nbsp;</div>
                     <div class="col-10 mt-3">
@@ -246,7 +246,163 @@
                     </div>
                 </form>
             </div>
-
+            <div class="edit-plot-mobile" style="display:none">
+                <div class="row">
+                    <div class="col-8">
+                        <form action="{{ route('plots.update', $datas) }}" method="POST">
+                            <div class="ant-modal-mask"></div>
+                            <div class="ant-modal-wrap ant-modal-centered">
+                                <div class="ant-modal">
+                                    <div class="ant-modal-content">
+                                        <div class="ant-modal-header">
+                                            <div class="row">
+                                                <div class="col-8">
+                                                    <div class="font-prompt" style="font-size: x-large;">แก้ไขแปลง</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="ant-modal-body">
+                                            @csrf
+                                            @method('PUT')
+                                            <div class="row">
+                                                <div class="col-8">
+                                                    <div class="" style="padding-left: 4px; padding-right: 4px;">
+                                                        <div class=" ant-form-item normal-offset undefined" style="row-gap: 0px;">
+                                                            <label class="font-prompt">ชื่อ</label>
+                                                            <div class="ant-form-item-control">
+                                                                <div class="ant-form-item-control-input">
+                                                                    <div class="ant-form-item-control-input-content">
+                                                                        <input value="{{ $value_data_plot->name }}" name="name" type="text" class="ant-input @error('name') is-invalid @enderror">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-8">
+                                                    <div class="" style="padding-left: 4px; padding-right: 4px;">
+                                                        <div class=" ant-form-item normal-offset undefined">
+                                                            <label class="font-prompt">Host</label>
+                                                            <div class="ant-form-item-control">
+                                                                <div class="ant-form-item-control-input">
+                                                                    <div class="ant-form-item-control-input-content">
+                                                                        <input type="text" name="host" class="ant-input font-prompt" value="{{ $value_data_plot->host }}">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-8">
+                                                    <div class="" style="padding-left: 4px; padding-right: 4px;">
+                                                        <div class=" ant-form-item normal-offset undefined" style="row-gap: 0px;">
+                                                            <label class="font-prompt">Topic send</label>
+                                                            <div class="ant-form-item-control">
+                                                                <div class="ant-form-item-control-input">
+                                                                    <div class="ant-form-item-control-input-content">
+                                                                        <input type="text" name="topic_send" class="ant-input font-prompt" value="{{ $value_data_plot->topic_send }}">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-8">
+                                                    <div class="" style="padding-left: 4px; padding-right: 4px;">
+                                                        <div class=" ant-form-item normal-offset undefined">
+                                                            <label class="font-prompt">Topic sub</label>
+                                                            <div class="ant-form-item-control">
+                                                                <div class="ant-form-item-control-input">
+                                                                    <div class="ant-form-item-control-input-content">
+                                                                        <input type="text" name="topic_sub" class="ant-input font-prompt" value="{{ $value_data_plot->topic_sub }}" placeholder="Topic ผู้ให้บริการ">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-8">
+                                                    <div class="" style="padding-left: 4px; padding-right: 4px;">
+                                                        <div class=" ant-form-item normal-offset undefined" style="row-gap: 0px;">
+                                                            <label class="font-prompt">รูปภาพ</label>
+                                                            <div class="ant-form-item-control">
+                                                                <div class="ant-form-item-control-input">
+                                                                    <div class="ant-form-item-control-input-content">
+                                                                        <input class="font-prompt" type="file" name="file" value="{{ $value_data_plot->file_path }}">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-8">
+                                                    <div class=" ant-form-item large-offset">
+                                                        <label class="font-prompt">รายละเอียด</label>
+                                                        <div class="ant-form-item-control">
+                                                            <div class="ant-form-item-control-input">
+                                                                <div class="ant-form-item-control-input-content">
+                                                                    <input type="text" rows="5" name="description" class="font-prompt ant-input" value="{{ $value_data_plot->description }}"></input>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            {{--
+                                                                <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
+                                            --}}
+                                            <div class="ant-modal-footer">
+                                                <div class="row">
+                                                    <div class="col-8">
+                                                        <button type="button" id="cancelEditPlotFormOnMobile" class="ant-btn ant-btn-secondary">
+                                                            <span class="font-prompt">ยกเลิก</span>
+                                                        </button>
+                                                        <button type="submit" class="ant-btn ant-btn-primary">
+                                                            <span class="font-prompt">ยืนยัน</span>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div id="delete-plot-mobile" class="modal">
+                <span onclick="document.getElementById('delete-plot-mobile').style.display='none'" class="close" title="Close Modal">×</span>
+                <form class="modal-content" style="width: 80%;" action="{{ route('plots.destroy', $datas) }}" method="post">
+                    <div class="container">
+                        <div class="row">
+                                <h3 class="font-prompt">แปลง : {{ $value_data_plot->name }}</h3>
+                        </div>
+                        <div class="row">
+                                <p class="font-prompt">ต้องการลบแปลงนี้หรือไม่?</p>
+                        </div>
+                        <div class="clearfix">
+                            <div class="row">
+                                <button type="button" onclick="document.getElementById('delete-plot-mobile').style.display='none'" class="cancelbtn font-prompt" style="font-size: medium;font-weight:bolder;">ยกเลิก</button>
+                            
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="deletebtn font-prompt" style="font-size: medium;font-weight:bolder;">ยืนยัน</button>
+                            </div>
+                        </div>  
+                    </div>
+                </form>
+            </div>
 
             @else
 

@@ -176,67 +176,42 @@
                                 <div class="ant-modal-title" id="rcDialogTitle0">โปรไฟล์ผู้ใช้</div>
                             </div>
                             <div class="ant-modal-body">
-                                <form class="ant-form ant-form-horizontal organization-settings-users-form">
+                                <form action="{{ route('profile.update') }}" method="POST">
+                                    @csrf
                                     <div class="ant-row ant-form-item ant-form-item-with-help own-custom-form-field normal-offset normal-offset ant-form-item-has-success" style="row-gap: 0px;">
-                                        <div class="ant-col ant-form-item-label"><label for="name" class="" title="Name">ชื่อ</label></div>
+                                        <div class="ant-col ant-form-item-label"><label for="name" class="font-prompt" title="Name">ชื่อ</label></div>
                                         <div class="ant-col ant-form-item-control">
                                             <div class="ant-form-item-control-input">
                                                 <div class="ant-form-item-control-input-content"><span class="ant-input-affix-wrapper"><span class="ant-input-prefix"><span role="img" aria-label="user" class="anticon anticon-user form--field-icon"><svg viewBox="64 64 896 896" focusable="false" data-icon="user" width="1em" height="1em" fill="currentColor" aria-hidden="true">
                                                                     <path d="M858.5 763.6a374 374 0 00-80.6-119.5 375.63 375.63 0 00-119.5-80.6c-.4-.2-.8-.3-1.2-.5C719.5 518 760 444.7 760 362c0-137-111-248-248-248S264 225 264 362c0 82.7 40.5 156 102.8 201.1-.4.2-.8.3-1.2.5-44.8 18.9-85 46-119.5 80.6a375.63 375.63 0 00-80.6 119.5A371.7 371.7 0 00136 901.8a8 8 0 008 8.2h60c4.4 0 7.9-3.5 8-7.8 2-77.2 33-149.5 87.8-204.3 56.7-56.7 132-87.9 212.2-87.9s155.5 31.2 212.2 87.9C779 752.7 810 825 812 902.2c.1 4.4 3.6 7.8 8 7.8h60a8 8 0 008-8.2c-1-47.8-10.9-94.3-29.5-138.2zM512 534c-45.9 0-89.1-17.9-121.6-50.4S340 407.9 340 362c0-45.9 17.9-89.1 50.4-121.6S466.1 190 512 190s89.1 17.9 121.6 50.4S684 316.1 684 362c0 45.9-17.9 89.1-50.4 121.6S557.9 534 512 534z"></path>
-                                                                </svg></span></span><input placeholder="Enter Name" maxlength="60" name="name" type="text" id="name" class="ant-input" value="Sai"></span></div>
+                                                                </svg></span></span><input placeholder="Enter Name" maxlength="60" name="name" type="text" id="name" class="ant-input font-prompt" value="{{ Auth::user()->name }}"></span></div>
                                             </div>
-                                            <div class="ant-form-item-explain ant-form-item-explain-success">
+                                            <div class="ant-form-item-explain ant-form-item-explain-success font-prompt">
                                                 <!-- <div role="alert">Use only letters, hyphens, dots and spaces</div> -->
                                                 <div role="alert">ใช้เฉพาะตัวอักษร, ยัติภังค์, จุด, และช่องว่าง</div>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="ant-row ant-form-item medium-offset" style="row-gap: 0px;">
-                                        <div class="ant-col ant-form-item-label"><label for="email" class="ant-form-item-required" title="Email">อีเมล</label></div>
+                                        <div class="ant-col ant-form-item-label"><label for="email" class="ant-form-item-required font-prompt" title="Email">อีเมล</label></div>
                                         <div class="ant-col ant-form-item-control">
                                             <div class="ant-form-item-control-input">
-                                                <div class="ant-form-item-control-input-content"><span class="ant-input-affix-wrapper ant-input-affix-wrapper-disabled"><span class="ant-input-prefix"><span role="img" aria-label="mail" class="anticon anticon-mail form--field-icon"><svg viewBox="64 64 896 896" focusable="false" data-icon="mail" width="1em" height="1em" fill="currentColor" aria-hidden="true">
+                                                <div class="ant-form-item-control-input-content"><span class="ant-input-affix-wrapper"><span class="ant-input-prefix"><span role="img" aria-label="mail" class="anticon anticon-mail form--field-icon"><svg viewBox="64 64 896 896" focusable="false" data-icon="mail" width="1em" height="1em" fill="currentColor" aria-hidden="true">
                                                                     <path d="M928 160H96c-17.7 0-32 14.3-32 32v640c0 17.7 14.3 32 32 32h832c17.7 0 32-14.3 32-32V192c0-17.7-14.3-32-32-32zm-40 110.8V792H136V270.8l-27.6-21.5 39.3-50.5 42.8 33.3h643.1l42.8-33.3 39.3 50.5-27.7 21.5zM833.6 232L512 482 190.4 232l-42.8-33.3-39.3 50.5 27.6 21.5 341.6 265.6a55.99 55.99 0 0068.7 0L888 270.8l27.6-21.5-39.3-50.5-42.7 33.2z"></path>
-                                                                </svg></span></span><input maxlength="200" title="Email" type="text" name="email" disabled="" placeholder="Enter email" id="email" class="ant-input ant-input-disabled" value="hctskhnhc@gmail.com"></span></div>
+                                                                </svg></span></span><input type="text" name="email" id="email" class="ant-input font-prompt" value="{{ Auth::user()->email }}"></span></div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="ant-row ant-form-item medium-offset" style="row-gap: 0px;">
-                                        <div class="ant-col ant-form-item-label"><label for="roleId" class="ant-form-item-required" title="Role">Role</label></div>
-                                        <div class="ant-col ant-form-item-control">
-                                            <div class="ant-form-item-control-input">
-                                                <div class="ant-form-item-control-input-content">
-                                                    <div class="ant-select ant-select-single ant-select-show-arrow ant-select-disabled" title="Role" name="roleName">
-                                                        <div class="ant-select-selector"><span class="ant-select-selection-search"><input id="roleId" disabled="" autocomplete="off" type="search" class="ant-select-selection-search-input" role="combobox" aria-expanded="false" aria-haspopup="listbox" aria-owns="roleId_list" aria-autocomplete="list" aria-controls="roleId_list" aria-activedescendant="roleId_list_0" readonly="" unselectable="on" value="" style="opacity: 0;"></span><span class="ant-select-selection-item" title="Admin">แอดมิน</span></div><span class="ant-select-arrow" unselectable="on" aria-hidden="true" style="user-select: none;"><span role="img" aria-label="down" class="anticon anticon-down ant-select-suffix"><svg viewBox="64 64 896 896" focusable="false" data-icon="down" width="1em" height="1em" fill="currentColor" aria-hidden="true">
-                                                                    <path d="M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z"></path>
-                                                                </svg></span></span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="ant-row ant-form-item own-custom-form-field normal-offset medium-offset ant-form-item-has-success" style="row-gap: 0px;">
-                                        <div class="ant-col ant-form-item-label"><label for="phoneNumber" class="" title="Phone Number">หมายเลขโทรศัพท์</label></div>
-                                        <div class="ant-col ant-form-item-control">
-                                            <div class="ant-form-item-control-input">
-                                                <div class="ant-form-item-control-input-content">
-                                                    <div class=" react-tel-input">
-                                                        <div class="special-label">โทรศัพท์</div><input class="ant-input form-control" placeholder="+1(222)333-44-55" type="tel" value="">
-                                                        <div class=" flag-dropdown">
-                                                            <div class="selected-flag" title="" tabindex="0" role="button" aria-haspopup="listbox">
-                                                                <div class="flag 0">
-                                                                    <div class="arrow"></div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                    <div class="ant-modal-footer">
+                                        <button type="button" class="ant-btn ant-btn-secondary" id="cancelEditUserProfile" ant-click-animating-without-extra-node="false">
+                                            <span>ยกเลิก</span>
+                                        </button>
+                                        <button type="submit" class="ant-btn ant-btn-primary locations--btn-primary">
+                                            <span>ยืนยัน</span>
+                                        </button>
                                     </div>
                                 </form>
                             </div>
-                            <div class="ant-modal-footer"><button type="button" class="ant-btn ant-btn-secondary" id="cancelEditUserProfile" ant-click-animating-without-extra-node="false"><span>Cancel</span></button><button type="button" class="ant-btn ant-btn-primary locations--btn-primary"><span>Save</span></button></div>
                         </div>
                         <div tabindex="0" aria-hidden="true" style="width: 0px; height: 0px; overflow: hidden; outline: none;"></div>
                     </div>
@@ -255,11 +230,11 @@
                                 <form class="ant-form ant-form-horizontal">
                                     <div class="password-input-component">
                                         <div class="ant-row ant-form-item normal-offset" style="row-gap: 0px;">
-                                            <div class="ant-col ant-form-item-label"><label for="currentPass" class="ant-form-item-required" title="Current password">รหัสผ่านปัจจุบัน</label></div>
+                                            <div class="ant-col ant-form-item-label"><label for="currentPass" class="ant-form-item-required font-prompt" title="Current password">รหัสผ่านปัจจุบัน</label></div>
                                             <div class="ant-col ant-form-item-control">
                                                 <div class="ant-form-item-control-input">
-                                                    <div class="ant-form-item-control-input-content"><span class="ant-input-affix-wrapper"><span class="ant-input-prefix"><span class="linearicon linearicon-lock undefined"></span></span><input maxlength="200" type="password" placeholder="Enter current password" id="currentPass" class="ant-input"><span class="ant-input-suffix">
-                                                                <div><span class="linearicon linearicon-eye undefined"></span></div>
+                                                    <div class="ant-form-item-control-input-content"><span class="ant-input-affix-wrapper"><span class="ant-input-prefix"><span class="linearicon linearicon-lock"></span></span><input type="text" placeholder="ใส่รหัสผ่านปัจจุบัน" id="currentPass" class="ant-input font-prompt"><span class="ant-input-suffix">
+                                                                <div><span class="linearicon"></span></div>
                                                             </span></span></div>
                                                 </div>
                                             </div>
@@ -267,22 +242,15 @@
                                     </div>
                                     <div class="password-input-component">
                                         <div class="ant-row ant-form-item normal-offset" style="row-gap: 0px;">
-                                            <div class="ant-col ant-form-item-label"><label for="newPass" class="ant-form-item-required" title="New Password">รหัสผ่านใหม่</label></div>
+                                            <div class="ant-col ant-form-item-label"><label for="newPass" class="ant-form-item-required font-prompt" title="New Password">รหัสผ่านใหม่</label></div>
                                             <div class="ant-col ant-form-item-control">
                                                 <div class="ant-form-item-control-input">
-                                                    <div class="ant-form-item-control-input-content"><span class="ant-input-affix-wrapper"><span class="ant-input-prefix"><span class="linearicon linearicon-lock undefined"></span></span><input maxlength="200" type="password" placeholder="Input your new password" id="newPass" class="ant-input"><span class="ant-input-suffix">
-                                                                <div><span class="linearicon linearicon-eye undefined"></span></div>
+                                                    <div class="ant-form-item-control-input-content"><span class="ant-input-affix-wrapper"><span class="ant-input-prefix"><span class="linearicon linearicon-lock"></span></span><input type="password" placeholder="ใส่รหัสผ่านใหม่" id="newPass" class="ant-input font-prompt"><span class="ant-input-suffix">
+                                                                <div><span class="linearicon"></span></div>
                                                             </span></span></div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="weakness-meter">
-                                            <div class="weakness-meter-grey"></div>
-                                            <div class="weakness-meter-grey"></div>
-                                            <div class="weakness-meter-grey"></div>
-                                            <div class="weakness-meter-grey"></div>
-                                        </div>
-                                        <div class="weakness-text"></div>
                                     </div>
                                 </form>
                             </div>

@@ -52,7 +52,7 @@
     </style>
 </head>
 
-<body style="overflow-y:auto;">
+<body>
     <div class="content">
         <div id="app">
             @if(Auth::check())

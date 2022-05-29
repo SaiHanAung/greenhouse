@@ -64,6 +64,14 @@
                                         $('#cancelEditPlotForm').click(function() {
                                             $('.edit-plot').hide();
                                         });
+
+                                        $('#openFormEditPlotOnMobile').click(function() {
+                                            $('.edit-plot-mobile').show();
+                                        });
+                                        $('#cancelEditPlotFormOnMobile').click(function() {
+                                            $('.edit-plot-mobile').hide();
+                                        });
+
                                     });
                                 </script>
                                 <div id="id01" class="modal">
@@ -192,11 +200,13 @@
                                 <script>
                                     // Get the modal
                                     var modal = document.getElementById('id01');
+                                    var delete_plot_mobile = document.getElementById('delete-plot-mobile');
 
                                     // When the user clicks anywhere outside of the modal, close it
                                     window.onclick = function(event) {
-                                        if (event.target == modal) {
+                                        if (event.target == modal || event.target == delete_plot_mobile) {
                                             modal.style.display = "none";
+                                            delete_plot_mobile.style.display = "none";
                                         }
                                     }
                                 </script>
