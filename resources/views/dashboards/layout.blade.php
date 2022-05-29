@@ -143,8 +143,8 @@
                 </div>
                 @endif
                 @foreach($get_host_topic as $keyht => $valueht)
-                <input id="input_host" type="hidden" value="{{$valueht->host}}">
-                <input id="input_topic" type="hidden" value="{{$valueht->topic_send}}">
+                <input id="input_host_mobile" type="hidden" value="{{$valueht->host}}">
+                <input id="input_topic_mobile" type="hidden" value="{{$valueht->topic_send}}">
                 @endforeach
                 <div class="row">
                     <div class="col-1"></div>
@@ -284,6 +284,7 @@
 
     <script>
         var host = document.getElementById("input_host").value
+        var host = document.getElementById("input_host_mobile").value
         var port = 8000;
         var x = Math.floor(Math.random() * 10000);
         var cname = "controlform-" + x;
@@ -298,6 +299,7 @@
         function onConnect() {
             message = new Paho.MQTT.Message("0");
             message.destinationName = document.getElementById("input_topic").value
+            message.destinationName = document.getElementById("input_topic_mobile").value
             client.subscribe(message.destinationName);
             client.send(message) // publish message
         }

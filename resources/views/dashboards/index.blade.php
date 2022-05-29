@@ -2,13 +2,8 @@
 
 @section('content')
 
-<div class="user-layout-right-content user-layout-right-content-fold font-prompt">
+<div class="user-layout-right-content user-layout-right-content-fold font-prompt"> 
     <div class="main-layout products-container">
-        <style>
-            .fix-strcoll {
-                position: fixed;
-            }
-        </style>
         <div class="main-layout--header" style="border-bottom-color:#49cea1;">
             <div class="main-layout--header-name font-prompt">แปลง : {{$value_name_sub}}</div>
             <div class="main-layout--header-options">
