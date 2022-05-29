@@ -98,13 +98,10 @@
                         </button>
                         <span class="switch-label">โหมดมืด</span> -->
                     </div>
-                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                        @csrf
-                        <a class="ant-btn settings-user-header__logout-button" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                            <span class="linearicon linearicon-exit undefined"></span>
-                            <span> ออกจากระบบ</span>
-                        </a>
-                    </form>
+                    <a class="ant-btn" href="{{ route('logout.perform') }}">
+                        <span class="linearicon linearicon-exit"></span>
+                        <span> ออกจากระบบ</span>
+                    </a>
                 </div>
                 <div></div>
                 <div></div>

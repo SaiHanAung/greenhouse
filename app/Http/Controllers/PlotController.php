@@ -21,14 +21,15 @@ class PlotController extends Controller
 
         $data = DB::table('plots')->get();
 
-        $userID = Auth::user()->id;
+        // $userID = Auth::user()->id;
 
-        $get_data_plot = DB::table('plots')
-            ->select('id', 'name', 'host', 'topic_send', 'topic_sub', 'description','img_name', 'file_path')
-            ->where('user_id', '=', $userID)->get();
+        // $get_data_plot = DB::table('plots')
+        //     ->select('id', 'name', 'host', 'topic_send', 'topic_sub', 'description','img_name', 'file_path')
+        //     ->where('user_id', '=', $userID)->get();
         
         // dd($get_data_plot);
-        return view('plots.index', compact('data', 'get_data_plot'));
+        // return view('plots.index', compact('data', 'get_data_plot'));
+        return view('plots.index', compact('data'));
                 // ->with('i', (request()->input('page', 1) - 1) * 5);
     }
 
@@ -96,23 +97,19 @@ class PlotController extends Controller
      * @param  \App\Plot  $plot
      * @return \Illuminate\Http\Response
      */
-    public function show(Plot $plot)
+    public function show($datas)
     {
         //
         // $data = Plot::first()->paginate(10);
         $userID = Auth::user()->id;
 
         $get_data_plot = DB::table('plots')
-            ->select('id', 'name', 'host', 'topic_send', 'description')
+            ->select('id', 'name', 'host', 'topic_send', 'topic_sub', 'description','img_name', 'file_path')
             ->where('user_id', '=', $userID)->get();
+            foreach($get_data_plot as $key_data_plot => $value_data_plot){}
 
-        foreach($get_data_plot as $keydp => $valuedp){}
-        foreach($plot as $keypid => $valuepid){}
-        $tracUrl = "http://127.0.0.1:8000/traceability/".$plot->id;
-        $qrcode = "https://chart.googleapis.com/chart?cht=qr&chl=".$tracUrl."&chs=180x180&choe=UTF-8";
-
-        // dd($qrcode);
-        return view('plots.show', compact('plot', 'get_data_plot', 'qrcode'));
+        // dd($value_data_plot);
+        return view('settings.index', compact('datas', 'get_data_plot','value_data_plot'));
     }
 
     /**

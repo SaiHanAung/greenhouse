@@ -12,7 +12,7 @@
                         <label class="nav-link clearfont active" style="color: #49cea1;border-color: #49cea1;border-bottom-color:transparent;">แผงควบคุม</label>
                         <button class="nav-link"><a href="{{ route('savenote.index', $datas) }}" class="clearfonts">จดบันทึก</a></button>
                         <!-- <button class="nav-link"><a href="{{ route('report.index', $datas) }}" class="clearfonts">รายงาน</a></button> -->
-                        <button class="nav-link"><a href="{{ route('plots.show', $datas) }}" class="clearfonts">ตั้งค่า</a></button>
+                        <button class="nav-link"><a href="{{ route('setting.index', $datas) }}" class="clearfonts">ตั้งค่า</a></button>
                         <button class="nav-link"><a href="{{ route('qrcode.index', $datas) }}" class="clearfonts">QR Code</a></button>
                     </div>
                 </nav>
@@ -150,6 +150,9 @@
                                 <div class="ant-form-item-control-input">
                                     <div class="ant-select ant-select-single">
                                         <select class="ant-select-selector font-prompt" name="port" required>
+                                            <option class="special" value="soc_0">
+                                                <span class="">soc 0</span>
+                                            </option>
                                             <option class="special" value="soc_1">
                                                 <span class="">soc 1</span>
                                             </option>
@@ -191,6 +194,7 @@
         </div>
     </form>
 </div>
+
 <script>
     $(document).ready(function() {
         $('#openFormCreateSwitch').click(function() {

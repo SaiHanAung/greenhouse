@@ -19,6 +19,11 @@ function myFunction(id) {
         });
 
         function onConnect() {
+            if (valueS == 'soc_0') {
+                message = new Paho.MQTT.Message('{"soc":0,"status":0}');
+                message.destinationName = document.getElementById("input_topic").value;
+                client.send(message); // publish message
+            }
             if (valueS == 'soc_1') {
                 message = new Paho.MQTT.Message('{"soc":1,"status":0}');
                 message.destinationName = document.getElementById("input_topic").value;
@@ -54,11 +59,6 @@ function myFunction(id) {
                 message.destinationName = document.getElementById("input_topic").value;
                 client.send(message); // publish message
             }
-            if (valueS == 'soc_8') {
-                message = new Paho.MQTT.Message('{"soc":8,"status":0}');
-                message.destinationName = document.getElementById("input_topic").value;
-                client.send(message); // publish message
-            }
         }
     }
 
@@ -71,6 +71,11 @@ function myFunction(id) {
         });
 
         function onConnect() {
+            if (valueS == 'soc_0') {
+                message = new Paho.MQTT.Message('{"soc":0,"status":1}');
+                message.destinationName = document.getElementById("input_topic").value;
+                client.send(message); // publish message
+            }
             if (valueS == 'soc_1') {
                 message = new Paho.MQTT.Message('{"soc":1,"status":1}');
                 message.destinationName = document.getElementById("input_topic").value;
@@ -103,11 +108,6 @@ function myFunction(id) {
             }
             if (valueS == 'soc_7') {
                 message = new Paho.MQTT.Message('{"soc":7,"status":1}');
-                message.destinationName = document.getElementById("input_topic").value;
-                client.send(message); // publish message
-            }
-            if (valueS == 'soc_8') {
-                message = new Paho.MQTT.Message('{"soc":8,"status":1}');
                 message.destinationName = document.getElementById("input_topic").value;
                 client.send(message); // publish message
             }

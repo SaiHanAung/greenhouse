@@ -84,6 +84,8 @@ Route::get('/plots/{datas}/report', 'ReportController@index')->name('report.inde
 
 Route::get('/plots/{datas}/qrcode', 'QrcodeController@index')->name('qrcode.index');
 
+Route::get('/plots/{datas}/setting', 'SettingController@index')->name('setting.index');
+
 Route::get('/plots/{datas}/dashboard/info', 'DashboardController@index')->name('dashboard.index');
 Route::get('/plots/{datas}/dashboard/autorun', 'AutorunController@index')->name('autorun.index');
 Route::get('/plots/{datas}/dashboard/autorun/show', 'AutorunController@show')->name('autorun.show');

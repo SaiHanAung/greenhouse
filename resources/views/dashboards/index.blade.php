@@ -17,7 +17,7 @@
                         <label class="nav-link clearfont active" style="color: #49cea1;border-color: #49cea1;border-bottom-color:transparent;">แผงควบคุม</label>
                         <button class="nav-link"><a href="{{ route('savenote.index', $datas) }}" class="clearfonts">จดบันทึก</a></button>
                         <!-- <button class="nav-link"><a href="{{ route('report.index', $datas) }}" class="clearfonts">รายงาน</a></button> -->
-                        <button class="nav-link"><a href="{{ route('plots.show', $datas) }}" class="clearfonts">ตั้งค่า</a></button>
+                        <button class="nav-link"><a href="{{ route('setting.index', $datas) }}" class="clearfonts">ตั้งค่า</a></button>
                         <button class="nav-link"><a href="{{ route('qrcode.index', $datas) }}" class="clearfonts">QR Code</a></button>
                     </div>
                 </nav>
@@ -76,43 +76,23 @@
                             <div class="settings-user-content"></div>
 
                             <div class="row">
-                                <div class="col-md-8">
+                                <div class="col-md-4">
                                     <div class="row">
-                                        <div class="col-sm-6">
-                                            <div class="width-border">
-                                                <h4 class="m-4 font-prompt">อุณหภูมิ</h4>
+                                        <div class="col-sm-12">
+                                            <div class="width-border ">
+                                                <h4 class="m-4 font-prompt">ค่าใช้จ่าย</h4>
                                                 <div class="row">
-                                                    <div class="center">
-                                                        <img src="/imgs/temperature.png" width="20%" alt="icon">
+                                                    <div class="col-sm-12">
+                                                        <div class="chart-container">
+                                                            <div class="chart has-fixed-height" id="pie_basic" style="margin-bottom: 1rem; margin-top: -5rem;"></div>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                                <div class="row">
-                                                    <div class="center">
-                                                        <h3 class="mt-2 font-prompt" id="temp">0.0 ํC</h3>
-                                                    </div>
-                                                </div>
-                                                <span class="m-4 font-prompt" id="date-time-temp">อัพเดทล่าสุด : 00/00/0000 00:00:00</span>
-                                                <p></p>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <div class="width-border">
-                                                <h4 class="m-4 font-prompt">ความชื้นในอากาศ</h4>
-                                                <div class="row">
-                                                    <div class="center">
-                                                        <img src="/imgs/wind.png" width="20%" alt="icon">
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="center">
-                                                        <h3 class="mt-2 font-prompt" id="humid">0.0 %</h3>
-                                                    </div>
-                                                </div>
-                                                <span class="m-4 font-prompt" id="date-time-humid">อัพเดทล่าสุด : 00/00/0000 00:00:00</span>
-                                                <p></p>
                                             </div>
                                         </div>
                                     </div>
+                                </div>
+                                <div class="col-md-8">
                                     <div class="row">
                                         <div class="col-sm-12">
                                             <div class="width-border" style="font-size: medium;">
@@ -147,19 +127,39 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="col-md-4">
                                     <div class="row">
-                                        <div class="col-sm-12">
-                                            <div class="width-border ">
-                                                <h4 class="m-4 font-prompt">ค่าใช้จ่าย</h4>
+                                        <div class="col-sm-6">
+                                            <div class="width-border">
+                                                <h4 class="m-4 font-prompt">อุณหภูมิ</h4>
                                                 <div class="row">
-                                                    <div class="col-sm-12">
-                                                        <div class="chart-container">
-                                                            <div class="chart has-fixed-height" id="pie_basic" style="margin-bottom: 1rem; margin-top: -5rem;"></div>
-                                                        </div>
+                                                    <div class="center">
+                                                        <img src="/imgs/temperature.png" width="20%" alt="icon">
                                                     </div>
                                                 </div>
+                                                <div class="row">
+                                                    <div class="center">
+                                                        <h3 class="mt-2 font-prompt" id="temp">0.0 ํC</h3>
+                                                    </div>
+                                                </div>
+                                                <span class="m-4 font-prompt" id="date-time-temp">อัพเดทล่าสุด : 00/00/0000 00:00:00</span>
+                                                <p></p>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="width-border">
+                                                <h4 class="m-4 font-prompt">ความชื้นในอากาศ</h4>
+                                                <div class="row">
+                                                    <div class="center">
+                                                        <img src="/imgs/wind.png" width="20%" alt="icon">
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="center">
+                                                        <h3 class="mt-2 font-prompt" id="humid">0.0 %</h3>
+                                                    </div>
+                                                </div>
+                                                <span class="m-4 font-prompt" id="date-time-humid">อัพเดทล่าสุด : 00/00/0000 00:00:00</span>
+                                                <p></p>
                                             </div>
                                         </div>
                                     </div>

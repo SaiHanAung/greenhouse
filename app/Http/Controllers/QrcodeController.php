@@ -26,19 +26,13 @@ class QrcodeController extends Controller
             }
         }
 
-        $userID = Auth::user()->id;
-
-        $get_data_plot = DB::table('plots')
-            ->select('id', 'name', 'host', 'topic_send', 'description')
-            ->where('user_id', '=', $userID)->get();
-
+        // $tracUrl ถ้าจะนำไปใช้กับเว็บอื่น ให้เปลี่ยนโดเมนเนม  **ตรง( /traceability/" . $datas )ไม่ต้องเปลี่่ยน
         $tracUrl = "https://app-greenhouse-project.herokuapp.com/traceability/" . $datas;
         $qrcode = "https://chart.googleapis.com/chart?cht=qr&chl=" . $tracUrl . "&chs=360x360&choe=UTF-8";
 
         return view('qrcodes.index', compact(
             'value_name_sub',
             'datas',
-            'get_data_plot',
             'qrcode'
         ));
     }

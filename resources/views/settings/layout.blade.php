@@ -6,16 +6,23 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <link rel="icon" type="image/x-icon" href="{{ asset('imgs/green-house.png') }}">
     <title>Green House</title>
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> -->
+    <link href="{{ asset('css/spacing.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/switch.css') }}" rel="stylesheet">
 
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link href="{{ asset('css/light-bootstrap-dashboard.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/deleteModal.css') }}" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link href="{{ asset('css/waiting_loading_page.css') }}" rel="stylesheet">
-
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <link href="{{ asset('css/spacing.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/light-bootstrap-dashboard.css') }}" rel="stylesheet">
     <link href="{{ asset('css/plot/tab.css') }}" rel="stylesheet">
     <link href="{{ asset('css/sidenave.css') }}" rel="stylesheet">
+
+    <script src="{{ asset('js/ajax.js') }}"></script>
+
+    <link href="{{ asset('/css/731bfdf3d0cb0f734453.css') }}" rel="stylesheet">
+    <link href="{{ asset('/css/ab3606d21984a57939eb.css') }}" rel="stylesheet">
     <script>
         function slider(x) {
             document.getElementById("mySidenav").classList.toggle("open");
@@ -27,13 +34,6 @@
             });
         });
     </script>
-
-    <script src="{{ asset('js/ajax.js') }}"></script>
-
-    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400&display=swap" rel="stylesheet">
-    <link href="{{ asset('/css/731bfdf3d0cb0f734453.css') }}" rel="stylesheet">
-    <link href="{{ asset('/css/ab3606d21984a57939eb.css') }}" rel="stylesheet">
-
     <style>
         body {
             font-family: 'Prompt', sans-serif;
@@ -46,6 +46,7 @@
 </head>
 
 <body>
+
     <div class="content">
         <div id="app">
             @if(Auth::check())
@@ -89,8 +90,8 @@
                     <ul>
                         <li style="list-style-type: none;"><a href="{{ route('dashboard.index', $datas) }}" class="font-prompt">แผงควบคุม</a></li>
                         <li style="list-style-type: none;"><a href="{{ route('savenote.index', $datas) }}" class="font-prompt">จดบันทึก</a></li>
-                        <li style="list-style-type: none;"><a href="{{ route('setting.index', $datas) }}" class="font-prompt">ตั้งค่า</a></li>
-                        <li style="list-style-type: none;"><a href="javascript:void(0)" style="color: #49cea1;" class="font-prompt">QR Code</a></li>
+                        <li style="list-style-type: none;"><a href="javascript:void(0)" style="color: #49cea1;" class="font-prompt">ตั้งค่า</a></li>
+                        <li style="list-style-type: none;"><a href="{{ route('qrcode.index', $datas) }}" class="font-prompt">QR Code</a></li>
                     </ul>
                     <a href="{{ route('profile') }}" class="font-prompt">โปรไฟล์</a>
                     <a href="{{ route('logout.perform') }}" class="font-prompt">ออกจากระบบ</a>
@@ -108,19 +109,144 @@
                             </span>
                         </div>
                         <div class="col-6">
-                            <label class="font-prompt vertical-center"><strong id="plotName" style="font-size: x-large;font-weight:bolder;"> แปลง : {{$value_name_sub}}</strong></label>
+                            <label class="font-prompt vertical-center"><strong id="plotName" style="font-size: x-large;font-weight:bolder;"> แปลง : {{$value_data_plot->name}}</strong></label>
                         </div>
                     </div>
                 </div>
                 <div class="row" style="margin: -0.5em 0 2em 0;">
-                    <hr class="mt-3">
-                    <img src="{{ $qrcode }}" alt="QrCode">
-                    <center>
-                        <a class="bt-create-farm-record font-prompt p-3" href="{{ route('downloadPDF', $datas)}}">ดาวน์โหลด QR Code</a>
-                        <input id="url" name="url" type="hidden" value="{{ $qrcode }}">
-                    </center>
+                    <hr>
+                    <div class="bt-last">
+                        <button class="bt-edit-farm-record btn-sm mr-2" id="openFormEditPlotOnMobile">แก้ไข</button>
+                        <button type="button" onclick="document.getElementById('id01').style.display='block'" class="bt-delete-farm-record btn-sm">ลบแปลง</button>
+                    </div>
+                    <div class="col-1 mt-3">&nbsp;</div>
+                    <div class="col-10 mt-3">
+                        <div class="width-border p-3">
+                            <div class="row">
+                                <label class="mb-2" style="font-size:large;"><strong>Host : </strong><span style="font-size: medium;">{{ $value_data_plot->host }}</span></label>
+                            </div>
+                            <div class="row">
+                                <label class="mb-2" style="font-size:large;"><strong>Topic send : </strong><span style="font-size: medium;">{{ $value_data_plot->topic_send }}</span></label>
+                            </div>
+                            <div class="row">
+                                <label class="mb-2" style="font-size:large;"><strong>Topic sub : </strong><span style="font-size: medium;">{{ $value_data_plot->topic_sub }}</span></label>
+                            </div>
+                            <div class="row">
+                                <label style="font-size:large;"><strong>คำอธิบาย : </strong><span style="font-size: medium;">{{ $value_data_plot->description }}</span></label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-1 mt-3">&nbsp;</div>
                 </div>
             </div>
+
+            <div class="ant-modal-root-1" style="display: none;">
+                <form action="{{ route('plots.store') }}" method="POST" enctype="multipart/form-data">
+                    <div class="ant-modal-mask"></div>
+                    <div class="ant-modal-wrap ant-modal-centered">
+                        <div class="ant-modal">
+                            <div class="ant-modal-content">
+                                <div class="ant-modal-header">
+                                    <div class="font-prompt" style="font-size: x-large;">สร้างแปลงใหม่</div>
+                                </div>
+                                <div class="ant-modal-body">
+                                    @csrf
+
+                                    <div class="ant-row" style="margin-left: -4px; margin-right: -4px; row-gap: 0px;">
+                                        <div class="ant-col ant-col-12" style="padding-left: 4px; padding-right: 4px;">
+                                            <div class="ant-row ant-form-item normal-offset undefined" style="row-gap: 0px;">
+                                                <label class="font-prompt">ชื่อ</label>
+                                                <div class="ant-col ant-form-item-control">
+                                                    <div class="ant-form-item-control-input">
+                                                        <div class="ant-form-item-control-input-content">
+                                                            <input type="text" name="name" class="ant-input font-prompt" value="" placeholder="ชื่อแปลง" required autofocus>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="ant-col ant-col-12" style="padding-left: 4px; padding-right: 4px;">
+                                            <div class="ant-row ant-form-item normal-offset undefined">
+                                                <label class="font-prompt">Host</label>
+                                                <div class="ant-col ant-form-item-control">
+                                                    <div class="ant-form-item-control-input">
+                                                        <div class="ant-form-item-control-input-content">
+                                                            <input type="text" name="host" class="ant-input font-prompt" value="" placeholder="Host ผู้ให้บริการ" required>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="ant-row" style="margin-left: -4px; margin-right: -4px; row-gap: 0px;">
+                                        <div class="ant-col ant-col-12" style="padding-left: 4px; padding-right: 4px;">
+                                            <div class="ant-row ant-form-item normal-offset undefined" style="row-gap: 0px;">
+                                                <label class="font-prompt">Topic send</label>
+                                                <div class="ant-col ant-form-item-control">
+                                                    <div class="ant-form-item-control-input">
+                                                        <div class="ant-form-item-control-input-content">
+                                                            <input type="text" name="topic_send" class="ant-input font-prompt" value="" placeholder="Topic ผู้ให้บริการ" required>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="ant-col ant-col-12" style="padding-left: 4px; padding-right: 4px;">
+                                            <div class="ant-row ant-form-item normal-offset undefined">
+                                                <label class="font-prompt">Topic sub</label>
+                                                <div class="ant-col ant-form-item-control">
+                                                    <div class="ant-form-item-control-input">
+                                                        <div class="ant-form-item-control-input-content">
+                                                            <input type="text" name="topic_sub" class="ant-input font-prompt" value="" placeholder="Topic ผู้ให้บริการ" required>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="ant-row" style="margin-left: -4px; margin-right: -4px; row-gap: 0px;">
+                                        <div class="ant-col ant-col-12" style="padding-left: 4px; padding-right: 4px;">
+                                            <div class="ant-row ant-form-item normal-offset undefined" style="row-gap: 0px;">
+                                                <label class="font-prompt">รูปภาพ</label>
+                                                <div class="ant-col ant-form-item-control">
+                                                    <div class="ant-form-item-control-input">
+                                                        <div class="ant-form-item-control-input-content">
+                                                            <input class="font-prompt" type="file" name="file" required>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="ant-row ant-form-item large-offset">
+                                        <label class="font-prompt">รายละเอียด</label>
+                                        <div class="ant-col ant-form-item-control">
+                                            <div class="ant-form-item-control-input">
+                                                <div class="ant-form-item-control-input-content">
+                                                    <textarea type="text" rows="5" name="description" class="font-prompt ant-input @error('description') is-invalid @enderror" placeholder="บอกรายละเอียดของแปลงนี้สักหน่อยสิ..." required></textarea>
+                                                    @error('description')
+                                                    <div class="alert alert-danger">{{ $message }}</div>
+                                                    @enderror
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
+                                    <div class="ant-modal-footer">
+                                        <button type="button" id="cancelNewfarmForm" class="ant-btn ant-btn-secondary">
+                                            <span class="font-prompt">ยกเลิก</span>
+                                        </button>
+                                        <button type="submit" class="ant-btn ant-btn-primary">
+                                            <span class="font-prompt">ยืนยัน</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
 
             @else
 
@@ -157,34 +283,21 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.min.js"></script>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.min.js"></script>
 
     <script>
         $(window).on("load", function() {
             $(".loader-wrapper").fadeOut("slow");
         });
     </script>
-    <script>
-        var urls = document.getElementById('url').value;
 
-        function download() {
-            axios({
-                    url: urls,
-                    method: 'GET',
-                    responseType: 'blob'
-                })
-                .then((response) => {
-                    const url = window.URL
-                        .createObjectURL(new Blob([response.data]));
-                    const link = document.createElement('a');
-                    link.href = url;
-                    link.setAttribute('download', 'QrCode.jpg');
-                    document.body.appendChild(link);
-                    link.click();
-                })
-        }
+    <script>
+        setTimeout(function() {
+            $('#alert').alert('close');
+        }, 3000);
     </script>
+
 </body>
 
 </html>

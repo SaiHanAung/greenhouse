@@ -2,14 +2,18 @@
 
 @section('content')
 
-<style>
-    /* @media only screen and (max-width: 576px) {
-        .button {
-            width: 100%;
-        }
-    } */
-</style>
+@guest
+@if (Route::has('register'))
 
+@endif
+@else
+<?php
+$userID = Auth::user()->id;
+
+$get_data_plot = DB::table('plots')
+    ->select('id', 'name', 'host', 'topic_send', 'topic_sub', 'description','img_name', 'file_path')
+    ->where('user_id', '=', $userID)->get();
+?>
 <div class="user-layout-right-content user-layout-right-content-fold">
     <div></div>
     <div class="main-layout products-container">
@@ -41,8 +45,7 @@
                         $('#cancelNewfarmForm').click(function() {
                             $('.ant-modal-root-1').hide();
                         });
-                    });
-                    $(document).ready(function() {
+                        
                         $('#openFormEditPlot').click(function() {
                             $('.edit-plot').show();
                         });
@@ -89,7 +92,5 @@
     </div>
 </div>
 
-
-
-
+@endguest
 @endsection

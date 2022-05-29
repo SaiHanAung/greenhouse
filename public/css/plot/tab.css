@@ -261,6 +261,20 @@
     border-radius: 5px;
 }
 
+.bt-w-bg {
+    background-color: #fff;
+    border: 1px solid #24C48E;
+    color: #000;
+    font-size: 18px;
+}
+
+.bt-green {
+    background-color: #24C48E;
+    border: 1px solid #24C48E;
+    color: #fff;
+    font-size: 18px;
+}
+
 .bt-create-farm-record {
     background-color: #24C48E;
     border: 1px solid #24C48E;

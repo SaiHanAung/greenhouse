@@ -16,6 +16,18 @@
     <link href="{{ asset('css/light-bootstrap-dashboard.css') }}" rel="stylesheet">
     <link href="{{ asset('css/deleteModal.css') }}" rel="stylesheet">
     <link href="{{ asset('css/plot/tab.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/sidenave.css') }}" rel="stylesheet">
+    <script>
+        function slider(x) {
+            document.getElementById("mySidenav").classList.toggle("open");
+            x.classList.toggle("change");
+        }
+        $(document).ready(function() {
+            $('div.container').click(function() {
+                $('#plotName').toggle(300);
+            });
+        });
+    </script>
 
     <!-- CSS & JS Pie charts -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -44,7 +56,7 @@
     <div class="content">
         <div id="app">
             @if(Auth::check())
-            <div style="height: 100vh;">
+            <div class="main-plot" style="height: 100vh;">
                 <div class="layout">
                     <div></div>
                     <div></div>
@@ -78,6 +90,160 @@
                 </div>
             </div>
 
+            <div class="side-mobile">
+                <div id="mySidenav" class="sidenav">
+                    <a href="{{ route('plots.index') }}" class="font-prompt">จัดการฟาร์ม</a>
+                    <ul>
+                        <li style="list-style-type: none;"><a href="javascript:void(0)" style="color: #49cea1;" class="font-prompt">แผงควบคุม</a></li>
+                        <li style="list-style-type: none;"><a href="{{ route('savenote.index', $datas) }}" class="font-prompt">จดบันทึก</a></li>
+                        <li style="list-style-type: none;"><a href="{{ route('setting.index', $datas) }}" class="font-prompt">ตั้งค่า</a></li>
+                        <li style="list-style-type: none;"><a href="{{ route('qrcode.index', $datas) }}" class="font-prompt">QR Code</a></li>
+                    </ul>
+                    <a href="{{ route('profile') }}" class="font-prompt">โปรไฟล์</a>
+                    <a href="{{ route('logout.perform') }}" class="font-prompt">ออกจากระบบ</a>
+                </div>
+
+                <div id="main" style="position:relative;">
+                    <div class="row">
+                        <div class="col-6">
+                            <span style="cursor:pointer;">
+                                <div class="container" onclick="slider(this)" style="width:fit-content;">
+                                    <div class="bar1-x"></div>
+                                    <div class="bar2-x"></div>
+                                    <div class="bar3-x"></div>
+                                </div>
+                            </span>
+                        </div>
+                        <div class="col-6">
+                            <label class="font-prompt vertical-center"><strong id="plotName" style="font-size: x-large;font-weight:bolder;"> แปลง : {{$value_name_sub}}</strong></label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" style="margin: -0.5em 0 2em 0;">
+                    <hr>
+                    <div class="col-3">
+                        <a href="javascript:void(0)" class="bt-green font-prompt btn-sm" style="font-size: medium;">
+                            โดยรวม
+                        </a>
+                    </div>
+                    <div class="col-3">
+                        <a href="{{ route('dashboard.switch', $datas) }}" class="bt-w-bg btn-sm font-prompt" style="color: #000; font-size: medium;">สวิตซ์</a>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <button  id="" class="bt-create-farm-record btn-sm" style="float:right;margin:-1em 1em 1em 0;">
+                            <span style="font-size: medium;">เริ่มปลูกใหม่</span>
+                        </button>
+                    </div>
+                </div>
+                @if ($message = Session::get('success'))
+                <div id="alert" class="alert alert-success">
+                    <span class="font-prompt" style="font-size: medium;">{{ $message }}</span>
+                </div>
+                @endif
+                @foreach($get_host_topic as $keyht => $valueht)
+                <input id="input_host" type="hidden" value="{{$valueht->host}}">
+                <input id="input_topic" type="hidden" value="{{$valueht->topic_send}}">
+                @endforeach
+                <div class="row">
+                    <div class="col-1"></div>
+                    <div class="col-10">
+                        <div class="width-border ">
+                            <h4 class="m-4 font-prompt">ค่าใช้จ่าย</h4>
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="chart-container">
+                                        <div class="chart has-fixed-height" id="pie_basic_mobile" style="margin-bottom: 1rem; margin-top: -5rem;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-1"></div>
+                </div>
+                <div class="row">
+                    <div class="col-1"></div>
+                    <div class="col-10">
+                        <div class="width-border" style="font-size: medium;">
+                            <div class="row">
+                                <div class="ml-4 mt-4">
+                                    <span>
+                                        <li>ลงทุนไปแล้ว
+                                            @if($check_tract_total_price == 0)
+                                            0
+                                            @else
+                                            {{$tract_total_price}}
+                                            @endif
+                                            บาท
+                                        </li>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="ml-4">
+                                    <span>
+                                        <li>คาดการณ์การเก็บเกี่ยววันที่</li>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="ml-4 mb-4">
+                                    <span>
+                                        <li>ขายได้ บาท</li>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-1"></div>
+                </div>
+                <div class="row">
+                    <div class="col-1"></div>
+                    <div class="col-10">
+                        <div class="width-border">
+                            <h4 class="m-4 font-prompt">อุณหภูมิ</h4>
+                            <div class="row">
+                                <div class="center">
+                                    <img src="/imgs/temperature.png" width="20%" alt="icon">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="center">
+                                    <h3 class="mt-2 font-prompt" id="temp_mobile">0.0 ํC</h3>
+                                </div>
+                            </div>
+                            <span class="m-4 font-prompt" id="date-time-temp-mobile">อัพเดทล่าสุด : 00/00/0000 00:00:00</span>
+                            <p></p>
+                        </div>
+                    </div>
+                    <div class="col-1"></div>
+                </div>
+                <div class="row">
+                    <div class="col-1"></div>
+                    <div class="col-10">
+                        <div class="width-border">
+                            <h4 class="m-4 font-prompt">ความชื้นในอากาศ</h4>
+                            <div class="row">
+                                <div class="center">
+                                    <img src="/imgs/wind.png" width="20%" alt="icon">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="center">
+                                    <h3 class="mt-2 font-prompt" id="humid_mobile">0.0 %</h3>
+                                </div>
+                            </div>
+                            <span class="m-4 font-prompt" id="date-time-humid-mobile">อัพเดทล่าสุด : 00/00/0000 00:00:00</span>
+                            <p></p>
+                        </div>
+                    </div>
+                    <div class="col-1"></div>
+                </div>
+            </div>
+
+            @else
+            
             @guest
             <div id="app">
                 <div style="height: 100vh;">
@@ -85,7 +251,7 @@
                         <div></div>
                         <div></div>
                         <div class="login-scene">
-                            <div class="login-logo-wrapper"><img class="login-logo" alt="LOGO" src="../imgs/green-house.png"></div>
+                            <div class="login-logo-wrapper"><img class="login-logo" alt="LOGO" src="/imgs/green-house.png"></div>
                             <div class="login-form-wrapper">
                                 <div class="alert alert-danger" role="alert">
                                     <strong>กรุณา</strong><a href="{{route('login') }}"> เข้าสู่ระบบ </a> ก่อนใช้งาน
@@ -100,45 +266,6 @@
             @endguest
 
             @endif
-
-            <!-- <div class="ant-modal-root-3-3" style="display: none;">
-                <form action="" method="POST">
-                    @csrf
-                    <div class="ant-modal-mask"></div>
-                    <div class="ant-modal-wrap ant-modal-centered">
-                        <div class="ant-modal">
-                            <div class="ant-modal-content">
-                                <div class="ant-modal-header">
-                                    <div class="ant-modal-title" style="font-size:large;font-weight:bolder;">ดึงข้อมูลจาก MQTT DASHBOARD</div>
-                                </div>
-                                <div class="ant-modal-body" id="FarmInputRecordTypeAndSourceShow">
-                                    <div class="ant-row ant-form-item ant-form-item-with-help own-custom-form-field normal-offset normal-offset ant-form-item-has-success" style="row-gap: 0px;">
-                                        <div class="font-prompt">ผลผลิต</div>
-                                        <div class="ant-col ant-form-item-control">
-                                            <div class="ant-form-item-control-input">
-                                                <div class="ant-form-item-control-input-content"><input name="product" type="text" class="ant-input" required></div>
-                                            </div>
-                                            <div class="ant-form-item-explain ant-form-item-explain-success">
-                                                <div role="alert" class="font-prompt">ใช้เฉพาะตัวอักษร, ยัติภังค์, จุด, และช่องว่าง</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="ant-row ant-form-item ant-form-item-with-help own-custom-form-field normal-offset normal-offset ant-form-item-has-success" style="row-gap: 0px;">
-                                        <div class="font-prompt">ปริมาณผลผลิตรวม</div>
-                                        <div class="ant-col ant-form-item-control">
-                                            <div class="ant-form-item-control-input">
-                                                <div class="ant-form-item-control-input-content"><input name="total_product" type="number" class="ant-input" required></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <input type="hidden" name="plot_id" value="{{$datas}}">
-                                </div>
-                                <div class="ant-modal-footer"><button type="button" class="ant-btn ant-btn-secondary" id="cancelOrganicProduceHarvestRecord" ant-click-animating-without-extra-node="false"><span>ยกเลิก</span></button><button type="submit" class="ant-btn ant-btn-primary"><span>ยืนยัน</span></button></div>
-                            </div>
-                        </div>
-                    </div>
-                </form>
-            </div> -->
         </div>
     </div>
 
@@ -186,11 +313,15 @@
             obj = eval("(function(){return " + msg + ";})()");
 
             document.getElementById("temp").innerHTML = obj.temp + " 'C";
+            document.getElementById("temp_mobile").innerHTML = obj.temp + " 'C";
             document.getElementById("humid").innerHTML = obj.humid + " %";
+            document.getElementById("humid_mobile").innerHTML = obj.humid + " %";
             
             if(obj.temp == undefined || obj.humid == undefined){
-                document.getElementById("temp").innerHTML = 'โหลดไม่สำเร็จ';
-                document.getElementById("humid").innerHTML = 'โหลดไม่สำเร็จ';
+                document.getElementById("temp").innerHTML = 'รอโหลด';
+                document.getElementById("temp_mobile").innerHTML = 'รอโหลด';
+                document.getElementById("humid").innerHTML = 'รอโหลด';
+                document.getElementById("humid_mobile").innerHTML = 'รอโหลด';
             }
             // document.getElementById("mqtt-value").innerHTML = msg;
             // console.log(msg);
@@ -203,92 +334,166 @@
                 const dateTime = now.toLocaleDateString() + ' ' + zeroFill(now.getHours()) + ':' + zeroFill(now.getMinutes()) + ':' + zeroFill(now.getSeconds());
 
                 document.getElementById("date-time-humid").innerHTML = "อัพเดทล่าสุด : " + dateTime;
+                document.getElementById("date-time-humid-mobile").innerHTML = "อัพเดทล่าสุด : " + dateTime;
                 document.getElementById('date-time-temp').innerHTML = "อัพเดทล่าสุด : " + dateTime;
+                document.getElementById('date-time-temp-mobile').innerHTML = "อัพเดทล่าสุด : " + dateTime;
 
             }, 1000);   
         }
-    </script>
 
+        // JS ECHART Pie chart
+        var pie_basic_element = document.getElementById('pie_basic');
+        if (pie_basic_element) {
+            var pie_basic = echarts.init(pie_basic_element);
+            pie_basic.setOption({
+                color: [
+                    '#2ec7c9','#b6a2de','#5ab1ef','#ffb980','#d87a80',
+                    '#8d98b3','#e5cf0d','#97b552','#95706d','#dc69aa',
+                    '#07a2a4','#9a7fd1','#588dd5','#f5994e','#c05050',
+                    '#59678c','#c9ab00','#7eb00a','#6f5553','#c14089'
+                ],          
+                
+                textStyle: {
+                    fontFamily: 'Prompt, sans-serif',
+                    fontSize: 15
+                },
+
+                title: {
+                    text: '',
+                    left: 'center',
+                    textStyle: {
+                        fontSize: 17,
+                        fontWeight: 500,
+                    },
+                    subtextStyle: {
+                        fontSize: 12
+                    }
+                },
+
+                tooltip: {
+                    trigger: 'item',
+                    backgroundColor: 'rgba(0,0,0,0.75)',
+                    padding: [10, 15],
+                    textStyle: {
+                        fontSize: 13,
+                        fontFamily: 'Roboto, sans-serif'
+                    },
+                    formatter: "{a} <br/>{b}: {c} บาท ({d}%)"
+                },
+
+                legend: {
+                    orient: 'horizontal',
+                    bottom: '0%',
+                    left: 'center',                   
+                    data: ['เมล็ด', 
+                    'ปุ๋ย',
+                    'ค่าแรง',
+                    'ค่าอื่นๆ'
+                ],
+                    itemHeight: 8,
+                    itemWidth: 8
+                },
+
+                series: [{
+                    name: 'ค่าใช้จ่าย',
+                    type: 'pie',
+                    radius: '70%',
+                    center: ['50%', '50%'],
+                    itemStyle: {
+                        normal: {
+                            borderWidth: 1,
+                            borderColor: '#fff'
+                        }
+                    },
+                    data: [
+                        {value: {{$seed}}, name: 'เมล็ด'},
+                        {value: {{$fertilizer}}, name: 'ปุ๋ย'},
+                        {value: {{$wage}}, name: 'ค่าแรง'},
+                        {value: {{$etc}}, name: 'ค่าอื่นๆ'}
+                    ]
+                }]
+            });
+        }
+    </script>
+    <script>
+        var pie_basic_element = document.getElementById('pie_basic_mobile');
+        if (pie_basic_element) {
+            var pie_basic = echarts.init(pie_basic_element);
+            pie_basic.setOption({
+                color: [
+                    '#2ec7c9','#b6a2de','#5ab1ef','#ffb980','#d87a80',
+                    '#8d98b3','#e5cf0d','#97b552','#95706d','#dc69aa',
+                    '#07a2a4','#9a7fd1','#588dd5','#f5994e','#c05050',
+                    '#59678c','#c9ab00','#7eb00a','#6f5553','#c14089'
+                ],          
+                
+                textStyle: {
+                    fontFamily: 'Prompt, sans-serif',
+                    fontSize: 15
+                },
+
+                title: {
+                    text: '',
+                    left: 'center',
+                    textStyle: {
+                        fontSize: 17,
+                        fontWeight: 500,
+                    },
+                    subtextStyle: {
+                        fontSize: 12
+                    }
+                },
+
+                tooltip: {
+                    trigger: 'item',
+                    backgroundColor: 'rgba(0,0,0,0.75)',
+                    padding: [10, 15],
+                    textStyle: {
+                        fontSize: 13,
+                        fontFamily: 'Roboto, sans-serif'
+                    },
+                    formatter: "{a} <br/>{b}: {c} บาท ({d}%)"
+                },
+
+                legend: {
+                    orient: 'horizontal',
+                    bottom: '0%',
+                    left: 'center',                   
+                    data: ['เมล็ด', 
+                    'ปุ๋ย',
+                    'ค่าแรง',
+                    'ค่าอื่นๆ'
+                ],
+                    itemHeight: 8,
+                    itemWidth: 8
+                },
+
+                series: [{
+                    name: 'ค่าใช้จ่าย',
+                    type: 'pie',
+                    radius: '70%',
+                    center: ['50%', '50%'],
+                    itemStyle: {
+                        normal: {
+                            borderWidth: 1,
+                            borderColor: '#fff'
+                        }
+                    },
+                    data: [
+                        {value: {{$seed}}, name: 'เมล็ด'},
+                        {value: {{$fertilizer}}, name: 'ปุ๋ย'},
+                        {value: {{$wage}}, name: 'ค่าแรง'},
+                        {value: {{$etc}}, name: 'ค่าอื่นๆ'}
+                    ]
+                }]
+            });
+        }
+    </script>
     <script>
         $(window).on("load", function() {
             $(".loader-wrapper").fadeOut("slow");
         });
     </script>
-
-<script type="text/javascript">
-                var pie_basic_element = document.getElementById('pie_basic');
-                if (pie_basic_element) {
-                    var pie_basic = echarts.init(pie_basic_element);
-                    pie_basic.setOption({
-                        color: [
-                            '#2ec7c9','#b6a2de','#5ab1ef','#ffb980','#d87a80',
-                            '#8d98b3','#e5cf0d','#97b552','#95706d','#dc69aa',
-                            '#07a2a4','#9a7fd1','#588dd5','#f5994e','#c05050',
-                            '#59678c','#c9ab00','#7eb00a','#6f5553','#c14089'
-                        ],          
-                        
-                        textStyle: {
-                            fontFamily: 'Prompt, sans-serif',
-                            fontSize: 15
-                        },
-
-                        title: {
-                            text: '',
-                            left: 'center',
-                            textStyle: {
-                                fontSize: 17,
-                                fontWeight: 500,
-                            },
-                            subtextStyle: {
-                                fontSize: 12
-                            }
-                        },
-
-                        tooltip: {
-                            trigger: 'item',
-                            backgroundColor: 'rgba(0,0,0,0.75)',
-                            padding: [10, 15],
-                            textStyle: {
-                                fontSize: 13,
-                                fontFamily: 'Roboto, sans-serif'
-                            },
-                            formatter: "{a} <br/>{b}: {c} บาท ({d}%)"
-                        },
-
-                        legend: {
-                            orient: 'horizontal',
-                            bottom: '0%',
-                            left: 'center',                   
-                            data: ['เมล็ด', 
-                            'ปุ๋ย',
-                            'ค่าแรง',
-                            'ค่าอื่นๆ'
-                        ],
-                            itemHeight: 8,
-                            itemWidth: 8
-                        },
-
-                        series: [{
-                            name: 'ค่าใช้จ่าย',
-                            type: 'pie',
-                            radius: '70%',
-                            center: ['50%', '50%'],
-                            itemStyle: {
-                                normal: {
-                                    borderWidth: 1,
-                                    borderColor: '#fff'
-                                }
-                            },
-                            data: [
-                                {value: {{$seed}}, name: 'เมล็ด'},
-                                {value: {{$fertilizer}}, name: 'ปุ๋ย'},
-                                {value: {{$wage}}, name: 'ค่าแรง'},
-                                {value: {{$etc}}, name: 'ค่าอื่นๆ'}
-                            ]
-                        }]
-                    });
-                }
-                </script>
 </body>
 
 </html>

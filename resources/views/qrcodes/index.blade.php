@@ -12,7 +12,7 @@
                         <button class="nav-link"><a href="{{ route('dashboard.index', $datas) }}" class="clearfonts">แผงควบคุม</a></button>
                         <!-- <button class="nav-link"><a href="{{ route('report.index', $datas) }}" class="clearfonts">รายงาน</a></button> -->
                         <button class="nav-link"><a href="{{ route('savenote.index', $datas) }}" class="clearfonts">จดบันทึก</a></button>
-                        <button class="nav-link"><a href="{{ route('plots.show', $datas) }}" class="clearfonts">ตั้งค่า</a></button>
+                        <button class="nav-link"><a href="{{ route('setting.index', $datas) }}" class="clearfonts">ตั้งค่า</a></button>
                         <label class="nav-link clearfont active" style="color: #49cea1;border-color: #49cea1;border-bottom-color:transparent;">QR Code</label>
                     </div>
                 </nav>
@@ -48,9 +48,6 @@
                                     </div>
                                     <div class="col-sm-4"></div>
                                 </div>
-                                @foreach($get_data_plot as $key => $value)
-                                <a href="{{ route('traceability.index', ['datas'=>$value->id]) }}"></a>
-                                @endforeach
                             </div>
                         </div>
                     </div>
