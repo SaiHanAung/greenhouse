@@ -90,7 +90,7 @@
                 </div>
             </div>
 
-            <div class="side-mobile" style="margin-bottom: 5em;">
+            <div class="side-mobile">
                 <div id="mySidenav" class="sidenav">
                     <a href="{{ route('plots.index') }}" class="font-prompt">จัดการฟาร์ม</a>
                     <ul>
@@ -214,7 +214,7 @@
                                 </div>
                             </div>
                             <span class="m-4 font-prompt" id="date-time-temp-mobile">อัพเดทล่าสุด : 00/00/0000 00:00:00</span>
-                            <p></p>
+                            <p style="padding: 1rem 1em;">&nbsp;</p>
                         </div>
                     </div>
                     <div class="col-1"></div>
@@ -240,6 +240,7 @@
                     </div>
                     <div class="col-1"></div>
                 </div>
+                <p></p>
             </div>
 
             @else
