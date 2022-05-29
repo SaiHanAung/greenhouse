@@ -121,8 +121,8 @@
                 </div>
                 <div class="row" style="margin: -0.5em 0 2em 0;">
                     <hr>
-                    <div class="col-4" style="justify-content:flex-end">
-                        <a href="javascript:void(0)" class="bt-green font-prompt btn-sm" style="font-size: medium;">
+                    <div class="col-4">
+                        <a href="javascript:void(0)" class="bt-green font-prompt btn-sm" style="font-size: medium;float:right;margin-top:-.4em;">
                             โดยรวม
                         </a>
                     </div>
