@@ -9,10 +9,10 @@
             <div class="main-layout--header-options">
                 <nav>
                     <div class="nav nav-tabs" style="border-bottom-color: #49cea1;">
-                        <button class="nav-link"><a href="{{ route('savenote.index', $datas) }}" class="clearfonts">จดบันทึก</a></button>
-                        <button class="nav-link"><a href="{{ route('report.index', $datas) }}" class="clearfonts">รายงาน</a></button>
+                        <button class="nav-link"><a href="{{ route('savenote.index', $plotID) }}" class="clearfonts">จดบันทึก</a></button>
+                        <button class="nav-link"><a href="{{ route('report.index', $plotID) }}" class="clearfonts">รายงาน</a></button>
                         <label class="nav-link clearfont active" style="color: #49cea1;border-color: #49cea1;border-bottom-color:transparent;">แผงควบคุม</label>
-                        <button class="nav-link"><a href="{{ route('plots.show', $datas) }}" class="clearfonts">ข้อมูล</a></button>
+                        <button class="nav-link"><a href="{{ route('plots.show', $plotID) }}" class="clearfonts">ข้อมูล</a></button>
                     </div>
                 </nav>
             </div>
@@ -27,15 +27,15 @@
                     <input class="state" type="radio" id="tab-four" checked />
 
                     <div class="tabs flex-tabs">
-                        <a href="{{ route('dashboard.index', $datas) }}">
+                        <a href="{{ route('dashboard.index', $plotID) }}">
                             <label class="tab font-black font-prompt">โดยรวม</label>
                         </a>
 
-                        <a href="{{ route('autorun.index', $datas) }}">
+                        <a href="{{ route('autorun.index', $plotID) }}">
                             <label class="tab font-black font-prompt">อัตโนมัติ</label>
                         </a>
 
-                        <a href="{{ route('dashboard.switch', $datas) }}">
+                        <a href="{{ route('dashboard.switch', $plotID) }}">
                             <label class="tab font-black font-prompt">I/O</label>
                         </a>
 
@@ -148,7 +148,7 @@
                                         </div>
                                         <div class="row mt-3">
                                             <div class="col-sm-12" style="text-align: center;">
-                                                <span>ID : {{ $value_settime->id }} ค่า : {{ $value_settime->settime_value }} plot_id : {{ $datas }}
+                                                <span>ID : {{ $value_settime->id }} ค่า : {{ $value_settime->settime_value }} plot_id : {{ $plotID }}
                                                     <div id="check"><input class="check-value" type="checkbox" id="port_{{$value_settime->id}}" onchange=myFunction({{$value_settime->id}}) value={{$value_settime->settime_value}}></div>
                                                 </span>
                                             </div>

@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Autorun;
 use App\Plot;
-use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 
 class PlotController extends Controller
 {
@@ -19,7 +18,7 @@ class PlotController extends Controller
     public function index()
     {
 
-        $data = DB::table('plots')->get();
+        $data = Plot::all();
 
         // $userID = Auth::user()->id;
 
@@ -52,40 +51,27 @@ class PlotController extends Controller
      */
     public function store(Request $request)
     {
-        //
-        $request->validate([
-            'name' => 'required'
-        ]);
-
-        if ($request->hasFile('file')) {
-
-            $request->validate([
-                'image' => 'mimes:png,jpg,gif'
-            ]);
-
-            $request->file->store('plot_images','public');
-
-            $plot = new Plot([
-                "name" => $request->get('name'),
-                "img_name" => $request->get('file'),
-                "host" => $request->get('host'),
-                "topic_send" => $request->get('topic_send'),
-                "topic_sub" => $request->get('topic_sub'),
-                "description" => $request->get('description'),
-                "user_id" => $request->get('user_id'),
-                "img_name" => $request->file->getClientOriginalName(),
-                "file_path" => $request->file->hashName()
-            ]);
-            $plot->save();
+        $plot = new Plot;
+        $plot->name = $request->input('name');
+        $plot->host = $request->input('host');
+        $plot->topic_send = $request->input('topic_send');
+        $plot->topic_sub = $request->input('topic_sub');
+        $plot->rai_size = $request->input('rai_size');
+        $plot->ngan_size = $request->input('ngan_size');
+        $plot->square_wah_size = $request->input('square_wah_size');
+        $plot->latitude = $request->input('latitude');
+        $plot->longitude = $request->input('longitude');
+        $plot->description = $request->input('description');
+        $plot->user_id = $request->input('user_id');
+        if($request->hasfile('img_name'))
+        {
+            $file = $request->file('img_name');
+            $extention = $file->getClientOriginalExtension();
+            $filename = time().'.'.$extention;
+            $file->move('plot_images', $filename);
+            $plot->img_name = $filename;
         }
-
-        // Plot::create($request->all());
-
-        $userID = Auth::user()->id;
-        $get_plot_id = DB::table('plots')
-            ->select('id')
-            ->where('user_id', '=', $userID)->get();
-            foreach($get_plot_id as $k_plot_id => $v_plot_id){}
+        $plot->save();
 
         return redirect()->route('plots.index')
                          ->with('success', 'สร้างแปลงสำเร็จแล้ว');
@@ -97,19 +83,19 @@ class PlotController extends Controller
      * @param  \App\Plot  $plot
      * @return \Illuminate\Http\Response
      */
-    public function show($datas)
+    public function show($plotID)
     {
         //
         // $data = Plot::first()->paginate(10);
-        $userID = Auth::user()->id;
+        // $userID = Auth::user()->id;
 
-        $get_data_plot = DB::table('plots')
-            ->select('id', 'name', 'host', 'topic_send', 'topic_sub', 'description','img_name', 'file_path')
-            ->where('user_id', '=', $userID)->get();
-            foreach($get_data_plot as $key_data_plot => $value_data_plot){}
+        // $get_data_plot = DB::table('plots')
+        //     ->select('id', 'name', 'host', 'topic_send', 'topic_sub', 'rai_size', 'ngan_size', 'square_wah_size', 'description', 'img_name')
+        //     ->where('user_id', '=', $userID)->get();
+        //     foreach($get_data_plot as $key_data_plot => $value_data_plot){}
 
         // dd($value_data_plot);
-        return view('settings.index', compact('datas', 'get_data_plot','value_data_plot'));
+        // return view('settings.index', compact('plotID', 'get_data_plot','value_data_plot'));
     }
 
     /**
@@ -131,13 +117,35 @@ class PlotController extends Controller
      * @param  \App\Plot  $plot
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Plot $plot)
+    public function update(Request $request, $plotID)
     {
         //
-        
-        $plot->update($request->all());
+        // $plot->update($request->all());
 
-        return back()->with('success', 'แก้ไขแปลงสำเร็จแล้ว');
+        $plot = Plot::find($plotID);
+        $plot->name = $request->input('name');
+        $plot->host = $request->input('host');
+        $plot->topic_send = $request->input('topic_send');
+        $plot->topic_sub = $request->input('topic_sub');
+        $plot->description = $request->input('description');
+        $plot->user_id = $request->input('user_id');
+
+        if($request->hasfile('img_name'))
+        {
+            $destination = 'plot_images'.$plot->img_name;
+            if(File::exists($destination))
+            {
+                File::delete($destination);
+            }
+            $file = $request->file('img_name');
+            $extention = $file->getClientOriginalExtension();
+            $filename = time().'.'.$extention;
+            $file->move('plot_images', $filename);
+            $plot->img_name = $filename;
+        }
+
+        $plot->update();
+        return redirect()->back()->with('success', 'แก้ไขแปลงสำเร็จแล้ว');
     }
 
     /**
@@ -146,7 +154,7 @@ class PlotController extends Controller
      * @param  \App\Plot  $plot
      * @return \Illuminate\Http\Response 
      */
-    public function destroy(Plot $plot)
+    public function destroy($plotID)
     {
         //
         $userID = Auth::user()->id;
@@ -154,6 +162,13 @@ class PlotController extends Controller
             ->select('id')
             ->where('user_id', '=', $userID)->get();
         foreach($get_plot_id as $k_plot_id => $v_plot_id){}
+
+        $plot = Plot::find($plotID);
+        $destination = 'plot_images'.$plot->img_name;
+        if(File::exists($destination))
+        {
+            File::delete($destination);
+        }
         // dd($v_plot_id);
         DB::table('autoruns')->select('id')->where('plot_id', '=', $v_plot_id->id)->delete();
         DB::table('switches')->select('id')->where('plot_id', '=', $v_plot_id->id)->delete();

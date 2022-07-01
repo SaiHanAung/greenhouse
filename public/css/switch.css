@@ -1,3 +1,33 @@
+.dot-open {
+    background-color: #24C48E;
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border-radius: 50px;
+}
+
+.bt-edit-switch:hover {
+    border-bottom: 3px solid #24C48E;
+}
+
+.switch-not-work {
+    display: inline-block;
+    background-color: darkgray;
+    color: #fff;
+    padding: .5em;
+    border-radius: 5px;
+    font-size: medium;
+}
+
+.switch-working {
+    display: inline-block;
+    background-color: #24C48E;
+    color: #fff;
+    padding: .5em;
+    border-radius: 5px;
+    font-size: medium;
+}
+
 .switch {
     position: relative;
     display: inline-block;

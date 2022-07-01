@@ -13,7 +13,7 @@ class ReportController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($datas)
+    public function index($plotID)
     {
         //
         $data_plot = DB::table('plots')->get();
@@ -21,14 +21,14 @@ class ReportController extends Controller
         foreach ($data_plot as $key => $item) {
             $get_plot_name = DB::table('plots')
                                     ->select('name')
-                                    ->where('id', '=', $datas)->get();
+                                    ->where('id', '=', $plotID)->get();
             foreach($get_plot_name as $key_name => $value_name){
                 foreach($value_name as $key_name_sub => $value_name_sub){
                 }
             }
         }
 
-        return view('reports.index', compact('datas', 'value_name_sub'));
+        return view('reports.index', compact('plotID', 'value_name_sub'));
     }
 
     /**

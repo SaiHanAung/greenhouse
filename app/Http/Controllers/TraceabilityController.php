@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Plot;
+use App\Traceability_harvest;
+use App\Traceability;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -14,41 +17,28 @@ class TraceabilityController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($datas)
+    // public function index($plotID, $id)
+    public function index($plotID,$reference_id)
     {
-        //
         $get_data_plot = DB::table('plots')
-            ->select('name', 'file_path')
-            ->where('id', '=', $datas)->get();
-
-        $get_data_trac = DB::table('traceability_factors')
-            ->select('id', 'received_date', 'name', 'amount', 'price', 'unit', 'source', 'total_price', 'recorder')
-            ->where('plot_id', '=', $datas)->get();
-
-        $check_date_trac_use_fact = DB::table('traceability_use_factors')->select('date_of_use')->where('plot_id', '=', $datas)->count();
-        $get_data_trac_use_fact = DB::table('traceability_use_factors')
-            ->select('date_of_use')
-            ->where('plot_id', '=', $datas)->get()->first();
-        // foreach($get_data_trac_use_fact as $key_data_trac_use_fact){}
+            ->where('id', '=', $plotID)->get()->all();
+        foreach($get_data_plot as $key_data_plot => $value_data_plot){}
         
-        $check_date_trac_harv = DB::table('traceability_harvests')->select('harvest_date')->where('plot_id', '=', $datas)->count();
-        $get_data_trac_harv = DB::table('traceability_harvests')
-            ->select('harvest_date')
-            ->where('plot_id', '=', $datas)->get()->first();
-            // foreach($get_data_trac_harv as $key_data_trac_harv => $value_data_trac_harv){}
+        $get_standard_user = DB::table('users')
+            ->where('id',$value_data_plot->user_id)->get('standard');
 
-        // dd($get_data_plot);
+        $traceability = Traceability::withTrashed()->where('plot_id',$plotID)->where('reference_id',$reference_id)->get();
+        foreach($traceability as $key_traceability => $value_traceability){}
+
+        $get_data_maintenance = DB::table('note_maintenances')
+            ->where('plot_id', $plotID)->where('reference_id', $reference_id)->get()->all();
+        // dd($get_standard_user);
 
         return view('traceabilitys.index', compact(
-            'get_data_trac_use_fact',
-            'get_data_trac_harv',
-            'get_data_trac',
-            'datas',
+            'get_data_maintenance',
+            'get_standard_user',
+            'value_traceability',
             'get_data_plot',
-            'check_date_trac_use_fact',
-            'check_date_trac_harv'
-            // 'value_data_trac_use_fact',
-            // 'value_data_trac_harv'
         ));
     }
 

@@ -5,7 +5,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <link rel="icon" type="image/x-icon" href="{{ asset('imgs/green-house.png') }}">
-    <title>Green House</title>
+    <title>
+        @include('layouts.titles') @yield('title.qrcodes.index')Green House 
+    </title>
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -82,14 +84,14 @@
                     </div>
                 </div>
             </div>
-
+            {{--
             <div class="side-mobile">
                 <div id="mySidenav" class="sidenav">
                     <a href="{{ route('plots.index') }}" class="font-prompt">จัดการฟาร์ม</a>
                     <ul>
-                        <li style="list-style-type: none;"><a href="{{ route('dashboard.index', $datas) }}" class="font-prompt">แผงควบคุม</a></li>
-                        <li style="list-style-type: none;"><a href="{{ route('savenote.index', $datas) }}" class="font-prompt">จดบันทึก</a></li>
-                        <li style="list-style-type: none;"><a href="{{ route('setting.index', $datas) }}" class="font-prompt">ตั้งค่า</a></li>
+                        <li style="list-style-type: none;"><a href="{{ route('dashboard.index', $plotID) }}" class="font-prompt">แผงควบคุม</a></li>
+                        <li style="list-style-type: none;"><a href="{{ route('savenote.index', $plotID) }}" class="font-prompt">จดบันทึก</a></li>
+                        <li style="list-style-type: none;"><a href="{{ route('setting.index', $plotID) }}" class="font-prompt">ตั้งค่า</a></li>
                         <li style="list-style-type: none;"><a href="javascript:void(0)" style="color: #49cea1;" class="font-prompt">QR Code</a></li>
                     </ul>
                     <a href="{{ route('profile') }}" class="font-prompt">โปรไฟล์</a>
@@ -116,12 +118,48 @@
                     <hr class="mt-3">
                     <img src="{{ $qrcode }}" alt="QrCode">
                     <center>
-                        <a class="bt-create-farm-record font-prompt p-3" href="{{ route('downloadPDF', $datas)}}">ดาวน์โหลด QR Code</a>
+                        <a class="bt-create-farm-record font-prompt p-3" href="{{ route('downloadPDF', $plotID)}}">ดาวน์โหลด QR Code</a>
                         <input id="url" name="url" type="hidden" value="{{ $qrcode }}">
                     </center>
                 </div>
             </div>
-
+            --}}
+            <div class="setting-qrcode" style="display: none;">
+                <form action="{{ route('settingQrcode', $plotID) }}" method="post">
+                    @csrf
+                    <div class="ant-modal-mask"></div>
+                    <div class="ant-modal-wrap ant-modal-centered">
+                        <div class="ant-modal">
+                            <div class="ant-modal-content">
+                                <div class="ant-modal-header">
+                                    <div class="ant-modal-title" style="font-size:large;font-weight:bolder;">ตั้งค่า Qr Code</div>
+                                </div>
+                                <div class="ant-modal-body" id="FarmInputRecordTypeAndSourceShow">
+                                    <div class="ant-row ant-form-item ant-form-item-with-help own-custom-form-field normal-offset normal-offset ant-form-item-has-success" style="row-gap: 0px;">
+                                        <div class="font-prompt">ที่อยู่เว็บไซต์</div>
+                                        <div class="ant-col ant-form-item-control">
+                                            <div class="ant-form-item-control-input">
+                                                <div class="ant-form-item-control-input-content">
+                                                    <input name="domainname" type="text" class="ant-input" placeholder="เช่น http://google.com" required>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <input type="hidden" name="plot_id" value="{{$plotID}}">
+                                </div>
+                                <div class="ant-modal-footer">
+                                    <button type="button" class="ant-btn ant-btn-secondary" id="closeSettingQrcode" ant-click-animating-without-extra-node="false">
+                                        <span>ยกเลิก</span>
+                                    </button>
+                                    <button type="submit" class="ant-btn ant-btn-primary">
+                                        <span>ยืนยัน</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
             @else
 
             @guest
@@ -134,7 +172,7 @@
                             <div class="login-logo-wrapper"><img class="login-logo" alt="LOGO" src="/imgs/green-house.png"></div>
                             <div class="login-form-wrapper">
                                 <div class="alert alert-danger" role="alert">
-                                    <strong>กรุณา</strong><a href="{{route('login') }}"> เข้าสู่ระบบ </a> ก่อนใช้งาน
+                                    กรุณา <a href="{{route('login') }}" class="font-prompt"><strong>เข้าสู่ระบบ</strong></a> ก่อนใช้งาน
                                 </div>
                             </div>
                             <div class="login-bottom-label"></div>
@@ -184,6 +222,22 @@
                     link.click();
                 })
         }
+    </script>
+    <script>
+        $(document).ready(function() {
+            $('#openSettingQrcode').click(function() {
+                $('.setting-qrcode').show();
+            });
+            $('#closeSettingQrcode').click(function() {
+                $('.setting-qrcode').hide();
+            });
+        });
+    </script>
+    <script>
+        setTimeout(function() {
+            $('#alert').alert('close');
+            $('#alert-mobile').alert('close');
+        }, 3000);
     </script>
 </body>
 

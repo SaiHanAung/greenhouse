@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3b929f3433e00cd4cb3c379a60619046",
+    "content-hash": "3c35fddc6a9e7565781979aa1332c9c5",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -1119,6 +1119,83 @@
                 }
             ],
             "time": "2022-03-20T21:51:18+00:00"
+        },
+        {
+            "name": "jpmurray/laravel-countdown",
+            "version": "3.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/jpmurray/laravel-countdown.git",
+                "reference": "8401f92f0f620b012db2686a390264b754f96578"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/jpmurray/laravel-countdown/zipball/8401f92f0f620b012db2686a390264b754f96578",
+                "reference": "8401f92f0f620b012db2686a390264b754f96578",
+                "shasum": ""
+            },
+            "require": {
+                "ext-bcmath": "*",
+                "illuminate/support": "6.* || 7.* || 8.*",
+                "nesbot/carbon": "^2.0",
+                "php": "^7.0"
+            },
+            "require-dev": {
+                "mockery/mockery": "dev-master@dev",
+                "nesbot/carbon": "^2.0",
+                "orchestra/testbench": "~3.0",
+                "phpunit/phpunit": "~4.0||~5.0",
+                "squizlabs/php_codesniffer": "^2.3"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "jpmurray\\LaravelCountdown\\CountdownServiceProvider"
+                    ],
+                    "aliases": {
+                        "Countdown": "jpmurray\\LaravelCountdown\\Facades\\CountdownFacade"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "jpmurray\\LaravelCountdown\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jean-Philippe Murray",
+                    "email": "himself@jpmurray.net",
+                    "homepage": "https://github.com/jpmurray/",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Provide an easy class easy way to get the time difference between two dates, with an extra bonus trait for eloquent",
+            "homepage": "https://github.com/jpmurray/laravel-countdown",
+            "keywords": [
+                "countdown",
+                "dates",
+                "elapsed",
+                "jpmurray",
+                "time",
+                "until"
+            ],
+            "support": {
+                "issues": "https://github.com/jpmurray/laravel-countdown/issues",
+                "source": "https://github.com/jpmurray/laravel-countdown/tree/3.0.0"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/jpmurray",
+                    "type": "github"
+                }
+            ],
+            "time": "2020-11-08T19:24:57+00:00"
         },
         {
             "name": "laravel/framework",

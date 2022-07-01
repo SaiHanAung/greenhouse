@@ -225,7 +225,7 @@
                                         <br />
                                         <br />
                                     </div>
-                                    <input type="hidden" name="plot_id" value="{{$datas}}">
+                                    <input type="hidden" name="plot_id" value="{{$plotID}}">
                                 </div>
                                 <div class="ant-modal-footer"><button type="button" class="ant-btn ant-btn-secondary" id="cancelCreateAuto" ant-click-animating-without-extra-node="false"><span>ยกเลิก</span></button><button type="submit" class="ant-btn ant-btn-primary"><span>ยืนยัน</span></button></div>
                             </div>

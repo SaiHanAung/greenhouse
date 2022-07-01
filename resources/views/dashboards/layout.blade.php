@@ -5,7 +5,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <link rel="icon" type="image/x-icon" href="{{ asset('imgs/green-house.png') }}">
-    <title>Green House</title>
+    <title>
+        @include('layouts.titles') @yield('title.dashboards.index')Green House 
+    </title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link href="{{ asset('css/waiting_loading_page.css') }}" rel="stylesheet">
 
@@ -17,6 +19,8 @@
     <link href="{{ asset('css/deleteModal.css') }}" rel="stylesheet">
     <link href="{{ asset('css/plot/tab.css') }}" rel="stylesheet">
     <link href="{{ asset('css/sidenave.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/back-to-top.css') }}" rel="stylesheet">
+
     <script>
         function slider(x) {
             document.getElementById("mySidenav").classList.toggle("open");
@@ -25,6 +29,33 @@
         $(document).ready(function() {
             $('div.container').click(function() {
                 $('#plotName').toggle(300);
+            });
+            $('#openHistoryPlant').click(function() {
+                $('.historyPlant').show();
+            });
+            $('#closeHistoryPlant').click(function() {
+                $('.historyPlant').hide();
+            });
+
+            $('#openSettingPlant').click(function() {
+                $('.setting-plant').show();
+            });
+            $('#closeSettingPlant').click(function() {
+                $('.setting-plant').hide();
+            });
+
+            $('#openDateShowTemps').click(function() {
+                $('.dateShowTemps').show();
+            });
+            $('#cancelDateShowTemp').click(function() {
+                $('.dateShowTemps').hide();
+            });
+
+            $('#openDateShowHumids').click(function() {
+                $('.dateShowHumids').show();
+            });
+            $('#cancelDateShowHumid').click(function() {
+                $('.dateShowHumids').hide();
             });
         });
     </script>
@@ -41,6 +72,7 @@
     <link href="{{ asset('/css/731bfdf3d0cb0f734453.css') }}" rel="stylesheet">
     <link href="{{ asset('/css/ab3606d21984a57939eb.css') }}" rel="stylesheet">
 
+
     <style>
         body {
             font-family: 'Prompt', sans-serif;
@@ -53,10 +85,12 @@
 </head>
 
 <body>
+    <button id="back-to-top-btn"><i class="fas fa-angle-double-up text-center"></i></button>
     <div class="content">
         <div id="app">
             @if(Auth::check())
             <div class="main-plot" style="height: 100vh;">
+            
                 <div class="layout">
                     <div></div>
                     <div></div>
@@ -84,20 +118,20 @@
 
                             @yield('content')
 
-
+                            
                         </div>
                     </div>
                 </div>
             </div>
-
+            {{--
             <div class="side-mobile">
                 <div id="mySidenav" class="sidenav">
                     <a href="{{ route('plots.index') }}" class="font-prompt">จัดการฟาร์ม</a>
                     <ul>
                         <li style="list-style-type: none;"><a href="javascript:void(0)" style="color: #49cea1;" class="font-prompt">แผงควบคุม</a></li>
-                        <li style="list-style-type: none;"><a href="{{ route('savenote.index', $datas) }}" class="font-prompt">จดบันทึก</a></li>
-                        <li style="list-style-type: none;"><a href="{{ route('setting.index', $datas) }}" class="font-prompt">ตั้งค่า</a></li>
-                        <li style="list-style-type: none;"><a href="{{ route('qrcode.index', $datas) }}" class="font-prompt">QR Code</a></li>
+                        <li style="list-style-type: none;"><a href="{{ route('savenote.index', $plotID) }}" class="font-prompt">จดบันทึก</a></li>
+                        <li style="list-style-type: none;"><a href="{{ route('setting.index', $plotID) }}" class="font-prompt">ตั้งค่า</a></li>
+                        <li style="list-style-type: none;"><a href="{{ route('qrcode.index', $plotID) }}" class="font-prompt">QR Code</a></li>
                     </ul>
                     <a href="{{ route('profile') }}" class="font-prompt">โปรไฟล์</a>
                     <a href="{{ route('logout.perform') }}" class="font-prompt">ออกจากระบบ</a>
@@ -127,7 +161,7 @@
                         </a>
                     </div>
                     <div class="col-3">
-                        <a href="{{ route('dashboard.switch', $datas) }}" class="bt-w-bg btn-sm font-prompt" style="color: #000; font-size: medium;">สวิตซ์</a>
+                        <a href="{{ route('dashboard.switch', $plotID) }}" class="bt-w-bg btn-sm font-prompt" style="color: #000; font-size: medium;">สวิตซ์</a>
                     </div>
                 </div>
                 <div class="row">
@@ -242,6 +276,173 @@
                 </div>
                 <p></p>
             </div>
+            --}}
+            <div class="historyPlant" style="display: none;">
+                <div class="ant-modal-mask"></div>
+                <div class="ant-modal-wrap ant-modal-centered">
+                    <div class="ant-modal">
+                        <div class="ant-modal-content">
+                            <div class="ant-modal-header">
+                                <div class="ant-modal-title" style="font-size:large;font-weight:bolder;">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        ประวัติการปลูกของคุณ
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="bt-last">
+                                            <!-- <button type="button" id="closeHistoryPlant" class="btn-secondary btn-sm">X</button> -->
+                                            <a href="javascrip:void(0)" id="closeHistoryPlant">
+                                                <img class="bt-edit-switch" src="/imgs/cancel-green.png" alt="icon" style="width: 1em;">
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                </div>
+                            </div>
+                            <div class="ant-modal-body">
+                                @php $i = 0; @endphp
+                                @foreach($get_new_plant_dates as $key_new_plant_dates => $value_new_plant_dates)
+                                <div class="ant-row ant-form-item ant-form-item-with-help own-custom-form-field normal-offset normal-offset ant-form-item-has-success" style="row-gap: 0px;">
+                                    <div class="font-prompt">รอบที่ {{++$i}}
+                                    <?php
+                                    $new_plant_dates = thaidate('d-m-Y H:i:s', strtotime($value_new_plant_dates->delete_date));
+                                    $total_pay = number_format($value_new_plant_dates->total_price);
+                                    $total_sell = number_format($value_new_plant_dates->total_sale);
+                                    ?>
+                                        <a href="{{ route('dashboard.historyPlant',  ['plotID'=>$plotID, 'historyPlantID' => $value_new_plant_dates->id]) }}" target="_blank" class="ant-btn ml-2">{{ $new_plant_dates }}</a>
+                                          
+                                        <span>รายจ่าย {{ $total_pay }} บาท</span>
+                                        
+                                        <span>รายรับ {{ $total_sell }} บาท</span>
+                                    </div>
+                                </div>
+                                @endforeach
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="setting-plant" style="display: none;">
+                <form action="{{ route('dashboard.storeSettingPlant') }}" method="POST">
+                    @csrf
+                    <div class="ant-modal-mask"></div>
+                    <div class="ant-modal-wrap ant-modal-centered">
+                        <div class="ant-modal">
+                            <div class="ant-modal-content">
+                                <div class="ant-modal-header">
+                                    <div class="ant-modal-title" style="font-size:large;font-weight:bolder;">ตั้งค่าการปลูก</div>
+                                </div>
+                                <div class="ant-modal-body" id="FarmInputRecordTypeAndSourceShow">
+                                    <div class="ant-row ant-form-item ant-form-item-with-help own-custom-form-field normal-offset normal-offset ant-form-item-has-success" style="row-gap: 0px;">
+                                        <div class="font-prompt">พืชที่ปลูก</div>
+                                        <div class="ant-col ant-form-item-control">
+                                            <div class="ant-form-item-control-input">
+                                                <div class="ant-form-item-control-input-content"><input name="name" type="text" class="ant-input" required></div>
+                                            </div>
+                                            <div class="ant-form-item-explain ant-form-item-explain-success">
+                                                <div role="alert" class="font-prompt">ใช้เฉพาะตัวอักษร, ยัติภังค์, จุด, และช่องว่าง</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="ant-row ant-form-item ant-form-item-with-help own-custom-form-field normal-offset normal-offset ant-form-item-has-success" style="row-gap: 0px;">
+                                        <div class="font-prompt">ชื่อผู้ปลูก</div>
+                                        <div class="ant-col ant-form-item-control">
+                                            <div class="ant-form-item-control-input">
+                                                <div class="ant-form-item-control-input-content"><input name="grower_name" type="text" class="ant-input" required></div>
+                                            </div>
+                                            <div class="ant-form-item-explain ant-form-item-explain-success">
+                                                <div role="alert" class="font-prompt">ใช้เฉพาะตัวอักษร, ยัติภังค์, จุด, และช่องว่าง</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="ant-row ant-form-item ant-form-item-with-help own-custom-form-field normal-offset normal-offset ant-form-item-has-success" style="row-gap: 0px;">
+                                        <div class="font-prompt">วันที่เริ่มปลูก</div>
+                                        <div class="ant-col ant-form-item-control">
+                                            <div class="ant-form-item-control-input">
+                                                <input class="ant-input font-prompt" type="date" name="date_of_plant" id="datePicker_start_plant" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="ant-row ant-form-item ant-form-item-with-help own-custom-form-field normal-offset normal-offset ant-form-item-has-success" style="row-gap: 0px;">
+                                        <div class="font-prompt">เก็บเกี่ยวผลผลิตในอีก <input name="harvest_day" type="number" class="ant-input" required style="width:20%;"> วัน</div>
+                                    </div>
+                                    <input type="hidden" name="plot_id" id="plot_id" value="{{$plotID}}">
+                                </div>
+                                <div class="ant-modal-footer">
+                                    <button type="button" class="ant-btn ant-btn-secondary" id="closeSettingPlant" ant-click-animating-without-extra-node="false">
+                                        <span>ยกเลิก</span>
+                                    </button>
+                                    <button type="submit" class="ant-btn ant-btn-primary">
+                                        <span>ยืนยัน</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="dateShowTemps" style="display: none;">
+                    <div class="ant-modal-mask"></div>
+                    <div class="ant-modal-wrap ant-modal-centered">
+                        <div class="ant-modal">
+                            <div class="ant-modal-content">
+                                <div class="ant-modal-header">
+                                    <div class="ant-modal-title" style="font-size:large;font-weight:bolder;">เลือกดูประวัติอุณหภูมิ</div>
+                                </div>
+                                <div class="ant-modal-body" id="FarmInputRecordTypeAndSourceShow">
+                                    <div class="ant-row ant-form-item ant-form-item-with-help own-custom-form-field normal-offset normal-offset ant-form-item-has-success" style="row-gap: 0px;">
+                                        <div class="font-prompt">วันที่ต้องการดู</div>
+                                        <div class="ant-col ant-form-item-control">
+                                            <div class="ant-form-item-control-input">
+                                                <input class="ant-input font-prompt" type="date" name="dateShowTemp" id="datePicker_show_temp" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <input type="hidden" name="plot_id" id="plot_id" value="{{$plotID}}">
+                                </div>
+                                <div class="ant-modal-footer">
+                                    <button type="button" class="ant-btn ant-btn-secondary" id="cancelDateShowTemp" ant-click-animating-without-extra-node="false">
+                                        <span>ยกเลิก</span>
+                                    </button>
+                                    <button onclick="dateShowTemp()" class="ant-btn ant-btn-primary">
+                                        <span>ยืนยัน</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+            <div class="dateShowHumids" style="display: none;">
+                    <div class="ant-modal-mask"></div>
+                    <div class="ant-modal-wrap ant-modal-centered">
+                        <div class="ant-modal">
+                            <div class="ant-modal-content">
+                                <div class="ant-modal-header">
+                                    <div class="ant-modal-title" style="font-size:large;font-weight:bolder;">เลือกดูประวัติความชื้น</div>
+                                </div>
+                                <div class="ant-modal-body" id="FarmInputRecordTypeAndSourceShow">
+                                    <div class="ant-row ant-form-item ant-form-item-with-help own-custom-form-field normal-offset normal-offset ant-form-item-has-success" style="row-gap: 0px;">
+                                        <div class="font-prompt">วันที่ต้องการดู</div>
+                                        <div class="ant-col ant-form-item-control">
+                                            <div class="ant-form-item-control-input">
+                                                <input class="ant-input font-prompt" type="date" name="dateShowHumid" id="datePicker_show_humid" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <input type="hidden" name="plot_id" id="plot_id" value="{{$plotID}}">
+                                </div>
+                                <div class="ant-modal-footer">
+                                    <button type="button" class="ant-btn ant-btn-secondary" id="cancelDateShowHumid" ant-click-animating-without-extra-node="false">
+                                        <span>ยกเลิก</span>
+                                    </button>
+                                    <button onclick="dateShowHumid()" class="ant-btn ant-btn-primary">
+                                        <span>ยืนยัน</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            </div>
 
             @else
             
@@ -254,8 +455,8 @@
                         <div class="login-scene">
                             <div class="login-logo-wrapper"><img class="login-logo" alt="LOGO" src="/imgs/green-house.png"></div>
                             <div class="login-form-wrapper">
-                                <div class="alert alert-danger" role="alert">
-                                    <strong>กรุณา</strong><a href="{{route('login') }}"> เข้าสู่ระบบ </a> ก่อนใช้งาน
+                                <div class="alert alert-danger font-prompt" role="alert">
+                                    กรุณา <a href="{{route('login') }}" class="font-prompt"><strong>เข้าสู่ระบบ</strong></a> ก่อนใช้งาน
                                 </div>
                             </div>
                             <div class="login-bottom-label"></div>
@@ -269,7 +470,6 @@
             @endif
         </div>
     </div>
-
     <div class="loader-wrapper">
         <div class="loader"></div>
         <img class="greenhouse-loader" src="{{ asset('imgs/green-house.png') }}" width="100px" alt="Logo">
@@ -278,11 +478,17 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.min.js"></script>
-
+    <!-- <script src="https://requirejs.org/docs/release/2.3.6/r.js"></script> -->
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.js" type="text/javascript"></script>
+    
+    <script src="https://kit.fontawesome.com/a54d2cbf95.js"></script>
+    <script src="{{ asset('js/back-to-top.js') }}"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
     <script>
+        var cl = console.log.bind(document);
         var host = document.getElementById("input_host").value
         var port = 8000;
         var x = Math.floor(Math.random() * 10000);
@@ -314,15 +520,15 @@
             obj = eval("(function(){return " + msg + ";})()");
 
             document.getElementById("temp").innerHTML = obj.temp + " 'C";
-            document.getElementById("temp_mobile").innerHTML = obj.temp + " 'C";
+            // document.getElementById("temp_mobile").innerHTML = obj.temp + " 'C";
             document.getElementById("humid").innerHTML = obj.humid + " %";
-            document.getElementById("humid_mobile").innerHTML = obj.humid + " %";
+            // document.getElementById("humid_mobile").innerHTML = obj.humid + " %";
             
             if(obj.temp == undefined || obj.humid == undefined){
                 document.getElementById("temp").innerHTML = 'รอโหลด';
-                document.getElementById("temp_mobile").innerHTML = 'รอโหลด';
+                // document.getElementById("temp_mobile").innerHTML = 'รอโหลด';
                 document.getElementById("humid").innerHTML = 'รอโหลด';
-                document.getElementById("humid_mobile").innerHTML = 'รอโหลด';
+                // document.getElementById("humid_mobile").innerHTML = 'รอโหลด';
             }
             // document.getElementById("mqtt-value").innerHTML = msg;
             // console.log(msg);
@@ -335,14 +541,42 @@
                 const dateTime = now.toLocaleDateString() + ' ' + zeroFill(now.getHours()) + ':' + zeroFill(now.getMinutes()) + ':' + zeroFill(now.getSeconds());
 
                 document.getElementById("date-time-humid").innerHTML = "อัพเดทล่าสุด : " + dateTime;
-                document.getElementById("date-time-humid-mobile").innerHTML = "อัพเดทล่าสุด : " + dateTime;
+                // document.getElementById("date-time-humid-mobile").innerHTML = "อัพเดทล่าสุด : " + dateTime;
                 document.getElementById('date-time-temp').innerHTML = "อัพเดทล่าสุด : " + dateTime;
-                document.getElementById('date-time-temp-mobile').innerHTML = "อัพเดทล่าสุด : " + dateTime;
-
+                // document.getElementById('date-time-temp-mobile').innerHTML = "อัพเดทล่าสุด : " + dateTime;
             }, 1000);   
-        }
 
-        // JS ECHART Pie chart
+            setTimeout(function(){
+                var plot_id = document.getElementById('plot_id').value;
+                var humid_val = obj.humid;
+                var temp_val = obj.temp;
+                const storeNow = new Date();
+                const countSeconds = zeroFill(storeNow.getSeconds());
+                const countMinutes = zeroFill(storeNow.getMinutes());
+                if(true){
+                    $.ajax({
+                        type: 'GET',
+                        url: "{{ route('storeTemp') }}", 
+                        data: {
+                            // 'switch_id': switchID,
+                            'value': temp_val, plot_id,
+                        }
+                    });
+                    $.ajax({
+                        type: 'GET',
+                        url: "{{ route('storeHumid') }}", 
+                        data: {
+                            // 'switch_id': switchID,
+                            'value': humid_val, plot_id,
+                        }
+                    });
+                }
+            }, 5000)
+            
+        }
+        
+
+        /////////////////// JS ECHART Pie chart ////////////////////////////////
         var pie_basic_element = document.getElementById('pie_basic');
         if (pie_basic_element) {
             var pie_basic = echarts.init(pie_basic_element);
@@ -379,17 +613,14 @@
                         fontSize: 13,
                         fontFamily: 'Roboto, sans-serif'
                     },
-                    formatter: "{a} <br/>{b}: {c} บาท ({d}%)"
+                    formatter: "{a} <br/>{b}: {c} บาท ({d}%)",
                 },
 
                 legend: {
                     orient: 'horizontal',
-                    bottom: '0%',
+                    bottom: '80%',
                     left: 'center',                   
-                    data: ['เมล็ด', 
-                    'ปุ๋ย',
-                    'ค่าแรง',
-                    'ค่าอื่นๆ'
+                    data: ['เตรียมพื้นที่ปลูก', 'เพาะปลูก', 'เก็บเกี่ยว', 'บำรุงรักษา'
                 ],
                     itemHeight: 8,
                     itemWidth: 8
@@ -398,25 +629,28 @@
                 series: [{
                     name: 'ค่าใช้จ่าย',
                     type: 'pie',
-                    radius: '70%',
-                    center: ['50%', '50%'],
+                    radius: '40%',
+                    // center: ['45%', '50%'],
                     itemStyle: {
                         normal: {
                             borderWidth: 1,
-                            borderColor: '#fff'
+                            borderColor: '#fff',
                         }
                     },
                     data: [
-                        {value: {{$seed}}, name: 'เมล็ด'},
-                        {value: {{$fertilizer}}, name: 'ปุ๋ย'},
-                        {value: {{$wage}}, name: 'ค่าแรง'},
-                        {value: {{$etc}}, name: 'ค่าอื่นๆ'}
+                        {value: {{$plant_area_total_price}}, name: 'เตรียมพื้นที่ปลูก'},
+                        {value: {{$plant_total_price}}, name: 'เพาะปลูก'},
+                        {value: {{$harvest_total_price}}, name: 'เก็บเกี่ยว'},
+                        {value: {{$maintenance_total_price}}, name: 'บำรุงรักษา'}
                     ]
                 }]
             });
         }
+        //////////////////////////////////////////////////////////////////////////
     </script>
-    <script>
+
+
+    <!-- <script>
         var pie_basic_element = document.getElementById('pie_basic_mobile');
         if (pie_basic_element) {
             var pie_basic = echarts.init(pie_basic_element);
@@ -489,12 +723,24 @@
                 }]
             });
         }
-    </script>
+    </script> -->
     <script>
         $(window).on("load", function() {
             $(".loader-wrapper").fadeOut("slow");
         });
+
+        document.getElementById('datePicker_start_plant').valueAsDate = new Date();
+        document.getElementById('datePicker_show_temp').valueAsDate = new Date();
+        document.getElementById('datePicker_show_humid').valueAsDate = new Date();
+
     </script>
+    <script>
+        setTimeout(function() {
+            $('#alert').alert('close');
+            $('#alert-mobile').alert('close');
+        }, 3000);
+    </script>
+    @yield('scripts')
 </body>
 
 </html>

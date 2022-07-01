@@ -9,11 +9,24 @@
             <div class="main-layout--header-options">
                 <nav>
                     <div class="nav nav-tabs" style="border-bottom-color: #49cea1;">
-                        <button class="nav-link"><a href="{{ route('dashboard.index', $datas) }}" class="clearfonts">แผงควบคุม</a></button>
-                        <button class="nav-link"><a href="{{ route('savenote.index', $datas) }}" class="clearfonts">จดบันทึก</a></button>
-                        <!-- <button class="nav-link"><a href="{{ route('report.index', $datas) }}" class="clearfonts">รายงาน</a></button> -->
+                        <button class="nav-link"><a href="{{ route('dashboard.index', $plotID) }}" class="clearfonts">แดชบอร์ด</a></button>
+                        <button class="nav-link"><a href="{{ route('savenote.index', $plotID) }}" class="clearfonts">จดบันทึก</a></button>
+                        <!-- <button class="nav-link"><a href="{{ route('report.index', $plotID) }}" class="clearfonts">รายงาน</a></button> -->
                         <label class="nav-link clearfont active" style="color: #49cea1;border-color: #49cea1;border-bottom-color:transparent;">ตั้งค่า</label>
-                        <button class="nav-link"><a href="{{ route('qrcode.index', $datas) }}" class="clearfonts">QR Code</a></button>
+                        @if($check_traceability == 0) 
+                        <button class="nav-link" data-toggle="tooltip" data-placement="left" title="หลังบันทึกการเก็บเกี่ยวแล้วกดปุ่มสร้าง Qr code จึงจะสามารถใช้งานได้">
+                            <a href="javascript:void(0)" class="clearfonts">QR Code</a>
+                        </button>
+                        <script>
+                            $(document).ready(function() {
+                                $('[data-toggle="tooltip"]').tooltip();
+                            });
+                        </script>
+                        @else
+                        <button class="nav-link">
+                            <a href="{{ route('qrcode.index', $plotID) }}" class="clearfonts">QR Code</a>
+                        </button>
+                        @endif
                     </div>
                 </nav>
                 <a href="{{ route('logout.perform') }}" class="ant-btn ml-3">
@@ -23,31 +36,48 @@
             </div>
         </div>
         <div class="main-layout--content">
-            <section style="margin-top: 1.5rem;margin-left: 2rem;">
-                <div class="ant-col ant-col-24 product-details-info-col" style="padding-left: 16px; padding-right: 16px;">
+            <section style="margin-top: 1.5rem;margin-left: 1rem;">
+                <div class="ant-col ant-col-24 product-details-info-col">
                     <div class="bt-last">
                         <button class="bt-edit-farm-record btn-sm mr-2" id="openFormEditPlot">แก้ไข</button>
                         <button type="button" onclick="document.getElementById('id01').style.display='block'" class="bt-delete-farm-record btn-sm">ลบแปลง</button>
                     </div>
-                    <div class="row">
-                        <div class="col-sm-3"></div>
+                    <div class="row" style="margin-top: 1em;">
                         <div class="col-sm-6">
-                            <div class="width-border p-5">
-                                <div class="row">
-                                    <label class="mb-2" style="font-size:large;"><strong>Host : </strong><span style="font-size: medium;">{{ $value_data_plot->host }}</span></label>
-                                </div>
-                                <div class="row">
-                                    <label class="mb-2" style="font-size:large;"><strong>Topic send : </strong><span style="font-size: medium;">{{ $value_data_plot->topic_send }}</span></label>
-                                </div>
-                                <div class="row">
-                                    <label class="mb-2" style="font-size:large;"><strong>Topic sub : </strong><span style="font-size: medium;">{{ $value_data_plot->topic_sub }}</span></label>
-                                </div>
-                                <div class="row">
-                                    <label style="font-size:large;"><strong>คำอธิบาย : </strong><span style="font-size: medium;">{{ $value_data_plot->description }}</span></label>
+                            <div class="width-border">
+                                <div class="p-4">
+                                    <h3 class="font-prompt">รายละเอียดแปลง</h3>
+                                    <div class="row">
+                                        <label class="mb-2" style="font-size:large;"><strong>ขนาดแปลง : </strong><span style="font-size: medium;">{{ $value_data_plot->rai_size }} ไร่ {{ $value_data_plot->ngan_size }} งาน {{ $value_data_plot->square_wah_size }} ตารางวา</span></label>
+                                    </div>
+                                    <div class="row">
+                                        <label class="mb-2" style="font-size:large;"><strong>ละติจูด : </strong><span style="font-size: medium;">{{ $value_data_plot->latitude }}</span></label>
+                                    </div>
+                                    <div class="row">
+                                        <label class="mb-2" style="font-size:large;"><strong>ลองจิจูด : </strong><span style="font-size: medium;">{{ $value_data_plot->longitude }}</span></label>
+                                    </div>
+                                    <div class="row">
+                                        <label style="font-size:large;"><strong>คำอธิบาย : </strong><span style="font-size: medium;">{{ $value_data_plot->description }}</span></label>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-3"></div>
+                        <div class="col-sm-6">
+                            <div class="width-border">
+                                <div class="p-4">
+                                    <h3 class="font-prompt">รายละเอียดระบบไอโอที</h3>
+                                    <div class="row">
+                                        <label class="mb-2" style="font-size:large;"><strong>โฮสต์ : </strong><span>{{ $value_data_plot->host }}</span></label>
+                                    </div>
+                                    <div class="row">
+                                        <label class="mb-2" style="font-size:large;"><strong>ท็อปปิครับข้อมูล : </strong><span style="font-size: medium;">{{ $value_data_plot->topic_send }}</span></label>
+                                    </div>
+                                    <div class="row">
+                                        <label class="mb-2" style="font-size:large;"><strong>ท็อปปิคส่งข้อมูล : </strong><span style="font-size: medium;">{{ $value_data_plot->topic_sub }}</span></label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="product-details-row">
                         <div class="ant-row row" style="margin-left: -16px; margin-right: -16px; row-gap: 0px;">
@@ -76,7 +106,7 @@
                                 </script>
                                 <div id="id01" class="modal">
                                     <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">×</span>
-                                    <form class="modal-content" action="{{ route('plots.destroy', $datas) }}" method="post">
+                                    <form class="modal-content" action="{{ route('plots.destroy', $plotID) }}" method="post">
                                         <div class="container">
                                             <h3 class="font-prompt">แปลง : {{ $value_data_plot->name }}</h3>
                                             <p class="font-prompt">ต้องการลบแปลงนี้หรือไม่?</p>
@@ -92,7 +122,7 @@
                                     </form>
                                 </div>
                                 <div class="edit-plot" style="display: none;">
-                                    <form action="{{ route('plots.update', $datas) }}" method="POST">
+                                    <form action="{{ route('plot-update', $plotID) }}" method="POST" enctype="multipart/form-data">
                                         <div class="ant-modal-mask"></div>
                                         <div class="ant-modal-wrap ant-modal-centered">
                                             <div class="ant-modal">
@@ -161,8 +191,15 @@
                                                                     <label class="font-prompt">รูปภาพ</label>
                                                                     <div class="ant-col ant-form-item-control">
                                                                         <div class="ant-form-item-control-input">
-                                                                            <div class="ant-form-item-control-input-content">
-                                                                                <input class="font-prompt" type="file" name="file" value="{{ $value_data_plot->file_path }}">
+                                                                            <div class="ant-form-item-control-input-content" style="width: 400px;">
+                                                                                <div class="row">
+                                                                                    <div class="col-sm-6">
+                                                                                        <input class="font-prompt" type="file" name="file_path">
+                                                                                    </div>
+                                                                                    <div class="col-sm-6">
+                                                                                        <img src="{{ asset('plot_images/'.$value_data_plot->img_name) }}" alt="Image" width="50%">
+                                                                                    </div>
+                                                                                </div>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -179,9 +216,7 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        {{--
                                                         <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
-                                                        --}}
                                                         <div class="ant-modal-footer">
                                                             <button type="button" id="cancelEditPlotForm" class="ant-btn ant-btn-secondary">
                                                                 <span class="font-prompt">ยกเลิก</span>

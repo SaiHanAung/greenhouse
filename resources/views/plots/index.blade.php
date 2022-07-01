@@ -11,7 +11,7 @@
 $userID = Auth::user()->id;
 
 $get_data_plot = DB::table('plots')
-    ->select('id', 'name', 'host', 'topic_send', 'topic_sub', 'description','img_name', 'file_path')
+    ->select('id', 'name', 'host', 'topic_send', 'topic_sub', 'description','img_name', 'file_path', 'rai_size', 'ngan_size', 'square_wah_size')
     ->where('user_id', '=', $userID)->get();
 ?>
 <div class="user-layout-right-content user-layout-right-content-fold">
@@ -56,26 +56,53 @@ $get_data_plot = DB::table('plots')
                 </script>
             </div>
         </div>
-        <div class="main-layout--content"><span class="ant-input-affix-wrapper products-filter-input"><span class="ant-input-prefix"><span class="linearicon linearicon-search undefined"></span></span><input maxlength="200" class="ant-input" placeholder="Search Templates" type="text" value=""><span class="ant-input-suffix"><span></span></span></span>
+        <div class="main-layout--content">
+            <!-- <form action="{{url('/search-record')}}"method="post" style="margin-bottom: -1em;">
+                <span class="ant-input-affix-wrapper products-filter-input">
+                    <span class="ant-input-prefix">
+                    <span class="linearicon linearicon-search"></span>
+                </span>
+                    @csrf
+                    <input class="ant-input font-prompt" placeholder="ค้นหา" type="text" name="name"/>
+                    <input class="ant-btn" type="submit" value="ค้นหา"/>
+                    <span class="ant-input-suffix">
+                        <span></span>
+                    </span>
+                </span>
+            </form> -->
             @if ($message = Session::get('success'))
-            <div id="alert" class="alert alert-success">
+            <div id="alert" class="alert alerSuccess">
                 <span class="font-prompt" style="font-size: medium;">{{ $message }}</span>
             </div>
             @endif
             <div class="settings-user-content main-list">
                 @foreach($get_data_plot as $key => $value)
-                <div class="row">
+                <div class="row mt-3">
                     <div class="col-4">
-                        <a href="{{ route('dashboard.index', ['datas'=>$value->id]) }}">
+                        <a href="{{ route('dashboard.index', ['plotID'=>$value->id]) }}">
                             <div class="main-list--item">
                                 <?php
                                 // dd($value);
                                 // echo asset('storage/');
                                 ?>
-                                <div class="main-list--item-preview main-list--item-preview--is-active"><img src="{{ asset('plot_images/'.$value->file_path) }}" alt="Image"></div>
+                                <div class="main-list--item-preview main-list--item-preview--is-active"><img src="{{ asset('plot_images/'.$value->img_name) }}" alt="Image"></div>
                                 <div class="main-list--item-details">
                                     <div class="main-list--item-details-name font-prompt"><label class="font-prompt" style="font-size:large;">แปลง :</label> {{ $value->name }}</div>
-                                    <div class="main-list--item-details-name font-prompt"><label class="font-prompt" style="font-size:large;">ไอดี :</label> {{ $value->id }}</div>
+                                    <div class="main-list--item-details-name font-prompt">
+                                        <label class="font-prompt" style="font-size:large;">ขนาด :</label> 
+                                        @if($value->rai_size == 0)
+                                        @else
+                                        {{$value->rai_size}} ไร่
+                                        @endif
+                                        @if($value->ngan_size == 0)
+                                        @else
+                                        {{$value->ngan_size}} งาน
+                                        @endif
+                                        @if($value->square_wah_size == 0)
+                                        @else
+                                        {{$value->square_wah_size}} ตารางวา
+                                        @endif
+                                    </div>
                                 </div>
                             </div>
                         </a>

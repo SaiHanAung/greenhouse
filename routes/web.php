@@ -26,9 +26,10 @@ Route::get('/', function () {
 Route::get('/layout2', function() {
     return view('dashboard.layout2');
 });
-Route::get('/test', function () {
-    return view('test');
-});
+Route::get('/test', 'TestController@index')->name('test.index');
+Route::delete('/test-softdelete/{id}', 'TestController@sd')->name('test.sd');
+Route::get('/test-softdelete-show/{id}', 'TestController@sdShow')->name('test.sd.show');
+
 Route::get('/test2', function () {
     return view('test2');
 });
@@ -39,9 +40,27 @@ Route::get('/qrcode', function () {
 
 Route::get('switch/{id}');
 
-
+// Temp and Humid Chat //
+Route::get('chart', 'ChartApiController@index')->name('api.chart');
+Route::get('store-temp', 'ChartApiController@storeTemp')->name('storeTemp');
+Route::get('showTemp-sixHour', 'ChartApiController@showTempSixHour')->name('showTempSixHour');
+Route::get('dateShowTemp', 'ChartApiController@dateShowTemp')->name('dateShowTemp');
+Route::get('dateShowHumid', 'ChartApiController@dateShowHumid')->name('dateShowHumid');
+Route::get('store-humid', 'ChartApiController@storeHumid')->name('storeHumid');
+//
 
 Auth::routes();
+
+Route::middleware(['auth', 'isAdmin'])->group(function () {
+    // Route::get('/admin', function () { return view('admin.index'); })->name('admin.index');
+    Route::get('/admin', 'AdminController@index')->name('admin.index');
+    Route::get('/admin/view-user/{userID}', 'AdminController@viewUser')->name('admin.viewUser');
+    Route::get('/admin/view-user/{userID}/edit-password', 'AdminController@editPassword')->name('admin.editPassword');
+    Route::put('/admin.editUserPassword/{userID}', 'AdminController@editUserPassword')->name('admin.editUserPassword');
+    Route::get('/admin/view-user/{userID}/view-plot/{plotID}', 'AdminController@viewPlot')->name('admin.viewPlot');
+    Route::delete('/admin.destroyUser/{userID}', 'AdminController@destroyUser')->name('admin.destroyUser');
+});
+
 
 Route::group(['middleware' => ['auth']], function() {
     /**
@@ -58,6 +77,8 @@ Route::get('/farms/info', 'FarmsController@info')->name('farmInfo');
 Route::get('/farms/dashboard', 'FarmsController@dashboard')->name('farmDashboard');
 Route::get('/farms/report', 'FarmsController@report')->name('farmReport');
 
+// Route::get('/report', function(){ return view('report.index'); });
+
 
 Route::get('/setting', 'SettingController@index')->name('setting');
 
@@ -67,48 +88,59 @@ Route::post('/profile.update', 'ProfileController@update')->name('profile.update
 Route::get('/traceability', function () {
     return view('traceability');
 });
-Route::get('/traceability/{datas}', 'TraceabilityController@index')->name('traceability.index');
+// Route::get('/traceability/{plotID}/{id}', 'TraceabilityController@index')->name('traceability.index');
+Route::get('/traceability/{plotID}/{reference_id}', 'TraceabilityController@index')->name('traceability.index');
 
 // Route::resource('dashboards', DashboardController::class);
 
 Route::resource('plots', PlotController::class);
+Route::put('plot-update/{plotID}', 'PlotController@update')->name('plot-update');
 
 Route::resource('autoruns', AutorunController::class);
 
 Route::resource('switches', SwitchesController::class);
 
 
-// Route::get('/plots/{datas}/savenote', 'SavenoteController@index')->name('savenote.index');
-Route::get('/plots/{datas}/savenote', 'SaveNoteController@index')->name('savenote.index');
+// Route::get('/plots/{plotID}/savenote', 'SavenoteController@index')->name('savenote.index');
+Route::get('/plots/{plotID}/savenote', 'SaveNoteController@index')->name('savenote.index');
 
-Route::get('/plots/{datas}/report', 'ReportController@index')->name('report.index');
+Route::get('/plots/{plotID}/report', 'ReportController@index')->name('report.index');
 
-Route::get('/plots/{datas}/qrcode', 'QrcodeController@index')->name('qrcode.index');
+Route::get('/plots/{plotID}/qrcode', 'QrcodeController@index')->name('qrcode.index');
 
-Route::get('/plots/{datas}/setting', 'SettingController@index')->name('setting.index');
+Route::get('/plots/{plotID}/setting', 'SettingController@index')->name('setting.index');
 
-Route::get('/plots/{datas}/dashboard/info', 'DashboardController@index')->name('dashboard.index');
-Route::get('/plots/{datas}/dashboard/autorun', 'AutorunController@index')->name('autorun.index');
-Route::get('/plots/{datas}/dashboard/autorun/show', 'AutorunController@show')->name('autorun.show');
-Route::get('/plots/{datas}/dashboard/switches', 'SwitchesController@index')->name('dashboard.switch');
-Route::get('/plots/{datas}/dashboard/settime', 'DashboardController@settime')->name('dashboard.settime');
+Route::get('/plots/{plotID}/dashboard/info', 'DashboardController@index')->name('dashboard.index');
+Route::get('/plots/{plotID}/dashboard/autorun', 'AutorunController@index')->name('autorun.index');
+Route::get('/plots/{plotID}/dashboard/autorun/show', 'AutorunController@show')->name('autorun.show');
+Route::get('/plots/{plotID}/dashboard/switches', 'SwitchesController@index')->name('dashboard.switch');
+Route::get('/plots/{plotID}/dashboard/settime', 'DashboardController@settime')->name('dashboard.settime');
+Route::get('/plots/{plotID}/dashboard/history-plant/{historyPlantID}', 'DashboardController@historyPlant')->name('dashboard.historyPlant');
+Route::delete('/new-plant/{plotID}', 'DashboardController@newPlant')->name('dashboard.newPlant');
+Route::post('/storeSettingPlant', 'DashboardController@storeSettingPlant')->name('dashboard.storeSettingPlant');
+Route::post('/store-traceability/{plotID}', 'DashboardController@storeTraceability')->name('dashboard.storeTraceability');
 
 Route::get('/autoruns', 'AutorunController@index')->name('autorun');
 Route::post('/autoruns.store', 'AutorunController@store')->name('autorun.store');
 Route::delete('/autorun.destroy', 'AutorunController@destroy')->name('autorun.destroy');
 
 Route::post('/switch.store', 'SwitchesController@store')->name('switch.store');
+Route::post('/switch-time-set.store', 'SwitchesController@storeSwichTimeSet')->name('switchtTimeSet.store');
 Route::delete('/switch.destroy/{switches}', 'SwitchesController@destroy')->name('switch.destroy');
+Route::delete('/switch-time-set.destroy/{switch_time_set}', 'SwitchesController@destroySwichTimeSet')->name('destroySwichTimeSet');
+Route::put('/switch-time-set.update/{switch_time_set}', 'SwitchesController@updateSwitchTimeSet')->name('updateSwitchTimeSet');
 
-Route::post('/traceability-factor.store', 'SaveNoteController@storeTraceabilityFactor')->name('savenote.storeTracFact');
-Route::post('/traceability-use-factor.store', 'SaveNoteController@storeTraceabilityUseFactor')->name('savenote.storeTracUseFact');
-Route::post('/traceability-harvest.store', 'SaveNoteController@storeTraceabilityHarvest')->name('savenote.storeTracHarv');
-Route::post('/sell-produce.store', 'SaveNoteController@storeSellProduce')->name('savenote.storeSellProduce');
+Route::post('/note-plant-area.store', 'SaveNoteController@storeNotePlantArea')->name('savenote.storeNotePlantArea');
+Route::post('/note-plant.store', 'SaveNoteController@storeNotePlant')->name('savenote.storeNotePlant');
+Route::post('/note-harvest.store', 'SaveNoteController@storeNoteHarvest')->name('savenote.storeNoteHarvest');
+Route::post('/note-maintenance.store', 'SaveNoteController@storeNoteMaintenance')->name('savenote.storeNoteMaintenance');
+Route::post('/note-sell.store', 'SaveNoteController@storeNoteSell')->name('savenote.storeNoteSell');
 
-Route::delete('/traceability-factor.destroy/{traceability_factor}', 'SaveNoteController@destroyTracFact')->name('destroyTracFact');
-Route::delete('/traceability-use-factor.destroy/{traceability_use_factor}', 'SaveNoteController@destroyTracUseFact')->name('destroyTracUseFact');
-Route::delete('/traceability-harvest.destroy/{traceability_harvest}', 'SaveNoteController@destroyTracHarv')->name('destroyTracHarv');
-Route::delete('/sell-produce.destroy/{sell_produce}', 'SaveNoteController@destroySellProduce')->name('destroySellProduce');
+Route::delete('/note-plant-area.destroy/{note_plant_area}', 'SaveNoteController@destroyNotePlantArea')->name('destroyNotePlantArea');
+Route::delete('/note-plant.destroy/{note_plant}', 'SaveNoteController@destroyNotePlant')->name('destroyNotePlant');
+Route::delete('/note-harvest.destroy/{note_harvest}', 'SaveNoteController@destroyNoteHarvest')->name('destroyNoteHarvest');
+Route::delete('/note-maintenance.destroy/{note_maintenance}', 'SaveNoteController@destroyNoteMaintenance')->name('destroyNoteMaintenance');
+Route::delete('/note-sell.destroy/{note_sell}', 'SaveNoteController@destroyNoteSell')->name('destroyNoteSell');
 
 
 Route::get('/clear-cache', function() {
@@ -117,7 +149,13 @@ Route::get('/clear-cache', function() {
     return back();
 });
 
-Route::get('/downloadPDF/{datas}','QrcodeController@downloadPDF')->name('downloadPDF');
+//หาข้อมูลไม่เจอระบบจะแจ้ง หน้า error 404 อัตโนมัติ
+Route::get('/test/{id}', function ($id) {
+    return App\Plot::findOrFail($id);
+});
+
+Route::get('/downloadPDF/{plotID}','QrcodeController@downloadPDF')->name('downloadPDF');
+Route::post('/settingQrcode/{plotID}','QrcodeController@settingQrcode')->name('settingQrcode');
 Route::get('/downloadTracFactExcel','SaveNoteController@TracFactExcel')->name('TracFactExcel');
 Route::get('/downloadTracUseFactExcel','SaveNoteController@TracUseFactExcel')->name('TracUseFactExcel');
 Route::get('/downloadTracHarvExcel','SaveNoteController@TracHarvExcel')->name('TracHarvExcel');
@@ -127,11 +165,6 @@ Route::get('/request-mqtt', 'DashboardController@reciveMqtt')->name('reciveMqtt'
 Route::get('settime/{id}', 'DashboardController@st')->name('st');
 
 
-Route::get('switch1/{id}', 'SwitchesController@da')->name('da');
-Route::get('switch2/{id}', 'SwitchesController@da2')->name('da2');
-Route::get('switch3/{id}', 'SwitchesController@da3')->name('da3');
-Route::get('switch4/{id}', 'SwitchesController@da4')->name('da4');
-Route::get('switch5/{id}', 'SwitchesController@da5')->name('da5');
-Route::get('switch6/{id}', 'SwitchesController@da6')->name('da6');
-Route::get('switch7/{id}', 'SwitchesController@da7')->name('da7');
-Route::get('switch8/{id}', 'SwitchesController@da8')->name('da8');
+Route::get('switch1/{switchID}', 'SwitchesController@da')->name('da');
+Route::get('switch-time-set-update/{switchID}', 'SwitchesController@switchTimeSetUpdate')->name('switchTimeSetUpdate');
+Route::get('stop-time-set/{switchID}', 'SwitchesController@stopTimeSet')->name('stopTimeSet');

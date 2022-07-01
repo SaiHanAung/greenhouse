@@ -1,0 +1,34 @@
+    #back-to-top-btn {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        font-size: 32px;
+        width: 55px;
+        height: 55px;
+        background-color: #fff;
+        color: #24C48E;
+        cursor: pointer;
+        border: 5px solid #24C48E;
+        border-radius: 50%;
+        transition: background-color .3s, opacity .5s, visibility .5s;
+        opacity: 0;
+        z-index: 10;
+        display: flex;
+        flex-wrap: wrap;
+        align-content: center;
+    }
+    
+    #back-to-top-btn:hover,
+    #back-to-top-btn:focus {
+        background-color: #24C48E;
+        color: #fff;
+    }
+    
+    #back-to-top-btn.show {
+        opacity: 1;
+        visibility: visible;
+    }
+    
+    .text-center {
+        transform: translate(-36%, -5%);
+    }

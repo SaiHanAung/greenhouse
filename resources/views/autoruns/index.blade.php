@@ -9,10 +9,10 @@
             <div class="main-layout--header-options">
                 <nav>
                     <div class="nav nav-tabs" style="border-bottom-color: #49cea1;">
-                        <button class="nav-link"><a href="{{ route('savenote.index', $datas) }}" class="clearfonts">จดบันทึก</a></button>
-                        <button class="nav-link"><a href="{{ route('report.index', $datas) }}" class="clearfonts">รายงาน</a></button>
+                        <button class="nav-link"><a href="{{ route('savenote.index', $plotID) }}" class="clearfonts">จดบันทึก</a></button>
+                        <button class="nav-link"><a href="{{ route('report.index', $plotID) }}" class="clearfonts">รายงาน</a></button>
                         <label class="nav-link clearfont active" style="color: #49cea1;border-color: #49cea1;border-bottom-color:transparent;">แผงควบคุม</label>
-                        <button class="nav-link"><a href="{{ route('plots.show', $datas) }}" class="clearfonts">ข้อมูล</a></button>
+                        <button class="nav-link"><a href="{{ route('plots.show', $plotID) }}" class="clearfonts">ข้อมูล</a></button>
                     </div>
                 </nav>
             </div>
@@ -32,14 +32,14 @@
                             <div class="col-sm-6">
                                 <div class="row">
                                     <div style="position: relative;">
-                                        <a href="{{ route('dashboard.index', $datas) }}">
+                                        <a href="{{ route('dashboard.index', $plotID) }}">
                                             <label class="tab font-black font-prompt">โดยรวม</label>
                                         </a>
                                         <label for="tab-two" id="tab-two-label" class="tab font-black font-prompt">อัตโนมัติ</label>
-                                        <a href="{{ route('dashboard.switch', $datas) }}">
+                                        <a href="{{ route('dashboard.switch', $plotID) }}">
                                             <label class="tab font-black font-prompt">I/O</label>
                                         </a>
-                                        <a href="{{ route('dashboard.settime', $datas) }}">
+                                        <a href="{{ route('dashboard.settime', $plotID) }}">
                                             <label class="tab font-black font-prompt">ตั้งเวลา</label>
                                         </a>
                                     </div>

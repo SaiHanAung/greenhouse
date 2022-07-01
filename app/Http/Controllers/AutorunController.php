@@ -13,7 +13,7 @@ class AutorunController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($datas)
+    public function index($plotID)
     {
         //
 
@@ -21,7 +21,7 @@ class AutorunController extends Controller
 
         $get_plot_name = DB::table('plots')
             ->select('name')
-            ->where('id', '=', $datas)->get();
+            ->where('id', '=', $plotID)->get();
         foreach ($get_plot_name as $key_name => $value_name) {
             foreach ($value_name as $key_name_sub => $value_name_sub) {
             }
@@ -43,10 +43,10 @@ class AutorunController extends Controller
                 'saturday',
                 'updated_at'
             )
-            ->where('plot_id', '=', $datas)->get();
+            ->where('plot_id', '=', $plotID)->get();
 
         // dd($get_data_autorun);
-        return view('autoruns.index', compact('datas', 'value_name_sub', 'get_data_autorun'));
+        return view('autoruns.index', compact('plotID', 'value_name_sub', 'get_data_autorun'));
     }
 
     /**
@@ -92,9 +92,9 @@ class AutorunController extends Controller
     public function show(Autorun $autorun)
     {
         //
-        $datas = Autorun::get();
+        $plotID = Autorun::get();
         // dd($data);
-        return view('autoruns.index', compact('autorun', 'datas'));
+        return view('autoruns.index', compact('autorun', 'plotID'));
     }
 
     /**

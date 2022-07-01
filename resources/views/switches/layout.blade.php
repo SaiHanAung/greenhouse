@@ -5,7 +5,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <link rel="icon" type="image/x-icon" href="{{ asset('imgs/green-house.png') }}">
-    <title>Green House</title>
+    <title>
+        @include('layouts.titles') @yield('title.switches.index')Green House 
+    </title>
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -21,6 +23,7 @@
     <link href="{{ asset('css/plot/tab.css') }}" rel="stylesheet">
     <link href="{{ asset('css/plot/drop_autorunpage.css') }}" rel="stylesheet">
     <link href="{{ asset('css/sidenave.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/back-to-top.css') }}" rel="stylesheet">
     <script>
         function slider(x) {
             document.getElementById("mySidenav").classList.toggle("open");
@@ -57,10 +60,29 @@
             background: #fff !important;
             color: #000 !important;
         }
+
+        [aria-current] .page-link {
+            background-color: #24c48e !important;
+            border-color: #24c48e !important;
+        }
+
+        [rel='prev'], [rel='next'] {
+            border-color: #24c48e !important;
+            color: #000000 !important;
+        }
+
+        .pagination > li :not([rel='prev'],[rel='next'],[aria-current] .page-link) {
+            border-color: #24c48e  !important;
+            color: #000000 !important;
+        }
+        .pagination > li :hover {
+            background-color: #99f99f !important;
+        }
     </style>
 </head>
 
 <body>
+    <button id="back-to-top-btn"><i class="fas fa-angle-double-up text-center"></i></button>
     <div class="content">
         <div id="app">
             @if(Auth::check())
@@ -107,14 +129,15 @@
                     });
                 });
             </script>
+            {{--
             <div class="side-mobile">
                 <div id="mySidenav" class="sidenav">
                     <a href="{{ route('plots.index') }}" class="font-prompt">จัดการฟาร์ม</a>
                     <ul>
                         <li style="list-style-type: none;"><a href="javascript:void(0)" style="color: #49cea1;" class="font-prompt">แผงควบคุม</a></li>
-                        <li style="list-style-type: none;"><a href="{{ route('savenote.index', $datas) }}" class="font-prompt">จดบันทึก</a></li>
-                        <li style="list-style-type: none;"><a href="{{ route('setting.index', $datas) }}" class="font-prompt">ตั้งค่า</a></li>
-                        <li style="list-style-type: none;"><a href="{{ route('qrcode.index', $datas) }}" class="font-prompt">QR Code</a></li>
+                        <li style="list-style-type: none;"><a href="{{ route('savenote.index', $plotID) }}" class="font-prompt">จดบันทึก</a></li>
+                        <li style="list-style-type: none;"><a href="{{ route('setting.index', $plotID) }}" class="font-prompt">ตั้งค่า</a></li>
+                        <li style="list-style-type: none;"><a href="{{ route('qrcode.index', $plotID) }}" class="font-prompt">QR Code</a></li>
                     </ul>
                     <a href="{{ route('profile') }}" class="font-prompt">โปรไฟล์</a>
                     <a href="{{ route('logout.perform') }}" class="font-prompt">ออกจากระบบ</a>
@@ -139,7 +162,7 @@
                 <div class="row" style="margin: -0.5em 0 2em 0;">
                     <hr>
                     <div class="col-4">
-                        <a href="{{ route('dashboard.index', $datas) }}" class="bt-w-bg btn-sm font-prompt" style="color: #000;float:right;margin-top:-.4em;">
+                        <a href="{{ route('dashboard.index', $plotID) }}" class="bt-w-bg btn-sm font-prompt" style="color: #000;float:right;margin-top:-.4em;">
                             โดยรวม
                         </a>
                     </div>
@@ -206,7 +229,312 @@
                     @endforeach
                 </div>
             </div>
-
+            --}}
+            <div class="createSwitch" style="display: none;">
+                <div class="ant-modal-mask"></div>
+                <div tabindex="-1" class="ant-modal-wrap modal-window vertical-center-modal create-tag-modal vertical-center-modal ant-modal-centered" role="dialog" aria-labelledby="rcDialogTitle0" style="">
+                    <div role="document" class="ant-modal" style="width: 776px; height: 536px; transform-origin: 955px 17.5px;">
+                        <div tabindex="0" aria-hidden="true" style="width: 0px; height: 0px; overflow: hidden; outline: none;"></div>
+                        <div class="ant-modal-content">
+                            <div class="ant-modal-header">
+                                <div class="ant-modal-title" id="rcDialogTitle0">สร้างสวิตช์ไอโอที</div>
+                            </div>
+                            <div class="ant-modal-body">
+                                <style>
+                                    .text-vertical-center{
+                                        transform: translate(0%, -50%);
+                                    }
+                                </style>
+                                <div class="row mb-3 mt-3">
+                                    <div class="col-sm-4">
+                                        <button id="openFormSwitchManual" class="ant-btn p-5" style="width: 100%;">
+                                            <p class="text-vertical-center font-prompt" style="font-size:large;">แมนนวล</p>
+                                        </button>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <button id="openFormSwitchTimeSet" class="ant-btn p-5" style="width: 100%;">
+                                            <p class="text-vertical-center font-prompt" style="font-size:large;">ตั้งเวลา</p>
+                                        </button>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        &nbsp;
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="ant-modal-footer">
+                                <button type="button" class="ant-btn bt-edit" id="cancelModalCreateSwitch" ant-click-animating-without-extra-node="false">
+                                    <span>ปิด</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="switchManual" style="display: none;">
+                <form action="{{ route('switch.store') }}" method="POST">
+                    @csrf
+                    <div class="ant-modal-mask"></div>
+                    <div class="ant-modal-wrap ant-modal-centered">
+                        <div class="ant-modal">
+                            <div class="ant-modal-content">
+                                <div class="ant-modal-header">
+                                    <div class="ant-modal-title" style="font-size:large;font-weight:bolder;">สร้างสวิตซ์แบบแมนนวล</div>
+                                </div>
+                                <div class="ant-modal-body" id="FarmInputRecordTypeAndSourceShow">
+                                    <div class="ant-row ant-form-item ant-form-item-with-help own-custom-form-field normal-offset normal-offset ant-form-item-has-success">
+                                        <div class="font-prompt">ชื่อสวิตซ์</div>
+                                        <div class="ant-col ant-form-item-control">
+                                            <div class="ant-form-item-control-input">
+                                                <div class="ant-form-item-control-input-content"><input name="name" type="text" class="ant-input font-prompt" placeholder="เช่น รดน้ำ" required></div> 
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="ant-row ant-form-item ant-form-item-with-help own-custom-form-field normal-offset normal-offset ant-form-item-has-success" style="row-gap: 0px;">
+                                        <div class="font-prompt">พอร์ต</div>
+                                        <div class="ant-col ant-form-item-control">
+                                            <div class="ant-form-item-control-input">
+                                                <div class="ant-select ant-select-single">
+                                                    <select class="ant-select-selector font-prompt" name="port" required>
+                                                        <option class="special" value="soc_0">
+                                                            <span class="">soc 0</span>
+                                                        </option>
+                                                        <option class="special" value="soc_1">
+                                                            <span class="">soc 1</span>
+                                                        </option>
+                                                        <option class="special" value="soc_2">
+                                                            <span class="">soc 2</span>
+                                                        </option>
+                                                        <option class="special" value="soc_3">
+                                                            <span class="">soc 3</span>
+                                                        </option>
+                                                        <option class="special" value="soc_4">
+                                                            <span class="">soc 4</span>
+                                                        </option>
+                                                        <option class="special" value="soc_5">
+                                                            <span class="">soc 5</span>
+                                                        </option>
+                                                        <option class="special" value="soc_6">
+                                                            <span class="">soc 6</span>
+                                                        </option>
+                                                        <option class="special" value="soc_7">
+                                                            <span class="">soc 7</span>
+                                                        </option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @error('port')
+                                    <div class="alert alert-danger font-prompt">พอร์ตที่เลือกถูกใช้อยู่ ใช้พอร์ตซ้ำไม่ได้</div>
+                                    @enderror
+                                    <input name="status" type="hidden" class="ant-input" value="0">
+                                    <input type="hidden" name="plot_id" value="{{$plotID}}">
+                                </div>
+                                <div class="ant-modal-footer">
+                                    <button type="button" class="ant-btn ant-btn-secondary" id="cancelSwitchManual" ant-click-animating-without-extra-node="false">
+                                        <span>ยกเลิก</span>
+                                    </button>
+                                    <button type="submit" class="ant-btn ant-btn-primary">
+                                        <span>ยืนยัน</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="switchTimeSet" style="display: none;">
+                <form action="{{ route('switchtTimeSet.store') }}" method="POST">
+                    @csrf
+                    <div class="ant-modal-mask"></div>
+                    <div class="ant-modal-wrap ant-modal-centered">
+                        <div class="ant-modal">
+                            <div class="ant-modal-content">
+                                <div class="ant-modal-header">
+                                    <div class="ant-modal-title" style="font-size:large;font-weight:bolder;">สร้างสวิตซ์แบบตั้งเวลา</div>
+                                </div>
+                                <div class="ant-modal-body" id="FarmInputRecordTypeAndSourceShow">
+                                    <div class="ant-row ant-form-item ant-form-item-with-help own-custom-form-field normal-offset normal-offset ant-form-item-has-success">
+                                        <div class="font-prompt">ชื่อสวิตซ์</div>
+                                        <div class="ant-col ant-form-item-control">
+                                            <div class="ant-form-item-control-input">
+                                                <div class="ant-form-item-control-input-content"><input name="name" type="text" class="ant-input font-prompt" placeholder="เช่น รดน้ำ" required></div> 
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="ant-row ant-form-item ant-form-item-with-help own-custom-form-field normal-offset normal-offset ant-form-item-has-success">
+                                        <div class="font-prompt">เวลาเริ่มต้นทำงาน</div>
+                                        <div class="ant-col ant-form-item-control">
+                                            <div class="ant-form-item-control-input">
+                                                <div class="ant-form-item-control-input-content">
+                                                    <input type="time" class="ant-input font-prompt" name="start_time" value="08:00" required />
+                                                </div> 
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="ant-row ant-form-item ant-form-item-with-help own-custom-form-field normal-offset normal-offset ant-form-item-has-success">
+                                        <div class="font-prompt">เวลาหยุดทำงาน</div>
+                                        <div class="ant-col ant-form-item-control">
+                                            <div class="ant-form-item-control-input">
+                                                <div class="ant-form-item-control-input-content">
+                                                <input type="time" class="ant-input font-prompt" name="stop_time" value="08:30" required />
+                                                </div> 
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="ant-row ant-form-item ant-form-item-with-help own-custom-form-field normal-offset normal-offset ant-form-item-has-success" style="row-gap: 0px;">
+                                        <div class="font-prompt">พอร์ต</div>
+                                        <div class="ant-col ant-form-item-control">
+                                            <div class="ant-form-item-control-input">
+                                                <div class="ant-select ant-select-single">
+                                                    <select class="ant-select-selector font-prompt" name="port" required>
+                                                        <option class="special" value="soc_0">
+                                                            <span class="">soc 0</span>
+                                                        </option>
+                                                        <option class="special" value="soc_1">
+                                                            <span class="">soc 1</span>
+                                                        </option>
+                                                        <option class="special" value="soc_2">
+                                                            <span class="">soc 2</span>
+                                                        </option>
+                                                        <option class="special" value="soc_3">
+                                                            <span class="">soc 3</span>
+                                                        </option>
+                                                        <option class="special" value="soc_4">
+                                                            <span class="">soc 4</span>
+                                                        </option>
+                                                        <option class="special" value="soc_5">
+                                                            <span class="">soc 5</span>
+                                                        </option>
+                                                        <option class="special" value="soc_6">
+                                                            <span class="">soc 6</span>
+                                                        </option>
+                                                        <option class="special" value="soc_7">
+                                                            <span class="">soc 7</span>
+                                                        </option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @error('port')
+                                    <div class="alert alert-danger font-prompt">พอร์ตที่เลือกถูกใช้อยู่ ใช้พอร์ตซ้ำไม่ได้</div>
+                                    @enderror
+                                    <input name="status" type="hidden" class="ant-input" value="0">
+                                    <input type="hidden" name="plot_id" value="{{$plotID}}">
+                                </div>
+                                <div class="ant-modal-footer">
+                                    <button type="button" class="ant-btn ant-btn-secondary" id="cancelSwitchTimeSet" ant-click-animating-without-extra-node="false">
+                                        <span>ยกเลิก</span>
+                                    </button>
+                                    <button type="submit" class="ant-btn ant-btn-primary">
+                                        <span>ยืนยัน</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            
+            {{--
+            <div class="editSwitchTimeSet" style="display: none;">
+                <form action="{{ route('updateSwitchTimeSet', $value_switch_time_set->id) }}" method="POST">
+                    @csrf
+                    @method('PUT')
+                    <div class="ant-modal-mask"></div>
+                    <div class="ant-modal-wrap ant-modal-centered">
+                        <div class="ant-modal">
+                            <div class="ant-modal-content">
+                                <div class="ant-modal-header">
+                                    <div class="ant-modal-title" style="font-size:large;font-weight:bolder;">แก้ไขสวิตซ์แบบตั้งเวลา</div>
+                                </div>
+                                <div class="ant-modal-body" id="FarmInputRecordTypeAndSourceShow">
+                                    <div class="ant-row ant-form-item ant-form-item-with-help own-custom-form-field normal-offset normal-offset ant-form-item-has-success">
+                                        <div class="font-prompt">ชื่อสวิตซ์</div>
+                                        <div class="ant-col ant-form-item-control">
+                                            <div class="ant-form-item-control-input">
+                                                <div class="ant-form-item-control-input-content">
+                                                    <input name="name" type="text" class="ant-input font-prompt" value="{{$value_switch_time_set->name}}" required>
+                                                </div> 
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="ant-row ant-form-item ant-form-item-with-help own-custom-form-field normal-offset normal-offset ant-form-item-has-success">
+                                        <div class="font-prompt">เวลาเริ่มต้นทำงาน</div>
+                                        <div class="ant-col ant-form-item-control">
+                                            <div class="ant-form-item-control-input">
+                                                <div class="ant-form-item-control-input-content">
+                                                    <input type="time" class="ant-input font-prompt" name="start_time" value="{{$value_switch_time_set->start_time}}" required />
+                                                </div> 
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="ant-row ant-form-item ant-form-item-with-help own-custom-form-field normal-offset normal-offset ant-form-item-has-success">
+                                        <div class="font-prompt">เวลาหยุดทำงาน</div>
+                                        <div class="ant-col ant-form-item-control">
+                                            <div class="ant-form-item-control-input">
+                                                <div class="ant-form-item-control-input-content">
+                                                <input type="time" class="ant-input font-prompt" name="stop_time" value="{{$value_switch_time_set->stop_time}}" required />
+                                                </div> 
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="ant-row ant-form-item ant-form-item-with-help own-custom-form-field normal-offset normal-offset ant-form-item-has-success" style="row-gap: 0px;">
+                                        <div class="font-prompt">พอร์ต</div>
+                                        <div class="ant-col ant-form-item-control">
+                                            <div class="ant-form-item-control-input">
+                                                <div class="ant-select ant-select-single">
+                                                    <select class="ant-select-selector font-prompt" name="port" required>
+                                                        <option class="special" value="{{$value_switch_time_set->port}}">
+                                                            <span class="">{{$value_switch_time_set->port}}</span>
+                                                        </option>
+                                                        <option class="special" value="soc_0">
+                                                            <span class="">soc 0</span>
+                                                        </option>
+                                                        <option class="special" value="soc_1">
+                                                            <span class="">soc 1</span>
+                                                        </option>
+                                                        <option class="special" value="soc_2">
+                                                            <span class="">soc 2</span>
+                                                        </option>
+                                                        <option class="special" value="soc_3">
+                                                            <span class="">soc 3</span>
+                                                        </option>
+                                                        <option class="special" value="soc_4">
+                                                            <span class="">soc 4</span>
+                                                        </option>
+                                                        <option class="special" value="soc_5">
+                                                            <span class="">soc 5</span>
+                                                        </option>
+                                                        <option class="special" value="soc_6">
+                                                            <span class="">soc 6</span>
+                                                        </option>
+                                                        <option class="special" value="soc_7">
+                                                            <span class="">soc 7</span>
+                                                        </option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <input name="status" type="hidden" class="ant-input" value="0">
+                                    <input type="hidden" name="plot_id" value="{{$plotID}}">
+                                </div>
+                                <div class="ant-modal-footer">
+                                    <button type="button" class="ant-btn ant-btn-secondary" id="cancelFormEditSwitchTimeSet" ant-click-animating-without-extra-node="false">
+                                        <span>ยกเลิก</span>
+                                    </button>
+                                    <button type="submit" class="ant-btn ant-btn-primary">
+                                        <span>ยืนยัน</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            --}}
 
             <div class="modal-mobile" style="display:none;">
                 <div class="row">
@@ -287,7 +615,7 @@
                                             <div class="alert alert-danger font-prompt">พอร์ตที่เลือกถูกใช้อยู่ ใช้พอร์ตซ้ำไม่ได้</div>
                                             @enderror
                                             <input name="status" type="hidden" class="ant-input" value="0">
-                                            <input type="hidden" name="plot_id" value="{{$datas}}">
+                                            <input type="hidden" name="plot_id" value="{{$plotID}}">
                                         </div>
                                         <div class="ant-modal-footer">
                                             <div class="row">
@@ -321,7 +649,7 @@
                             <div class="login-logo-wrapper"><img class="login-logo" alt="LOGO" src="/imgs/green-house.png"></div>
                             <div class="login-form-wrapper">
                                 <div class="alert alert-danger" role="alert">
-                                    <strong>กรุณา</strong><a href="{{route('login') }}"> เข้าสู่ระบบ </a> ก่อนใช้งาน
+                                    กรุณา <a href="{{route('login') }}" class="font-prompt"><strong>เข้าสู่ระบบ</strong></a> ก่อนใช้งาน
                                 </div>
                             </div>
                             <div class="login-bottom-label"></div>
@@ -345,8 +673,9 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 
-    <script src="{{ asset('js/switch.js') }}"></script>
-    <!-- <script src="{{ asset('js/set_select_times.js') }}"></script> -->
+    <script src="{{ asset('js/switch.js') }}"></script> 
+    <script  src="https://kit.fontawesome.com/a54d2cbf95.js"></script>
+    <script  src="{{ asset('js/back-to-top.js') }}"></script>
 
     <script>
         $(window).on("load", function() {
@@ -367,6 +696,13 @@
             });
             $('#cancelCreateAuto').click(function() {
                 $('.ant-modal-root-2').hide();
+            });
+
+            $('#openFormEditSwitchTimeSet').click(function() {
+                $('.editSwitchTimeSet').show();
+            });
+            $('#cancelFormEditSwitchTimeSet').click(function() {
+                $('.editSwitchTimeSet').hide();
             });
         });
     </script>

@@ -5,7 +5,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <link rel="icon" type="image/x-icon" href="{{ asset('imgs/green-house.png') }}">
-    <title>Green House</title>
+    <title>
+        @include('layouts.titles') @yield('title.profile.index')Green House 
+    </title>
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 
@@ -70,7 +72,11 @@
                                 <div class="user-layout-left-navigation  user-layout-left-navigation-fold">
                                     <div class="user-layout-left-navigation-fold-company-logo" style="cursor: default;"><img src="../imgs/green-house.png" alt="Icon"></div>
                                     <ul class="ant-menu ant-menu-root ant-menu-vertical ant-menu-light user-layout-left-navigation-menu ant-menu-inline-collapsed" role="menu" tabindex="0" data-menu-list="true">
-                                        <li class="ant-menu-item" role="menuitem" tabindex="-1" data-menu-id="rc-menu-uuid-69146-1-/products" data-toggle="tooltip" data-placement="right" title="จัดการฟาร์ม"><span class="ant-menu-title-content"><a href="{{ route('plots.index') }}"></a><span class="linearicon linearicon-grid2 undefined"></span><span>ฟาร์ม</span></span></li>
+                                    @if (Auth::user()->user_type == 'admin')
+                                    <li class="ant-menu-item" data-toggle="tooltip" data-placement="right" title="จัดการผู้ใช้"><span class="ant-menu-title-content"><a href="{{ route('admin.index') }}"></a><span class="linearicon linearicon-grid2 undefined"></span><span>ฟาร์ม</span></span></li>
+                                    @else
+                                    <li class="ant-menu-item" role="menuitem" tabindex="-1" data-menu-id="rc-menu-uuid-69146-1-/products" data-toggle="tooltip" data-placement="right" title="จัดการฟาร์ม"><span class="ant-menu-title-content"><a href="{{ route('plots.index') }}"></a><span class="linearicon linearicon-grid2 undefined"></span><span>ฟาร์ม</span></span></li>
+                                    @endif
                                         <!-- <li class="ant-menu-item" role="menuitem" tabindex="-1" data-menu-id="rc-menu-uuid-69146-1-/settings" data-toggle="tooltip" data-placement="right" title="ตั้งค่า"><a href="{{ route('setting') }}"></a><span class="ant-menu-title-content"><span class="linearicon linearicon-cog undefined"></span><span>Settings</span></span></li> -->
                                         <li class="ant-menu-item ant-menu-item-selected" role="menuitem" data-menu-id="rc-menu-uuid-69146-1-/user-profile" data-toggle="tooltip" data-placement="right" title="โปรไฟล์ผู้ใช้"><span class="ant-menu-title-content"><span class="linearicon linearicon-user undefined"></span><span>User Profile</span></span></li>
                                         <script>
@@ -94,6 +100,7 @@
                 <!-- <div class="privacy-policy"><span class="privacy-policy__region">Region: sgp1</span><a href="/dashboard/privacy-policy" target="_blank">Privacy Policy</a></div> -->
             </div>
 
+            {{--
             <div class="side-mobile">
                 <div id="mySidenav" class="sidenav">
                     <a href="{{ route('plots.index') }}" class="font-prompt">จัดการฟาร์ม</a>
@@ -163,7 +170,7 @@
                     <div class="col-1"></div>
                 </div>
             </div>
-
+            --}}
             <div class="ant-modal-root-1" style="display: none;">
                 <div class="ant-modal-mask"></div>
                 <div tabindex="-1" class="ant-modal-wrap modal-window vertical-center-modal organization-settings-users-edit-modal ant-modal-centered" role="dialog" aria-labelledby="rcDialogTitle0" style="">
@@ -273,7 +280,7 @@
                             <div class="login-logo-wrapper"><img class="login-logo" alt="LOGO" src="/imgs/green-house.png"></div>
                             <div class="login-form-wrapper">
                                 <div class="alert alert-danger" role="alert">
-                                    <strong>กรุณา</strong><a href="{{route('login') }}"> เข้าสู่ระบบ </a> ก่อนใช้งาน
+                                    กรุณา <a href="{{route('login') }}" class="font-prompt"><strong>เข้าสู่ระบบ</strong></a> ก่อนใช้งาน
                                 </div>
                             </div>
                             <div class="login-bottom-label"></div>

@@ -10,10 +10,10 @@
                 <nav>
                     <div class="nav nav-tabs" style="border-bottom-color: #49cea1;">
                         <label class="nav-link clearfont active" style="color: #49cea1;border-color: #49cea1;border-bottom-color:transparent;">แผงควบคุม</label>
-                        <button class="nav-link"><a href="{{ route('savenote.index', $datas) }}" class="clearfonts">จดบันทึก</a></button>
-                        <!-- <button class="nav-link"><a href="{{ route('report.index', $datas) }}" class="clearfonts">รายงาน</a></button> -->
-                        <button class="nav-link"><a href="{{ route('setting.index', $datas) }}" class="clearfonts">ตั้งค่า</a></button>
-                        <button class="nav-link"><a href="{{ route('qrcode.index', $datas) }}" class="clearfonts">QR Code</a></button>
+                        <button class="nav-link"><a href="{{ route('savenote.index', $plotID) }}" class="clearfonts">จดบันทึก</a></button>
+                        <!-- <button class="nav-link"><a href="{{ route('report.index', $plotID) }}" class="clearfonts">รายงาน</a></button> -->
+                        <button class="nav-link"><a href="{{ route('setting.index', $plotID) }}" class="clearfonts">ตั้งค่า</a></button>
+                        <button class="nav-link"><a href="{{ route('qrcode.index', $plotID) }}" class="clearfonts">QR Code</a></button>
                     </div>
                 </nav>
                 <a href="{{ route('logout.perform') }}" class="ant-btn ml-3">
@@ -36,14 +36,14 @@
                             <div class="col-sm-6">
                                 <div class="row">
                                     <div style="position: relative;">
-                                        <a href="{{ route('dashboard.index', $datas) }}">
+                                        <a href="{{ route('dashboard.index', $plotID) }}">
                                             <label class="tab font-black font-prompt">โดยรวม</label>
                                         </a>
-                                        <!-- <a href="{{ route('autorun.index', $datas) }}">
+                                        <!-- <a href="{{ route('autorun.index', $plotID) }}">
                                             <label class="tab font-black font-prompt">อัตโนมัติ</label>
                                         </a> -->
-                                        <label for="tab-three" id="tab-three-label" class="tab font-black font-prompt">สวิตซ์</label>
-                                        <!-- <a href="{{ route('dashboard.settime', $datas) }}">
+                                        <label for="tab-three" id="tab-three-label" class="tab font-black font-prompt">ระบบไอโอที</label>
+                                        <!-- <a href="{{ route('dashboard.settime', $plotID) }}">
                                             <label class="tab font-black font-prompt">ตั้งเวลา</label>
                                         </a> -->
                                     </div>
@@ -51,7 +51,7 @@
                             </div>
                             <div class="col-sm-6">
                                 <div class="main-layout--header-options">
-                                    <button type="button" id="openFormCreateSwitch" class="ant-btn ant-btn-primary">
+                                    <button type="button" id="openModalCreateSwitch" class="ant-btn ant-btn-primary">
                                         <div class="row">
                                             <div class="col-sm-1">
                                                 <span style="font-size: xx-large;">+</span>
@@ -65,7 +65,7 @@
                             </div>
                         </div>
                         @if ($message = Session::get('success'))
-                        <div id="alert" class="alert alert-success">
+                        <div id="alert" class="alert alerSuccess">
                             <span class="font-prompt" style="font-size: medium;">{{ $message }}</span>
                         </div>
                         @endif
@@ -74,45 +74,217 @@
                         <input id="input_host" type="hidden" value="{{$valueht->host}}">
                         <input id="input_topic" type="hidden" value="{{$valueht->topic_sub}}">
                         @endforeach
-                        <div id="tab-three-panel" class="panel active">
+                        <div id="tab-three-panel" class="">
+                            <div class="row mt-4 mb-2">
+                                <label class="font-prompt" style="font-size:x-large;">สวิตช์แบบแมนนวล</label>
+                            </div>
                             <div class="row">
-                                @foreach ($get_data_switches as $key => $value)
-                                <input type="hidden" id="s_{{$value->id}}" value="{{$value->port}}">
-                                <div class="col-sm-3">
-                                    <div class="width-border">
-                                        <div class="row">
-                                            <div class="col-sm-6">
-                                                <h4 class="m-3 font-prompt" style="vertical-align: middle;"><img src="/imgs/power-off.png" class="mr-1" width="25%" alt="icon">{{ $value->name }}</h4>
-                                            </div>
-                                            <div class="col-sm-6">
-                                                <div class="bt-last" style="margin: .5em .5em 0 0;">
-                                                    <form action="{{ route('switch.destroy', $value->id) }}" method="post">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button type="submit" class="btn-secondary btn-sm">X</button>
-                                                    </form>
+                                <div class="col-sm-12">
+                                    <div class="row">
+                                        @foreach ($get_data_switches as $key => $value)
+                                        <input type="hidden" id="s_{{$value->id}}" value="{{$value->port}}">
+                                        <div class="col-sm-3" style="margin-bottom: -1.7em;">
+                                            <div class="width-border">
+                                                <div class="row">
+                                                    <div class="col-sm-10">
+                                                        <h4 class="m-3 font-prompt" style="vertical-align: middle;"><img src="/imgs/power-off.png" class="mr-1" width="15%" alt="icon">{{ $value->name }}</h4>
+                                                    </div>
+                                                    <div class="col-sm-2">
+                                                        <div class="bt-last" style="margin: .8em .8em 0 0;">
+                                                            <form id="destroySwich" action="{{ route('switch.destroy', $value->id) }}" method="post">
+                                                                @csrf
+                                                                @method('DELETE')
+                                                                <a href="javascrip:void(0)" onclick="event.preventDefault(); document.getElementById('destroySwich').submit();">
+                                                                    <img class="bt-edit-switch" src="/imgs/cancel-green.png" alt="icon" style="width: 1.5em;">
+                                                                </a>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <center>
+                                                        <label class="switch">
+                                                            <input id="port_{{$value->id}}" data-id="{{$value->id}}" onchange=myFunction({{$value->id}}) onchange=sub({{$value->id}}) value={{$value->status}} class="toggle-class switch_off" type="checkbox" data-onstyle="success" data-offstyle="danger" data-toggle="toggle" data-on="Active" data-off="InActive" {{ $value->status ? 'checked' : '' }}>
+                                                            
+                                                            <span class="slider round">
+                                                                <p class="text-off"></p>
+                                                            </span>
+                                                        </label>
+                                                    </center>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="center">
+                                                        <p id="port-normal" class="mt-3 font-prompt">พอร์ต : {{ $value->port }}</p>
+                                                        <input type="hidden" id="plot_id" value="{{ $value->plot_id }}">
+                                                        @foreach($get_port as $key_port => $value_port)
+                                                            @foreach($get_data_switch_time_set as $key_status => $value_status)
+                                                                @if($value_port->port == $value->port && $value_status->status == 1)
+                                                                <script>
+                                                                    $('#port-normal').hide();
+                                                                    $('.switch').hide();
+                                                                </script>
+                                                                <p class="mt-3 font-prompt" style="color:#24C48E;">พอร์ต : {{ $value->port }}</p>
+                                                                <p class="font-prompt" style="color:#24C48E; margin-top:-.3em; margin-bottom:2em;">พอร์ตนี้กำลังเปิดแบบตั้งเวลา</p>
+                                                                @endif
+                                                            @endforeach
+                                                        @endforeach
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
+                                        @endforeach
+                                    </div>
+                                </div>
+                            </div>
+                            <hr >
+                            <div class="row mt-4 mb-2">
+                                <label class="font-prompt" style="font-size:x-large;">สวิตช์แบบตั้งเวลา</label>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="row">
+                                        @foreach($get_data_switch_time_set as $key_switch_time_set => $value_switch_time_set)
+                                        <div class="col-sm-3">
+                                            <div class="width-border">
+                                                <div class="row">
+                                                    <input type="hidden" id="port_sts_{{$value_switch_time_set->id}}" value="{{$value_switch_time_set->port}}">
+                                                    <input type="hidden" id="status_sts_{{$value_switch_time_set->id}}" value="">
+                                                    <div class="col-sm-10">
+                                                        <h4 class="m-3 font-prompt" style="vertical-align: middle;"><img src="/imgs/clock.png" class="mr-1" width="15%" alt="icon">{{ $value_switch_time_set->name }}</h4>
+                                                    </div>
+                                                    <!-- <div class="col-sm-2">
+                                                        <div class="bt-last" style="margin: .5em -.5em 0 0;">
+                                                            <a href="javascrip:void(0)" id="openFormEditSwitchTimeSet">
+                                                                <img class="bt-edit-switch" src="/imgs/edit-green.png" alt="icon" style="width: 2em;">
+                                                            </a>
+                                                        </div>
+                                                    </div> -->
+                                                    <div class="col-sm-2">
+                                                        <div class="bt-last" style="margin: .8em .8em 0 0;">
+                                                            <form id="destroySwichTimeSet" action="{{ route('destroySwichTimeSet', $value_switch_time_set->id) }}" method="post">
+                                                                @csrf
+                                                                @method('DELETE')
+                                                                <a href="javascrip:void(0)" onclick="event.preventDefault(); document.getElementById('destroySwichTimeSet').submit();">
+                                                                    <img class="bt-edit-switch" src="/imgs/cancel-green.png" alt="icon" style="width: 1.5em;">
+                                                                </a>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <div class="row">
+                                                            <div class="col-sm-12">
+                                                                <p class="font-prompt ml-4">พอร์ด : {{ $value_switch_time_set->port }}</p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-sm-12">
+                                                                <p class="font-prompt ml-4" style="margin-top: -.5em;">เวลาเริ่ม : {{ $value_switch_time_set->start_time }}</p>
+                                                                <input type="hidden" id="start_time_{{$value_switch_time_set->id}}" value="{{$value_switch_time_set->start_time}}">
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-sm-12">
+                                                                <p class="font-prompt ml-4" style="margin-top: -.5em;">เวลาหยุด : {{ $value_switch_time_set->stop_time }}</p>
+                                                                <input type="hidden" id="stop_time_{{$value_switch_time_set->id}}" value="{{$value_switch_time_set->stop_time}}">
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-sm-12">
+                                                                <center>
+                                                                    <input type="hidden" id="port_stop_id_{{$value_switch_time_set->id}}" value="{{$value_switch_time_set->port}}">
+                                                                    <p class="font-prompt" style="font-size: large;">สถานะ : 
+                                                                        @if($value_switch_time_set->status == 0)
+                                                                        <span class="font-prompt switch-not-work">ไม่ทำงาน</span>
+                                                                        @else
+                                                                        <span class="font-prompt switch-working">กำลังทำงาน</span><br>
+                                                                        <button class="ant-btn mt-3" onclick="stopTimeSet({{$value_switch_time_set->id}})" data-toggle="tooltip" title="กดเพื่อหยุดการทำงาน">
+                                                                            <input type="hidden" id="stop_id_{{$value_switch_time_set->id}}" value="">หยุดทำงาน
+                                                                        </button>
+                                                                        @endif
+                                                                    </p>
+                                                                </center>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        @endforeach
+                                    </div>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="width-border p-4">
+                                        <div class="row ">
+                                            <p class="font-prompt"><strong style="font-size: large;">ประวัติการ เปิด - ปิด สวิตช์แบบแมนนวล</strong></p>
+                                        </div>
+                                        <hr style="margin-top: -.7em;">
+                                        @foreach($get_switch_log as $key_switch_log => $value_switch_log)
+                                        <?php
+                                        $switch_log_date = thaidate('d-m-Y  H:i:s', strtotime($value_switch_log->created_at));
+                                        ?>
+                                        <div class="row ">
+                                            <p class="font-prompt">วันที่ : {{ $switch_log_date }} &nbsp;||&nbsp; 
+                                                @if($value_switch_log->status == 1) 
+                                                <span class="dot-open"></span><span style="color: #24C48E;"> เปิด</span> 
+                                                @else 
+                                                ปิด 
+                                                @endif
+                                                สวิตช์ {{ $value_switch_log->name }} พอร์ต {{ $value_switch_log->port }}
+                                            </p>
+                                        </div>
+                                        <hr style="margin-top: -.7em; margin-bottom: 1em;">
+                                        @endforeach
                                         <div class="row">
                                             <center>
-                                                <label class="switch">
-                                                    <input id="port_{{$value->id}}" data-id="{{$value->id}}" onchange=myFunction({{$value->id}}) onchange=sub({{$value->id}}) value={{$value->status}} class="toggle-class switch_off" type="checkbox" data-onstyle="success" data-offstyle="danger" data-toggle="toggle" data-on="Active" data-off="InActive" {{ $value->status ? 'checked' : '' }}>
-                                                    
-                                                    <span class="slider round">
-                                                        <p class="text-off"></p>
-                                                    </span>
-                                                </label>
+                                                {{ $get_switch_log->links() }}
                                             </center>
-                                        </div>
-                                        <div class="row">
-                                            <div class="center">
-                                                <p class="mt-3 font-prompt">พอร์ต : {{ $value->port }}</p>
-                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                                @endforeach
+                                <div class="col-sm-6">
+                                    <div class="width-border p-4">
+                                        <div class="row ">
+                                            <p class="font-prompt"><strong style="font-size: large;">ประวัติการ เปิด - ปิด สวิตช์แบบตั้งเวลา</strong></p>
+                                        </div>
+                                        <hr style="margin-top: -.7em;">
+                                        @foreach($get_switch_time_set_log as $key_switch_time_set_log => $value_switch_time_set_log)
+                                        <?php
+                                        $switch_log_date = thaidate('d-m-Y  H:i:s', strtotime($value_switch_time_set_log->created_at));
+                                        ?>
+                                        <div class="row ">
+                                            <style>
+                                                .dot-open {
+
+                                                    background-color: #24C48E;
+                                                    display: inline-block;
+                                                    width: 12px;
+                                                    height: 12px;
+                                                    border-radius: 50px;
+                                                }
+                                            </style>
+                                            <p class="font-prompt">วันที่ : {{ $switch_log_date }} &nbsp;||&nbsp; 
+                                                @if($value_switch_time_set_log->status == 1) 
+                                                <span class="dot-open"></span><span style="color: #24C48E;"> เปิด</span> 
+                                                @else 
+                                                ปิด 
+                                                @endif
+                                                สวิตช์ {{ $value_switch_time_set_log->name }} พอร์ต {{ $value_switch_time_set_log->port }}
+                                            </p>
+                                        </div>
+                                        <hr style="margin-top: -.7em; margin-bottom: 1em;">
+                                        @endforeach
+                                        <div class="row">
+                                            <center>
+                                                {{ $get_switch_time_set_log->links() }}
+                                            </center>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -121,92 +293,198 @@
         </div>
     </div>
 </div>
-<div class="ant-modal-root-3-1" style="display: none;">
-    <form action="{{ route('switch.store') }}" method="POST">
-        @csrf
-        <div class="ant-modal-mask"></div>
-        <div class="ant-modal-wrap ant-modal-centered">
-            <div class="ant-modal">
-                <div class="ant-modal-content">
-                    <div class="ant-modal-header">
-                        <div class="ant-modal-title" style="font-size:large;font-weight:bolder;">สร้างสวิตซ์ เปิด-ปิด</div>
-                    </div>
-                    <div class="ant-modal-body" id="FarmInputRecordTypeAndSourceShow">
-                        <div class="ant-row ant-form-item ant-form-item-with-help own-custom-form-field normal-offset normal-offset ant-form-item-has-success">
-                            <div class="font-prompt">ชื่อสวิตซ์</div>
-                            <div class="ant-col ant-form-item-control">
-                                <div class="ant-form-item-control-input">
-                                    <div class="ant-form-item-control-input-content"><input name="name" type="text" class="ant-input font-prompt" placeholder="ชื่อสวิตซ์" required></div> 
-                                </div>
-                                <div class="ant-form-item-explain ant-form-item-explain-success">
-                                    <!-- <div role="alert">Use only letters, digits, and spaces</div> -->
-                                    <div role="alert" class="font-prompt">ใช้เฉพาะตัวอักษร, ยัติภังค์, จุด, และช่องว่าง</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="ant-row ant-form-item ant-form-item-with-help own-custom-form-field normal-offset normal-offset ant-form-item-has-success" style="row-gap: 0px;">
-                            <div class="font-prompt">พอร์ต</div>
-                            <div class="ant-col ant-form-item-control">
-                                <div class="ant-form-item-control-input">
-                                    <div class="ant-select ant-select-single">
-                                        <select class="ant-select-selector font-prompt" name="port" required>
-                                            <option class="special" value="soc_0">
-                                                <span class="">soc 0</span>
-                                            </option>
-                                            <option class="special" value="soc_1">
-                                                <span class="">soc 1</span>
-                                            </option>
-                                            <option class="special" value="soc_2">
-                                                <span class="">soc 2</span>
-                                            </option>
-                                            <option class="special" value="soc_3">
-                                                <span class="">soc 3</span>
-                                            </option>
-                                            <option class="special" value="soc_4">
-                                                <span class="">soc 4</span>
-                                            </option>
-                                            <option class="special" value="soc_5">
-                                                <span class="">soc 5</span>
-                                            </option>
-                                            <option class="special" value="soc_6">
-                                                <span class="">soc 6</span>
-                                            </option>
-                                            <option class="special" value="soc_7">
-                                                <span class="">soc 7</span>
-                                            </option>
-                                            <option class="special" value="soc_8">
-                                                <span class="">soc 8</span>
-                                            </option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        @error('port')
-                        <div class="alert alert-danger font-prompt">พอร์ตที่เลือกถูกใช้อยู่ ใช้พอร์ตซ้ำไม่ได้</div>
-                        @enderror
-                        <input name="status" type="hidden" class="ant-input" value="0">
-                        <input type="hidden" name="plot_id" value="{{$datas}}">
-                    </div>
-                    <div class="ant-modal-footer"><button type="button" class="ant-btn ant-btn-secondary" id="cancelFormCreateSwitch" ant-click-animating-without-extra-node="false"><span>ยกเลิก</span></button><button type="submit" class="ant-btn ant-btn-primary"><span>ยืนยัน</span></button></div>
-                </div>
-            </div>
-        </div>
-    </form>
-</div>
+<!-- CDN MQTT -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.js" type="text/javascript"></script>
+{{--
+@foreach($get_data_switch_time_set as $key_switch_time_set => $value_switch_time_set)
+<script>
+    var port_switch_time_set = document.getElementById("port_sts_" + {{$value_switch_time_set->id}}).value;
+    var status_switch_time_set = document.getElementById("status_sts_" + {{$value_switch_time_set->id}}).value;
+    var start_time = document.getElementById("start_time_" + {{$value_switch_time_set->id}}).value;
+    var stop_time = document.getElementById("stop_time_" + {{$value_switch_time_set->id}}).value;
 
+    const zeroFill = n => {
+        return ('0' + n).slice(-2);
+    }
+
+    var host = document.getElementById("input_host").value
+    var port = 8000;
+    var x = Math.floor(Math.random() * 10000);
+    var cname = "controlform-" + x;
+    client = mqtt = new Paho.MQTT.Client(host, port, cname);
+
+    
+    var switchID = {{$value_switch_time_set->id}};
+    var statusSTS = document.getElementById("status_sts_" + {{$value_switch_time_set->id}}).value;
+    var plot_id = document.getElementById('plot_id').value;
+
+    client.connect({
+        onSuccess: onConnect
+    });
+    function onConnect() {
+        const timeNow = setTimeout(function() {
+        const nowDate = new Date();
+        const nowTime = zeroFill(nowDate.getHours()) + ':' + zeroFill(nowDate.getMinutes()) + ':' + zeroFill(nowDate.getSeconds());
+        
+
+        if (nowTime == start_time) {
+            document.getElementById("status_sts_" + {{$value_switch_time_set->id}}).value = 1;
+            if (port_switch_time_set == 'soc_0') {
+                message = new Paho.MQTT.Message('{"soc":0,"status":1}');
+                message.destinationName = document.getElementById("input_topic").value;
+                client.send(message); // publish message}
+            }
+            if (port_switch_time_set == 'soc_1') {
+                message = new Paho.MQTT.Message('{"soc":1,"status":1}');
+                message.destinationName = document.getElementById("input_topic").value;
+                client.send(message); // publish message}
+            }
+            if (port_switch_time_set == 'soc_2') {
+                message = new Paho.MQTT.Message('{"soc":2,"status":1}');
+                message.destinationName = document.getElementById("input_topic").value;
+                client.send(message); // publish message}
+            }
+            if (port_switch_time_set == 'soc_3') {
+                message = new Paho.MQTT.Message('{"soc":3,"status":1}');
+                message.destinationName = document.getElementById("input_topic").value;
+                client.send(message); // publish message}
+            }
+            if (port_switch_time_set == 'soc_4') {
+                message = new Paho.MQTT.Message('{"soc":4,"status":1}');
+                message.destinationName = document.getElementById("input_topic").value;
+                client.send(message); // publish message}
+            }
+            if (port_switch_time_set == 'soc_5') {
+                message = new Paho.MQTT.Message('{"soc":5,"status":1}');
+                message.destinationName = document.getElementById("input_topic").value;
+                client.send(message); // publish message}
+            }
+            if (port_switch_time_set == 'soc_6') {
+                message = new Paho.MQTT.Message('{"soc":6,"status":1}');
+                message.destinationName = document.getElementById("input_topic").value;
+                client.send(message); // publish message}
+            }
+            if (port_switch_time_set == 'soc_7') {
+                message = new Paho.MQTT.Message('{"soc":7,"status":1}');
+                message.destinationName = document.getElementById("input_topic").value;
+                client.send(message); // publish message}
+            }
+            var status_start = document.getElementById("status_sts_" + {{$value_switch_time_set->id}}).value;
+
+            $.ajax({
+                type: 'GET',
+                url: '/switch-time-set-update/' + switchID, 
+                data: {
+                    'switch_id': switchID,
+                    'value': status_start,
+                    plot_id,
+                },
+                success: function(data) {
+                    console.log(data);
+                    location.reload();
+                },
+                error: function(data) {
+                    console.log(data);
+                },
+            });
+        }
+        if (nowTime == stop_time) {
+            document.getElementById("status_sts_" + {{$value_switch_time_set->id}}).value = 0;
+            if (port_switch_time_set == 'soc_0') {
+                message = new Paho.MQTT.Message('{"soc":0,"status":0}');
+                message.destinationName = document.getElementById("input_topic").value;
+                client.send(message); // publish message}
+            }
+            if (port_switch_time_set == 'soc_1') {
+                message = new Paho.MQTT.Message('{"soc":1,"status":0}');
+                message.destinationName = document.getElementById("input_topic").value;
+                client.send(message); // publish message}
+            }
+            if (port_switch_time_set == 'soc_2') {
+                message = new Paho.MQTT.Message('{"soc":2,"status":0}');
+                message.destinationName = document.getElementById("input_topic").value;
+                client.send(message); // publish message}
+            }
+            if (port_switch_time_set == 'soc_3') {
+                message = new Paho.MQTT.Message('{"soc":3,"status":0}');
+                message.destinationName = document.getElementById("input_topic").value;
+                client.send(message); // publish message}
+            }
+            if (port_switch_time_set == 'soc_4') {
+                message = new Paho.MQTT.Message('{"soc":4,"status":0}');
+                message.destinationName = document.getElementById("input_topic").value;
+                client.send(message); // publish message}
+            }
+            if (port_switch_time_set == 'soc_5') {
+                message = new Paho.MQTT.Message('{"soc":5,"status":0}');
+                message.destinationName = document.getElementById("input_topic").value;
+                client.send(message); // publish message}
+            }
+            if (port_switch_time_set == 'soc_6') {
+                message = new Paho.MQTT.Message('{"soc":6,"status":0}');
+                message.destinationName = document.getElementById("input_topic").value;
+                client.send(message); // publish message}
+            }
+            if (port_switch_time_set == 'soc_7') {
+                message = new Paho.MQTT.Message('{"soc":7,"status":0}');
+                message.destinationName = document.getElementById("input_topic").value;
+                client.send(message); // publish message}
+            }
+
+            var status_stop = document.getElementById("status_sts_" + {{$value_switch_time_set->id}}).value;
+            $.ajax({
+                type: 'GET',
+                url: '/switch-time-set-update/' + switchID, 
+                data: {
+                    'switch_id': switchID,
+                    'value': status_stop,
+                    plot_id,
+                },
+                success: function(data) {
+                    console.log(data);
+                    location.reload();
+                },
+                error: function(data) {
+                    console.log(data);
+                },
+            });
+        }
+        
+        onConnect();
+        
+        }, 1000);   
+    
+    }
+
+</script>
+@endforeach
+--}}
 <script>
     $(document).ready(function() {
-        $('#openFormCreateSwitch').click(function() {
-            $('.ant-modal-root-3-1').show();
+        $('#openModalCreateSwitch').click(function() {
+            $('.createSwitch').show();
         });
-        $('#cancelFormCreateSwitch').click(function() {
-            $('.ant-modal-root-3-1').hide();
+        $('#cancelModalCreateSwitch').click(function() {
+            $('.createSwitch').hide();
+        });
+        
+        $('#openFormSwitchManual').click(function() {
+            $('.switchManual').show();
+            $('.createSwitch').hide();
+        });
+        $('#cancelSwitchManual').click(function() {
+            $('.switchManual').hide();
+        });
+        
+        $('#openFormSwitchTimeSet').click(function() {
+            $('.switchTimeSet').show();
+            $('.createSwitch').hide();
+        });
+        $('#cancelSwitchTimeSet').click(function() {
+            $('.switchTimeSet').hide();
         });
     });
 </script>
 
-<!-- CDN MQTT -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.js" type="text/javascript"></script>
 
 @endsection

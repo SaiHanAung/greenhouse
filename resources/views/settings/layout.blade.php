@@ -5,7 +5,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <link rel="icon" type="image/x-icon" href="{{ asset('imgs/green-house.png') }}">
-    <title>Green House</title>
+    <title>
+        @include('layouts.titles') @yield('title.settings.index')Green House 
+    </title>
     <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> -->
@@ -84,14 +86,15 @@
                 </div>
             </div>
 
+            {{--
             <div class="side-mobile">
                 <div id="mySidenav" class="sidenav">
                     <a href="{{ route('plots.index') }}" class="font-prompt">จัดการฟาร์ม</a>
                     <ul>
-                        <li style="list-style-type: none;"><a href="{{ route('dashboard.index', $datas) }}" class="font-prompt">แผงควบคุม</a></li>
-                        <li style="list-style-type: none;"><a href="{{ route('savenote.index', $datas) }}" class="font-prompt">จดบันทึก</a></li>
+                        <li style="list-style-type: none;"><a href="{{ route('dashboard.index', $plotID) }}" class="font-prompt">แผงควบคุม</a></li>
+                        <li style="list-style-type: none;"><a href="{{ route('savenote.index', $plotID) }}" class="font-prompt">จดบันทึก</a></li>
                         <li style="list-style-type: none;"><a href="javascript:void(0)" style="color: #49cea1;" class="font-prompt">ตั้งค่า</a></li>
-                        <li style="list-style-type: none;"><a href="{{ route('qrcode.index', $datas) }}" class="font-prompt">QR Code</a></li>
+                        <li style="list-style-type: none;"><a href="{{ route('qrcode.index', $plotID) }}" class="font-prompt">QR Code</a></li>
                     </ul>
                     <a href="{{ route('profile') }}" class="font-prompt">โปรไฟล์</a>
                     <a href="{{ route('logout.perform') }}" class="font-prompt">ออกจากระบบ</a>
@@ -139,6 +142,7 @@
                     <div class="col-1 mt-3">&nbsp;</div>
                 </div>
             </div>
+            --}}
 
             <div class="ant-modal-root-1" style="display: none;">
                 <form action="{{ route('plots.store') }}" method="POST" enctype="multipart/form-data">
@@ -249,7 +253,7 @@
             <div class="edit-plot-mobile" style="display:none">
                 <div class="row">
                     <div class="col-8">
-                        <form action="{{ route('plots.update', $datas) }}" method="POST">
+                        <form action="{{ route('plots.update', $plotID) }}" method="POST">
                             <div class="ant-modal-mask"></div>
                             <div class="ant-modal-wrap ant-modal-centered">
                                 <div class="ant-modal">
@@ -336,7 +340,7 @@
                                                             <div class="ant-form-item-control">
                                                                 <div class="ant-form-item-control-input">
                                                                     <div class="ant-form-item-control-input-content">
-                                                                        <input class="font-prompt" type="file" name="file" value="{{ $value_data_plot->file_path }}">
+                                                                        <input class="font-prompt" type="file" name="file" value="{{ $value_data_plot->img_name }}">
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -383,7 +387,7 @@
             </div>
             <div id="delete-plot-mobile" class="modal">
                 <span onclick="document.getElementById('delete-plot-mobile').style.display='none'" class="close" title="Close Modal">×</span>
-                <form class="modal-content" style="width: 80%;" action="{{ route('plots.destroy', $datas) }}" method="post">
+                <form class="modal-content" style="width: 80%;" action="{{ route('plots.destroy', $plotID) }}" method="post">
                     <div class="container">
                         <div class="row">
                                 <h3 class="font-prompt">แปลง : {{ $value_data_plot->name }}</h3>
@@ -416,7 +420,7 @@
                             <div class="login-logo-wrapper"><img class="login-logo" alt="LOGO" src="/imgs/green-house.png"></div>
                             <div class="login-form-wrapper">
                                 <div class="alert alert-danger" role="alert">
-                                    <strong>กรุณา</strong><a href="{{route('login') }}"> เข้าสู่ระบบ </a> ก่อนใช้งาน
+                                    กรุณา <a href="{{route('login') }}" class="font-prompt"><strong>เข้าสู่ระบบ</strong></a> ก่อนใช้งาน
                                 </div>
                             </div>
                             <div class="login-bottom-label"></div>

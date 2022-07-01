@@ -3,40 +3,64 @@
 namespace App\Http\Controllers;
 
 use App\Switches;
+use App\Switch_time_set;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
-class SwitchesController extends Controller 
+class SwitchesController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($datas)
+    public function index($plotID)
     {
         //
         $data_switches = DB::table('switches')->get();
         $data_plot = DB::table('plots')->get();
-        
-            $get_plot_name = DB::table('plots')
-                                    ->select('name')
-                                    ->where('id', '=', $datas)->get();
-            foreach($get_plot_name as $key_name => $value_name){
-                foreach($value_name as $key_name_sub => $value_name_sub){
-                }
-            }
-            $get_host_topic = DB::table('plots')
-                ->select('host', 'topic_sub')
-                ->where('id', '=', $datas)->get();
-            // dd($value_topic_sub);                    
 
-            $get_data_switches = DB::table('switches')
-                                    ->select('id', 'name', 'port', 'status')
-                                    ->where('plot_id', '=', $datas)->get();
+        $get_plot_name = DB::table('plots')
+            ->select('name')
+            ->where('id', '=', $plotID)->get();
+        foreach ($get_plot_name as $key_name => $value_name) {
+            foreach ($value_name as $key_name_sub => $value_name_sub) {
+            }
+        }
+        $get_host_topic = DB::table('plots')
+            ->select('host', 'topic_sub')
+            ->where('id', '=', $plotID)->get();
+        // dd($value_topic_sub);                    
+
+        $get_data_switches = DB::table('switches')
+            ->select('id', 'name', 'port', 'status', 'plot_id')
+            ->where('plot_id', '=', $plotID)->get();
         
-        // dd($get_data_switches);
-        return view('switches.index', compact('datas', 'value_name_sub', 'data_switches', 'get_data_switches', 'get_host_topic'));
+        $get_switch_log = DB::table('switch_logs')->where('plot_id', $plotID)->where('history_plant_id', null)->latest()->paginate(10);
+        foreach($get_switch_log as $key_switch_log => $value_switch_log){}
+        $get_switch_time_set_log = DB::table('switch_time_set_logs')->where('plot_id', $plotID)->where('history_plant_id', null)->latest()->paginate(10);
+        
+        
+        $get_data_switch_time_set = Switch_time_set::where('plot_id', $plotID)->get()->all();
+
+        $get_port = DB::table('switches')
+                        ->join('switch_time_sets', 'switch_time_sets.port', '=', 'switches.port')
+                        ->select('switches.port')
+                        ->get();
+
+        // dd($get_port);
+        return view('switches.index', compact(
+            'get_port', 
+            'get_switch_time_set_log', 
+            'get_data_switch_time_set', 
+            'get_switch_log', 
+            'plotID', 
+            'value_name_sub', 
+            'data_switches', 
+            'get_data_switches', 
+            'get_host_topic',
+        ));
     }
 
     /**
@@ -65,7 +89,7 @@ class SwitchesController extends Controller
         ]);
 
         Switches::create($request->all());
-        
+
         return back()->with('success', 'สร้างสวิตซ์สำเร็จแล้ว');
     }
 
@@ -100,7 +124,7 @@ class SwitchesController extends Controller
      * @param  \App\Switches  $switches
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request,Switches $switches)
+    public function update(Request $request, Switches $switches)
     {
         //
         $request->validate([
@@ -128,83 +152,95 @@ class SwitchesController extends Controller
         return back()->with('success', 'ลบสวิตซ์สำเร็จแล้ว');
     }
 
-    public function da(Request $request, $id)
+    public function da(Request $request, $switchID)
     {
+        $plotID = $request->input('plot_id');
         $newPermLevel = $request->input('value');
         $override = (int) $newPermLevel;
-    
+
         DB::table('switches')
-            ->where('id', "$id")
-            ->update(array('status' =>$override));
+            ->where('id', "$switchID")
+            ->update(array('status' => $override));
+
+        $get_switch_name = DB::table('switches')->select('name', 'port')
+            ->where('id', $switchID)->get();
+        foreach ($get_switch_name as $key_switch_name => $value_switch_name) {
+        }
+
+        DB::table('switch_logs')->insert([[
+            'plot_id' => $plotID,
+            'name' => $value_switch_name->name,
+            'port' => $value_switch_name->port,
+            'status' => $override,
+            'created_at' => Carbon::now(),
+        ]]);
     }
 
-    public function da2(Request $request, $id)
+    public function switchTimeSetUpdate(Request $request, $switchID)
     {
-        $newPermLevel2 = $request->input('value');
-        $override2 = (int) $newPermLevel2;
-    
-        DB::table('switches')
-            ->where('id', "$id")
-            ->update(array('port_2' =>$override2));
+        $plotIDsts = $request->input('plot_id');
+        $newPermLevelsts = $request->input('value');
+        $overridests = (int) $newPermLevelsts;
+
+        DB::table('switch_time_sets')
+            ->where('id', "$switchID")
+            ->update(array('status' => $overridests));
+
+        $get_switch_name = DB::table('switch_time_sets')->select('name', 'port')
+            ->where('id', $switchID)->get();
+        foreach ($get_switch_name as $key_switch_name => $value_switch_name) {
+        }
+
+        DB::table('switch_time_set_logs')->insert([[
+            'plot_id' => $plotIDsts,
+            'name' => $value_switch_name->name,
+            'port' => $value_switch_name->port,
+            'status' => $overridests,
+            'created_at' => Carbon::now(),
+        ]]);
     }
 
-    public function da3(Request $request, $id)
+    public function stopTimeSet(Request $request, $switchID)
     {
-        $newPermLevel3 = $request->input('value');
-        $override3 = (int) $newPermLevel3;
-    
-        DB::table('switches')
-            ->where('id', "$id")
-            ->update(array('port_3' =>$override3));
+        $plotID = $request->input('plot_id');
+        $value_stop = $request->input('value');
+        $stop_time_set = (int) $value_stop;
+
+        DB::table('switch_time_sets')
+            ->where('id', "$switchID")
+            ->update(array('status' => $stop_time_set));
+
+        $get_switch_name = DB::table('switch_time_sets')->select('name', 'port')
+            ->where('id', $switchID)->get();
+        foreach ($get_switch_name as $key_switch_name => $value_switch_name) {
+        }
+
+        DB::table('switch_time_set_logs')->insert([[
+            'plot_id' => $plotID,
+            'name' => $value_switch_name->name,
+            'port' => $value_switch_name->port,
+            'status' => $stop_time_set,
+            'created_at' => Carbon::now(),
+        ]]);
+    }
+    public function storeSwichTimeSet(Request $request)
+    {
+        Switch_time_set::create($request->all());
+
+        return back()->with('success', 'สร้างสวิตช์แบบตั้งเวลาสำเร็จแล้ว');
     }
 
-    public function da4(Request $request, $id)
+    public function destroySwichTimeSet(Switch_time_set $switch_time_set)
     {
-        $newPermLevel4 = $request->input('value');
-        $override4 = (int) $newPermLevel4;
-    
-        DB::table('switches')
-            ->where('id', "$id")
-            ->update(array('port_4' =>$override4));
+        $switch_time_set->delete();
+
+        return back()->with('success', 'ลบสวิตช์แบบตั้งเวลาที่เลือกสำเร็จแล้ว');
     }
 
-    public function da5(Request $request, $id)
+    public function updateSwitchTimeSet(Request $request, Switch_time_set $switch_time_set)
     {
-        $newPermLevel5 = $request->input('value');
-        $override5 = (int) $newPermLevel5;
-    
-        DB::table('switches')
-            ->where('id', "$id")
-            ->update(array('port_5' =>$override5));
-    }
+        $switch_time_set->update($request->all());
 
-    public function da6(Request $request, $id)
-    {
-        $newPermLevel6 = $request->input('value');
-        $override6 = (int) $newPermLevel6;
-    
-        DB::table('switches')
-            ->where('id', "$id")
-            ->update(array('port_6' =>$override6));
-    }
-
-    public function da7(Request $request, $id)
-    {
-        $newPermLevel7 = $request->input('value');
-        $override7 = (int) $newPermLevel7;
-    
-        DB::table('switches')
-            ->where('id', "$id")
-            ->update(array('port_7' =>$override7));
-    }
-
-    public function da8(Request $request, $id)
-    {
-        $newPermLevel8 = $request->input('value');
-        $override8 = (int) $newPermLevel8;
-    
-        DB::table('switches')
-            ->where('id', "$id")
-            ->update(array('port_8' =>$override8));
+        return back()->with('success', 'แก้ไขสวิตช์แบบตั้งเวลาสำเร็จแล้ว');
     }
 }

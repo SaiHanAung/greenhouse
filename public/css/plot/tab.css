@@ -1,3 +1,12 @@
+.alerSuccess {
+    background-color: #C2DED1;
+    border: #D3EBCD 1px solid;
+    color: rgb(55, 55, 55);
+    border-radius: 5px;
+    padding: 1em 1em;
+    margin-bottom: 1.5em;
+}
+
 .clearfont {
     color: #49cea1;
     font-size: large;
@@ -85,8 +94,8 @@
 }
 
 .worko-tabs {
-    margin-left: 20px;
-    width: 95%;
+    margin-left: 1.5em;
+    /* width: 95%; */
 }
 
 .worko-tabs .state {
@@ -142,7 +151,6 @@
 #tab-four:checked~.tabs #tab-four-panel,
 #tab-five:checked~.tabs #tab-five-panel {
     display: block;
-    border-bottom: 2px solid white;
 }
 
 .width-border {
@@ -220,7 +228,6 @@
 }
 
 #customers {
-    font-family: Arial, Helvetica, sans-serif;
     border-collapse: collapse;
     width: 100%;
 }
@@ -244,6 +251,33 @@
     padding-bottom: 12px;
     text-align: left;
     background-color: #04AA6D;
+    color: white;
+}
+
+#customers-history {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+#customers-history td,
+#customers-history th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+#customers-history tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+#customers-history tr:hover {
+    background-color: #ddd;
+}
+
+#customers-history th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #3b4642;
     color: white;
 }
 

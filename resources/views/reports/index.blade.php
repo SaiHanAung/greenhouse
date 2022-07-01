@@ -9,10 +9,10 @@
             <div class="main-layout--header-options">
                 <nav>
                     <div class="nav nav-tabs" style="border-bottom-color: #49cea1;">
-                        <button class="nav-link"><a href="{{ route('savenote.index', $datas) }}" class="clearfonts">จดบันทึก</a></button>
+                        <button class="nav-link"><a href="{{ route('savenote.index', $plotID) }}" class="clearfonts">จดบันทึก</a></button>
                         <label class="nav-link clearfont active" style="color: #49cea1;border-color: #49cea1;border-bottom-color:transparent;">รายงาน</label>
-                        <button class="nav-link"><a href="{{ route('dashboard.index', $datas) }}" class="clearfonts">แผงควบคุม</a></button>
-                        <button class="nav-link"><a href="{{ route('plots.show', $datas) }}" class="clearfonts">ข้อมูล</a></button>
+                        <button class="nav-link"><a href="{{ route('dashboard.index', $plotID) }}" class="clearfonts">แผงควบคุม</a></button>
+                        <button class="nav-link"><a href="{{ route('plots.show', $plotID) }}" class="clearfonts">ข้อมูล</a></button>
                     </div>
                 </nav>
             </div>

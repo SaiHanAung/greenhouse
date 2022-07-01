@@ -3,100 +3,19 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>how to create dynamic pie chart in laravel - websolutionstuff.com</title>	
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-	<link href="{{asset('assets/css/components.min.css')}}" rel="stylesheet" type="text/css">	
-	<script type="text/javascript" src="{{asset('assets/js/jquery.min.js')}}"></script>
-	<script type="text/javascript" src="{{asset('assets/js/bootstrap.bundle.min.js')}}"></script>	
-	<script type="text/javascript" src="{{asset('assets/js/echarts.min.js')}}"></script>	
-</head>
+	<title>test2</title>	
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="{{ asset('css/spacing.css') }}" rel="stylesheet">
 <body>
-<div class="col-md-12">
-	<h1 class="text-center">how to create dynamic pie chart in laravel - websolutionstuff.com</h1>
-	<div class="col-xl-6" style="margin-top: 30px;">
-		<div class="card">
-			<div class="card-body">
-				<div class="chart-container">
-					<div class="chart has-fixed-height" id="pie_basic"></div>
-				</div>
-			</div>
-		</div>
-	</div>	
+    <h3>Show SoftDelete</h3>
+@foreach($test_softDelete as $key => $value)
+<div class="row ml-5">
+    <div class="col">
+        <span>{{ $value->title }}</span>
+        <span>{{ $value->price }}</span>
+        <span>{{ $value->deleted_at }}</span>
+    </div>
 </div>
-
-<script type="text/javascript">
-var pie_basic_element = document.getElementById('pie_basic');
-if (pie_basic_element) {
-    var pie_basic = echarts.init(pie_basic_element);
-    pie_basic.setOption({
-        color: [
-            '#2ec7c9','#b6a2de','#5ab1ef','#ffb980','#d87a80',
-            '#8d98b3','#e5cf0d','#97b552','#95706d','#dc69aa',
-            '#07a2a4','#9a7fd1','#588dd5','#f5994e','#c05050',
-            '#59678c','#c9ab00','#7eb00a','#6f5553','#c14089'
-        ],          
-        
-        textStyle: {
-            fontFamily: 'Roboto, Arial, Verdana, sans-serif',
-            fontSize: 13
-        },
-
-        title: {
-            text: 'Pie Chart Example',
-            left: 'center',
-            textStyle: {
-                fontSize: 17,
-                fontWeight: 500
-            },
-            subtextStyle: {
-                fontSize: 12
-            }
-        },
-
-        tooltip: {
-            trigger: 'item',
-            backgroundColor: 'rgba(0,0,0,0.75)',
-            padding: [10, 15],
-            textStyle: {
-                fontSize: 13,
-                fontFamily: 'Roboto, sans-serif'
-            },
-            formatter: "{a} <br/>{b}: {c} บาท ({d}%)"
-        },
-
-        legend: {
-            orient: 'horizontal',
-            bottom: '0%',
-            left: 'center',                   
-            data: ['เมล็ด', 
-            'ปุ๋ย',
-            'ค่าแรง',
-            'ค่าอื่นๆ'
-        ],
-            itemHeight: 8,
-            itemWidth: 8
-        },
-
-        series: [{
-            name: 'ค่าใช้จ่าย',
-            type: 'pie',
-            radius: '70%',
-            center: ['50%', '50%'],
-            itemStyle: {
-                normal: {
-                    borderWidth: 1,
-                    borderColor: '#fff'
-                }
-            },
-            data: [
-                {value: {{$seed_count}}, name: 'เมล็ด'},
-                {value: {{$fertilizer_count}}, name: 'ปุ๋ย'},
-                {value: {{$wage_count}}, name: 'ค่าแรง'},
-                {value: {{$etc_count}}, name: 'ค่าอื่นๆ'}
-            ]
-        }]
-    });
-}
-</script>
+@endforeach
 </body>
 </html>

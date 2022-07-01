@@ -19,10 +19,14 @@ class CreatePlotsTbl extends Migration
             $table->string('host');
             $table->string('topic_send');
             $table->string('topic_sub');
+            $table->integer('rai_size');
+            $table->integer('ngan_size');
+            $table->integer('square_wah_size');
+            $table->string('latitude');
+            $table->string('longitude');
             $table->string('description');
             $table->integer('user_id');
             $table->string('img_name');
-            $table->string('file_path');
             $table->timestamps();
         });
     }
