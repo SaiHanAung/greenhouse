@@ -13,7 +13,7 @@ class UsersTableSeeder extends Seeder
     public function run()
     {
         DB::table('users')->where('name', 'admin')->update(
-            array('User_type' => 'admin')
+            array('user_type' => 'admin')
         );
     }
 }
