@@ -194,7 +194,7 @@
                                                                             <div class="ant-form-item-control-input-content" style="width: 400px;">
                                                                                 <div class="row">
                                                                                     <div class="col-sm-6">
-                                                                                        <input class="font-prompt" type="file" name="file_path">
+                                                                                        <input class="font-prompt" type="file" name="img_name">
                                                                                     </div>
                                                                                     <div class="col-sm-6">
                                                                                         <img src="{{ asset('plot_images/'.$value_data_plot->img_name) }}" alt="Image" width="50%">

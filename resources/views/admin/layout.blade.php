@@ -73,7 +73,7 @@
             $userID = Auth::user()->id;
 
             $get_data_plot = DB::table('plots')
-                ->select('id', 'name', 'host', 'topic_send', 'topic_sub', 'description','img_name', 'file_path')
+                ->select('id', 'name', 'host', 'topic_send', 'topic_sub', 'description','img_name')
                 ->where('user_id', '=', $userID)->get();
             ?>
             <div class="main-plot" style="height: 100vh;">
@@ -156,7 +156,7 @@
                             // dd($value);
                             // echo asset('storage/');
                             ?>
-                            <div class="main-list--item-preview main-list--item-preview--is-active"><img src="{{ asset('plot_images/'.$value->file_path) }}" alt="Image"></div>
+                            <div class="main-list--item-preview main-list--item-preview--is-active"><img src="{{ asset('plot_images/'.$value->img_name) }}" alt="Image"></div>
                             <div class="main-list--item-details">
                                 <div class="main-list--item-details-name font-prompt"><label class="font-prompt" style="font-size:large;">แปลง :</label> {{ $value->name }}</div>
                                 <div class="main-list--item-details-name font-prompt"><label class="font-prompt" style="font-size:large;">ไอดี :</label> {{ $value->id }}</div>
