@@ -11,7 +11,7 @@
 $userID = Auth::user()->id;
 
 $get_data_plot = DB::table('plots')
-    ->select('id', 'name', 'host', 'topic_send', 'topic_sub', 'description','img_name', 'file_path')
+    ->select('id', 'name', 'host', 'topic_send', 'topic_sub', 'description','img_name')
     ->where('user_id', '=', $userID)->get();
 ?>
 <div class="user-layout-right-content user-layout-right-content-fold">
