@@ -489,8 +489,7 @@
 
     <script>
         var cl = console.log.bind(document);
-        var inputHost = document.getElementById("input_host").value;
-        var host = 'mqtt://' + inputHost + ':1883';
+        var host = document.getElementById("input_host").value;
         var port = 8000;
         var x = Math.floor(Math.random() * 10000);
         var cname = "controlform-" + x;
