@@ -111,18 +111,18 @@ class DashboardController extends Controller
 
         $get_temp_humid = DB::table('temp_humid')->get('temp', 'humid');
 
-        $get_temps = DB::table('temps')->latest('temp')->where('plot_id',$plotID)->first();
-        $get_humids = DB::table('humids')->latest('humid')->where('plot_id',$plotID)->first();
-        $temp = $get_temps->temp;
-        $humid = $get_humids->humid;
+        // $get_temps = DB::table('temps')->latest('temp')->where('plot_id',$plotID)->first();
+        // $get_humids = DB::table('humids')->latest('humid')->where('plot_id',$plotID)->first();
+        // $temp = $get_temps->temp;
+        // $humid = $get_humids->humid;
 
         // dd($temp);
 
         return view('dashboards.index', compact(
-            'humid',
-            'temp',
-            'get_humids',
-            'get_temps',
+            // 'humid',
+            // 'temp',
+            // 'get_humids',
+            // 'get_temps',
             'get_temp_humid',
             'check_plant_price',
             'sum_total_price',
