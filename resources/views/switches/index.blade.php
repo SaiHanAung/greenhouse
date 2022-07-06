@@ -103,7 +103,7 @@
                                                 </div>
                                                 <div class="row">
                                                     <center>
-                                                        <label class="switch">
+                                                        <label class="switch" id="switch{{$value->id}}">
                                                             <input id="port_{{$value->id}}" data-id="{{$value->id}}" onchange=myFunction({{$value->id}}) onchange=sub({{$value->id}}) value={{$value->status}} class="toggle-class switch_off" type="checkbox" data-onstyle="success" data-offstyle="danger" data-toggle="toggle" data-on="Active" data-off="InActive" {{ $value->status ? 'checked' : '' }}>
                                                             
                                                             <span class="slider round">
@@ -114,20 +114,27 @@
                                                 </div>
                                                 <div class="row">
                                                     <div class="center">
-                                                        <p id="port-normal" class="mt-3 font-prompt">พอร์ต : {{ $value->port }}</p>
+                                                        <p id="port-normal{{$value->id}}" class="mt-3 font-prompt">พอร์ต : {{ $value->port }}</p>
                                                         <input type="hidden" id="plot_id" value="{{ $value->plot_id }}">
                                                         @foreach($get_port as $key_port => $value_port)
                                                             @foreach($get_data_switch_time_set as $key_status => $value_status)
                                                                 @if($value_port->port == $value->port && $value_status->status == 1)
                                                                 <script>
-                                                                    $('#port-normal').hide();
-                                                                    $('.switch').hide();
+                                                                    $('#port-normal{{$value->id}}').hide();
+                                                                    $('#switch{{$value->id}}').hide();
                                                                 </script>
-                                                                <p class="mt-3 font-prompt" style="color:#24C48E;">พอร์ต : {{ $value->port }}</p>
-                                                                <p class="font-prompt" style="color:#24C48E; margin-top:-.3em; margin-bottom:2em;">พอร์ตนี้กำลังเปิดแบบตั้งเวลา</p>
+                                                                @endif
+                                                                @if($value_port->port == $value->port)
+                                                                <script>
+                                                                    $('#tttt').show();
+                                                                </script>
                                                                 @endif
                                                             @endforeach
                                                         @endforeach
+                                                        <div id="tttt" style="display: none;">
+                                                            <p class="mt-3 font-prompt" style="color:#24C48E;">พอร์ต : {{ $value->port }}</p>
+                                                            <p class="font-prompt" style="color:#24C48E; margin-top:-.3em; margin-bottom:2em;">พอร์ตนี้กำลังเปิดแบบตั้งเวลา</p>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -199,9 +206,9 @@
                                                                         <span class="font-prompt switch-not-work">ไม่ทำงาน</span>
                                                                         @else
                                                                         <span class="font-prompt switch-working">กำลังทำงาน</span><br>
-                                                                        <button class="ant-btn mt-3" onclick="stopTimeSet({{$value_switch_time_set->id}})" data-toggle="tooltip" title="กดเพื่อหยุดการทำงาน">
+                                                                        <!-- <button class="ant-btn mt-3" onclick="stopTimeSet({{$value_switch_time_set->id}})" data-toggle="tooltip" title="กดเพื่อหยุดการทำงาน">
                                                                             <input type="hidden" id="stop_id_{{$value_switch_time_set->id}}" value="">หยุดทำงาน
-                                                                        </button>
+                                                                        </button> -->
                                                                         @endif
                                                                     </p>
                                                                 </center>

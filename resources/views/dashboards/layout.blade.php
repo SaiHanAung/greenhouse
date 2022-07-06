@@ -546,32 +546,32 @@
                 // document.getElementById('date-time-temp-mobile').innerHTML = "อัพเดทล่าสุด : " + dateTime;
             }, 1000);   
 
-            setTimeout(function(){
-                var plot_id = document.getElementById('plot_id').value;
-                var humid_val = obj.humid;
-                var temp_val = obj.temp;
-                const storeNow = new Date();
-                const countSeconds = zeroFill(storeNow.getSeconds());
-                const countMinutes = zeroFill(storeNow.getMinutes());
-                if(true){
-                    $.ajax({
-                        type: 'GET',
-                        url: "{{ route('storeTemp') }}", 
-                        data: {
-                            // 'switch_id': switchID,
-                            'value': temp_val, plot_id,
-                        }
-                    });
-                    $.ajax({
-                        type: 'GET',
-                        url: "{{ route('storeHumid') }}", 
-                        data: {
-                            // 'switch_id': switchID,
-                            'value': humid_val, plot_id,
-                        }
-                    });
-                }
-            }, 5000)
+            // setTimeout(function(){
+            //     var plot_id = document.getElementById('plot_id').value;
+            //     var humid_val = obj.humid;
+            //     var temp_val = obj.temp;
+            //     const storeNow = new Date();
+            //     const countSeconds = zeroFill(storeNow.getSeconds());
+            //     const countMinutes = zeroFill(storeNow.getMinutes());
+            //     if(true){
+            //         $.ajax({
+            //             type: 'GET',
+            //             url: "{{ route('storeTemp') }}", 
+            //             data: {
+            //                 // 'switch_id': switchID,
+            //                 'value': temp_val, plot_id,
+            //             }
+            //         });
+            //         $.ajax({
+            //             type: 'GET',
+            //             url: "{{ route('storeHumid') }}", 
+            //             data: {
+            //                 // 'switch_id': switchID,
+            //                 'value': humid_val, plot_id,
+            //             }
+            //         });
+            //     }
+            // }, 5000)
             
         }
         

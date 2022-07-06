@@ -90,7 +90,8 @@ $get_data_plot = DB::table('plots')
 </div>
 
 <div class="formEditPassword" style="display: ;">
-    <form action="{{ route('admin.editUserPassword', $userID) }}" method="POST">
+    @foreach($userName as $key_userName => $value_userName)
+    <form action="{{ route('admin.editUserPassword', ['userID' => $value_userName->id]) }}" method="POST">
         @csrf
         @method('PUT')
         <div class="ant-modal-mask"></div>
@@ -101,11 +102,12 @@ $get_data_plot = DB::table('plots')
                         <div class="ant-modal-title" style="font-size:large;font-weight:bolder;">แก้ไขรหัสผ่านผู้ใช้</div>
                     </div>
                     <div class="ant-modal-body" id="FarmInputRecordTypeAndSourceShow">
-                        @foreach($userName as $key_userName => $value_userName)
                         <div class="ant-row ant-form-item ant-form-item-with-help own-custom-form-field normal-offset normal-offset ant-form-item-has-success" style="row-gap: 0px;">
                             <div class="font-prompt">ผู้ใช้ : {{ $value_userName->name }}</div>
                         </div>
-                        @endforeach
+                        <div class="ant-row ant-form-item ant-form-item-with-help own-custom-form-field normal-offset normal-offset ant-form-item-has-success" style="row-gap: 0px;">
+                            <div class="font-prompt">อีเมล : {{ $value_userName->email }}</div>
+                        </div>
                         <div class="ant-row ant-form-item ant-form-item-with-help own-custom-form-field normal-offset normal-offset ant-form-item-has-success" style="row-gap: 0px;">
                             <div class="font-prompt">รหัสผ่านใหม่</div>
                             <div class="ant-col ant-form-item-control">
@@ -127,6 +129,7 @@ $get_data_plot = DB::table('plots')
             </div>
         </div>
     </form>
+    @endforeach
 </div>
 @endguest
 @endsection

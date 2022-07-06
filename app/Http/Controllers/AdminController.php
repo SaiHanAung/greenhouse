@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use PhpParser\Node\Expr\FuncCall;
 use App\User;
@@ -33,11 +34,11 @@ class AdminController extends Controller
         ));
     }
 
-    public function editUserPassword(Request $request, User $user)
+    public function editUserPassword(Request $request, $userID)
     {
-        // $userP = User::where('id',$userID);
-        // $userP->password = $request->input('password');
-        $user->update($request->all());
+        DB::table('users')->where('id', $userID)->update(
+            array('password' => Hash::make($request->input('password')))
+        );
         return redirect()->route('admin.index')->with('success', 'แก้ไขรหัสผ่านสำเร็จแล้ว');
     }
 
