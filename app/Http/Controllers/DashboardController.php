@@ -113,14 +113,10 @@ class DashboardController extends Controller
 
         // $get_temps = DB::table('temps')->latest('temp')->where('plot_id',$plotID)->first();
         // $get_humids = DB::table('humids')->latest('humid')->where('plot_id',$plotID)->first();
-        // $temp = $get_temps->temp;
-        // $humid = $get_humids->humid;
 
         // dd($temp);
 
         return view('dashboards.index', compact(
-            // 'humid',
-            // 'temp',
             // 'get_humids',
             // 'get_temps',
             'get_temp_humid',

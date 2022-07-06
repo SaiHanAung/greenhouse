@@ -201,7 +201,9 @@
                                                             <?php
                                                             $get_temps = DB::table('temps')->latest('temp')->where('plot_id',$plotID)->first();
                                                             ?>
+                                                            @foreach($get_temps as $key_temp => $value_temp)
                                                             {{$get_temps->temp}}
+                                                            @endforeach
                                                             <!-- 0.0 -->
                                                              ํC</h3>
                                                     </div>
@@ -226,7 +228,9 @@
                                                             <?php
                                                             $get_humids = DB::table('humids')->latest('humid')->where('plot_id',$plotID)->first();
                                                             ?>
+                                                            @foreach($get_humids as $key_humid => $value_humid)
                                                             {{$get_humids->humid}}
+                                                            @endforeach
                                                             <!-- 0.0  -->
                                                             %</h3>
                                                     </div>
