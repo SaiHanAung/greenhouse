@@ -488,6 +488,19 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
     <script>
+        const zeroFill = n => {
+                return ('0' + n).slice(-2);
+            }
+
+            const interval = setInterval(() => {
+                const now = new Date();
+                const dateTime = now.toLocaleDateString() + ' ' + zeroFill(now.getHours()) + ':' + zeroFill(now.getMinutes()) + ':' + zeroFill(now.getSeconds());
+
+                document.getElementById("date-time-humid").innerHTML = "อัพเดทล่าสุด : " + dateTime;
+                // document.getElementById("date-time-humid-mobile").innerHTML = "อัพเดทล่าสุด : " + dateTime;
+                document.getElementById('date-time-temp').innerHTML = "อัพเดทล่าสุด : " + dateTime;
+                // document.getElementById('date-time-temp-mobile').innerHTML = "อัพเดทล่าสุด : " + dateTime;
+            }, 1000);   
         var cl = console.log.bind(document);
         var host = document.getElementById("input_host").value;
         var port = 8000;
@@ -532,19 +545,19 @@
             }
             // document.getElementById("mqtt-value").innerHTML = msg;
             // console.log(msg);
-            const zeroFill = n => {
-                return ('0' + n).slice(-2);
-            }
+            // const zeroFill = n => {
+            //     return ('0' + n).slice(-2);
+            // }
 
-            const interval = setInterval(() => {
-                const now = new Date();
-                const dateTime = now.toLocaleDateString() + ' ' + zeroFill(now.getHours()) + ':' + zeroFill(now.getMinutes()) + ':' + zeroFill(now.getSeconds());
+            // const interval = setInterval(() => {
+            //     const now = new Date();
+            //     const dateTime = now.toLocaleDateString() + ' ' + zeroFill(now.getHours()) + ':' + zeroFill(now.getMinutes()) + ':' + zeroFill(now.getSeconds());
 
-                document.getElementById("date-time-humid").innerHTML = "อัพเดทล่าสุด : " + dateTime;
-                // document.getElementById("date-time-humid-mobile").innerHTML = "อัพเดทล่าสุด : " + dateTime;
-                document.getElementById('date-time-temp').innerHTML = "อัพเดทล่าสุด : " + dateTime;
-                // document.getElementById('date-time-temp-mobile').innerHTML = "อัพเดทล่าสุด : " + dateTime;
-            }, 1000);   
+            //     document.getElementById("date-time-humid").innerHTML = "อัพเดทล่าสุด : " + dateTime;
+            //     // document.getElementById("date-time-humid-mobile").innerHTML = "อัพเดทล่าสุด : " + dateTime;
+            //     document.getElementById('date-time-temp').innerHTML = "อัพเดทล่าสุด : " + dateTime;
+            //     // document.getElementById('date-time-temp-mobile').innerHTML = "อัพเดทล่าสุด : " + dateTime;
+            // }, 1000);   
 
             // setTimeout(function(){
             //     var plot_id = document.getElementById('plot_id').value;

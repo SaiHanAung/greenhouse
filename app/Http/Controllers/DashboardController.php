@@ -110,11 +110,15 @@ class DashboardController extends Controller
         $check_plant_price = Note_plant::where('plot_id', $plotID)->where('deleted_at', null)->count();
 
         $get_temp_humid = DB::table('temp_humid')->get('temp', 'humid');
-        // foreach($get_temp_humid as $key_temp_humid => $value_temp_humid){}
 
-        // dd($value_temp_humid);
+        $get_temps = DB::table('temps')->latest('temp')->where('plot_id',$plotID)->first();
+        $get_humids = DB::table('humids')->latest('humid')->where('plot_id',$plotID)->first();
+
+        // dd($get_temps->temp);
 
         return view('dashboards.index', compact(
+            'get_humids',
+            'get_temps',
             'get_temp_humid',
             'check_plant_price',
             'sum_total_price',
