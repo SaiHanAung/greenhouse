@@ -489,8 +489,8 @@
 
     <script>
         var cl = console.log.bind(document);
-        var host = document.getElementById("input_host").value
-        var port = 1883;
+        var host = document.getElementById("input_host").value;
+        var port = 8000;
         var x = Math.floor(Math.random() * 10000);
         var cname = "controlform-" + x;
         client = mqtt = new Paho.MQTT.Client(host, port, cname);
@@ -503,7 +503,7 @@
 
         function onConnect() {
             message = new Paho.MQTT.Message("0");
-            message.destinationName = document.getElementById("input_topic").value
+            message.destinationName = document.getElementById("input_topic").value;
             client.subscribe(message.destinationName);
             client.send(message) // publish message
         }
