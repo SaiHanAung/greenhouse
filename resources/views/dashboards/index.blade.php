@@ -198,7 +198,10 @@
                                                 <div class="row">
                                                     <div class="center">
                                                         <h3 class="mt-2 font-prompt" id="temp">
-                                                            {{$temp}}
+                                                            <?php
+                                                            $get_temps = DB::table('temps')->latest('temp')->where('plot_id',$plotID)->first();
+                                                            ?>
+                                                            {{$get_temps->temp}}
                                                             <!-- 0.0 -->
                                                              ํC</h3>
                                                     </div>
@@ -220,7 +223,10 @@
                                                 <div class="row">
                                                     <div class="center">
                                                         <h3 class="mt-2 font-prompt" id="humid">
-                                                            {{$humid}}
+                                                            <?php
+                                                            $get_humids = DB::table('humids')->latest('humid')->where('plot_id',$plotID)->first();
+                                                            ?>
+                                                            {{$get_humids->humid}}
                                                             <!-- 0.0  -->
                                                             %</h3>
                                                     </div>
