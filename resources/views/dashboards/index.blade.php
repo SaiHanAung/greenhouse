@@ -198,9 +198,6 @@
                                                 <div class="row">
                                                     <div class="center">
                                                         <h3 class="mt-2 font-prompt" id="temp">
-                                                            <?php
-                                                            $get_temps = DB::table('temps')->latest('temp')->where('plot_id',$plotID)->first();
-                                                            ?>
                                                             @foreach($get_temps as $key_temp => $value_temp)
                                                             {{$get_temps->temp}}
                                                             @endforeach
@@ -225,9 +222,6 @@
                                                 <div class="row">
                                                     <div class="center">
                                                         <h3 class="mt-2 font-prompt" id="humid">
-                                                            <?php
-                                                            $get_humids = DB::table('humids')->latest('humid')->where('plot_id',$plotID)->first();
-                                                            ?>
                                                             @foreach($get_humids as $key_humid => $value_humid)
                                                             {{$get_humids->humid}}
                                                             @endforeach
