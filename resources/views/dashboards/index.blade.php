@@ -198,9 +198,7 @@
                                                 <div class="row">
                                                     <div class="center">
                                                         <h3 class="mt-2 font-prompt" id="temp">
-                                                            @foreach($get_temps as $key_temp => $value_temp)
-                                                            {{$get_temps->temp}}
-                                                            @endforeach
+                                                            {{$get_temps}}
                                                             <!-- 0.0 -->
                                                              ํC</h3>
                                                     </div>
@@ -222,9 +220,7 @@
                                                 <div class="row">
                                                     <div class="center">
                                                         <h3 class="mt-2 font-prompt" id="humid">
-                                                            @foreach($get_humids as $key_humid => $value_humid)
-                                                            {{$get_humids->humid}}
-                                                            @endforeach
+                                                            {{$get_humids}}
                                                             <!-- 0.0  -->
                                                             %</h3>
                                                     </div>
