@@ -198,7 +198,7 @@
                                                 <div class="row">
                                                     <div class="center">
                                                         <h3 class="mt-2 font-prompt" id="temp">
-                                                            {{$get_temps->temp}}
+                                                            {{$temp}}
                                                             <!-- 0.0 -->
                                                              ํC</h3>
                                                     </div>
@@ -220,7 +220,7 @@
                                                 <div class="row">
                                                     <div class="center">
                                                         <h3 class="mt-2 font-prompt" id="humid">
-                                                            {{$get_humids->humid}}
+                                                            {{$humid}}
                                                             <!-- 0.0  -->
                                                             %</h3>
                                                     </div>
