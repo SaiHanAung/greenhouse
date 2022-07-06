@@ -490,7 +490,7 @@
     <script>
         var cl = console.log.bind(document);
         var host = document.getElementById("input_host").value
-        var port = 8000;
+        var port = 1883;
         var x = Math.floor(Math.random() * 10000);
         var cname = "controlform-" + x;
         client = mqtt = new Paho.MQTT.Client(host, port, cname);
