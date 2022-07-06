@@ -587,8 +587,8 @@
             // }, 5000)
             
         }
-        
-
+    </script>
+    <script>
         /////////////////// JS ECHART Pie chart ////////////////////////////////
         var pie_basic_element = document.getElementById('pie_basic');
         if (pie_basic_element) {
