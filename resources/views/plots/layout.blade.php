@@ -37,13 +37,16 @@
             $('#openFormNewFarmOnMobile').click(function() {
                 $('.modal-mobile').show();
             });
-            $('#cancelNewfarmFormOnMobile').click(function() {
+            $('#cancelFormCreatePlotMobile').click(function() {
                 $('.modal-mobile').hide();
             });
         });
     </script>
     <style>
         .font-prompt {
+            font-family: 'Prompt', sans-serif;
+        }
+        body{
             font-family: 'Prompt', sans-serif;
         }
     </style>
@@ -93,64 +96,9 @@ $get_data_plot = DB::table('plots')
                     </div>
                 </div>
             </div>
-            {{--
-            <div class="side-mobile">
-                <div id="mySidenav" class="sidenav">
-                    <a href="javascript:void(0)" style="color: #49cea1;" class="font-prompt">จัดการฟาร์ม</a>
-                    <a href="{{ route('profile') }}" class="font-prompt">โปรไฟล์</a>
-                    <a href="{{ route('logout.perform') }}" class="font-prompt">ออกจากระบบ</a>
-                </div>
 
-                <div id="main" style="position:relative;">
-                    <div class="row">
-                        <div class="col-6">
-                            <span style="cursor:pointer;">
-                                <div class="container" onclick="slider(this)" style="width:fit-content;">
-                                    <div class="bar1-x"></div>
-                                    <div class="bar2-x"></div>
-                                    <div class="bar3-x"></div>
-                                </div>
-                            </span>
-                        </div>
-                        <div class="col-6">
-                            <label class="font-prompt vertical-center"><strong id="plotName" style="font-size: x-large;font-weight:bolder;">จัดการฟาร์ม</strong></label>
-                        </div>
-                    </div>
-                </div>
-                <div class="row" style="margin: -0.5em 0 2em 0;">
-                    <hr>
-                    <div class="col-7"></div>
-                    <div class="col-5">
-                        <button type="button" id="openFormNewFarmOnMobile" class="ant-btn ant-btn-primary">
-                            <span style="font-size: large;">+</span>
-                            <span class="font-prompt" style="font-size: medium;">แปลงใหม่</span>
-                        </button>
-                    </div>
-                </div>
-                @if ($message = Session::get('success'))
-                <div id="alert-mobile" class="alert alert-success">
-                    <span class="font-prompt" style="font-size: medium;">{{ $message }}</span>
-                </div>
-                @endif
-                @foreach($get_data_plot as $key => $value)
-                <div style="margin-left:20%;">
-                    <a href="{{ route('dashboard.index', ['plotID'=>$value->id]) }}">
-                        <div class="main-list--item">
-                            <?php
-                            // dd($value);
-                            // echo asset('storage/');
-                            ?>
-                            <div class="main-list--item-preview main-list--item-preview--is-active"><img src="{{ asset('plot_images/') }}" alt="Image"></div>
-                            <div class="main-list--item-details">
-                                <div class="main-list--item-details-name font-prompt"><label class="font-prompt" style="font-size:large;">แปลง :</label> {{ $value->name }}</div>
-                                <div class="main-list--item-details-name font-prompt"><label class="font-prompt" style="font-size:large;">ไอดี :</label> {{ $value->id }}</div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                @endforeach
-            </div>
-            --}}
+            @include('plots.res_mobile')
+
             <div class="ant-modal-root-1" style="display: none;">
                 <form action="{{ route('plots.store') }}" method="POST" enctype="multipart/form-data">
                     <div class="ant-modal-mask"></div>
@@ -198,7 +146,7 @@ $get_data_plot = DB::table('plots')
                                         <div class="ant-col ant-form-item-control">
                                             <div class="ant-form-item-control-input">
                                                 <div class="ant-form-item-control-input-content">
-                                                    <input type="text" name="latitude" class="ant-input font-prompt" value="" placeholder="กรอกตำแหน่ง ละติจูด ของที่ตั้งแปลง" required autofocus>
+                                                    <input type="text" name="latitude" class="ant-input font-prompt" value="" placeholder="กรอกตำแหน่ง ละติจูด ของที่ตั้งแปลง" required>
                                                 </div>
                                             </div>
                                         </div>
@@ -228,7 +176,7 @@ $get_data_plot = DB::table('plots')
                                         <div class="ant-col ant-form-item-control">
                                             <div class="ant-form-item-control-input">
                                                 <div class="ant-form-item-control-input-content">
-                                                    <input type="text" rows="5" name="description" class="font-prompt ant-input @error('description') is-invalid @enderror" placeholder="บอกรายละเอียดของแปลงเพิ่มเติมสักหน่อยสิ..." required></textarea>
+                                                    <input type="text" rows="5" name="description" class="font-prompt ant-input @error('description') is-invalid @enderror" placeholder="บอกรายละเอียดของแปลงเพิ่มเติมสักหน่อยสิ..." required>
                                                 </div>
                                             </div>
                                         </div>
@@ -254,21 +202,21 @@ $get_data_plot = DB::table('plots')
                                         </div>
                                     </div>
                                     <div class="ant-row ant-form-item ant-form-item-with-help own-custom-form-field normal-offset normal-offset ant-form-item-has-success" style="row-gap: 0px;">
-                                        <div class="font-prompt">ท็อปปิค รับข้อมูล</div>
+                                        <div class="font-prompt">ท็อปปิก รับข้อมูล</div>
                                         <div class="ant-col ant-form-item-control">
                                             <div class="ant-form-item-control-input">
                                                 <div class="ant-form-item-control-input-content">
-                                                    <input type="text" name="topic_send" class="ant-input font-prompt" value="" placeholder="กรอกท็อปปิคสำหรับ ( รับข้อมูล ) ของผู้ให้บริการ" required>
+                                                    <input type="text" name="topic_send" class="ant-input font-prompt" value="" placeholder="กรอกท็อปปิกสำหรับ ( รับข้อมูล ) ของผู้ให้บริการ" required>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="ant-row ant-form-item ant-form-item-with-help own-custom-form-field normal-offset normal-offset ant-form-item-has-success" style="row-gap: 0px;">
-                                        <div class="font-prompt">ท็อปปิค ส่งข้อมูล</div>
+                                        <div class="font-prompt">ท็อปปิก ส่งข้อมูล</div>
                                         <div class="ant-col ant-form-item-control">
                                             <div class="ant-form-item-control-input">
                                                 <div class="ant-form-item-control-input-content">
-                                                    <input type="text" name="topic_sub" class="ant-input font-prompt" value="" placeholder="กรอกท็อปปิคสำหรับ ( ส่งข้อมูล ) ของผู้ให้บริการ" required>
+                                                    <input type="text" name="topic_sub" class="ant-input font-prompt" value="" placeholder="กรอกท็อปปิกสำหรับ ( ส่งข้อมูล ) ของผู้ให้บริการ" required>
                                                 </div>
                                             </div>
                                         </div>
@@ -287,136 +235,6 @@ $get_data_plot = DB::table('plots')
                         </div>
                     </div>
                 </form>
-            </div>
-            <div class="modal-mobile" style="display:none;">
-                <div class="row">
-                    <div class="col-8">
-                        <form action="{{ route('plots.store') }}" method="POST" enctype="multipart/form-data">
-                            <!-- <div class="ant-modal-mask"></div> -->
-                            <div class="ant-modal-wrap ant-modal-centered">
-                                <div class="ant-modal">
-                                    <div class="ant-modal-content">
-                                        <div class="row">
-                                            
-                                            <div class="col-8">
-                                                <div class="ant-modal-header">
-                                                    <div class="font-prompt" style="font-size: x-large;">สร้างแปลงใหม่</div>
-                                                </div>
-                                            </div>
-                                            
-                                        </div>
-                                        <div class="ant-modal-body">
-                                            @csrf
-
-                                            <div class="row">
-                                                
-                                                <div class="col-8">
-                                                    <label class="font-prompt">ชื่อ</label>
-                                                    <div class="ant-form-item-control">
-                                                        <div class="ant-form-item-control-input">
-                                                            <div class="ant-form-item-control-input-content">
-                                                                <input type="text" name="name" class="ant-input font-prompt" value="" placeholder="ชื่อแปลง" required autofocus>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                
-                                            </div>
-                                            <div class="row">
-                                                
-                                                <div class="col-8">
-                                                    <label class="font-prompt">Host</label>
-                                                    <div class="ant-form-item-control">
-                                                        <div class="ant-form-item-control-input">
-                                                            <div class="ant-form-item-control-input-content">
-                                                                <input type="text" name="host" class="ant-input font-prompt" value="" placeholder="Host ผู้ให้บริการ" required>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                
-                                            </div>
-                                            <div class="row">
-                                                
-                                                <div class="col-8">
-                                                    <label class="font-prompt">Topic send</label>
-                                                    <div class="ant-form-item-control">
-                                                        <div class="ant-form-item-control-input">
-                                                            <div class="ant-form-item-control-input-content">
-                                                                <input type="text" name="topic_send" class="ant-input font-prompt" value="" placeholder="Topic ผู้ให้บริการ" required>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                
-                                            </div>
-                                            <div class="row">
-                                                
-                                                <div class="col-8">
-                                                    <label class="font-prompt">Topic sub</label>
-                                                    <div class="ant-form-item-control">
-                                                        <div class="ant-form-item-control-input">
-                                                            <div class="ant-form-item-control-input-content">
-                                                                <input type="text" name="topic_sub" class="ant-input font-prompt" value="" placeholder="Topic ผู้ให้บริการ" required>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                
-                                            </div>
-                                            <div class="row">
-                                                
-                                                <div class="col-8">
-                                                    <label class="font-prompt">รูปภาพ</label>
-                                                    <div class="ant-form-item-control">
-                                                        <div class="ant-form-item-control-input">
-                                                            <div class="ant-form-item-control-input-content">
-                                                                <input class="font-prompt" type="file" name="file" required>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                
-                                            </div>
-                                            <div class="row">
-                                                
-                                                <div class="col-8">
-                                                    <label class="font-prompt">รายละเอียด</label>
-                                                    <div class="ant-form-item-control">
-                                                        <div class="ant-form-item-control-input">
-                                                            <div class="ant-form-item-control-input-content">
-                                                                <textarea type="text" rows="5" name="description" class="font-prompt ant-input @error('description') is-invalid @enderror" placeholder="บอกรายละเอียดของแปลงนี้สักหน่อยสิ..." required></textarea>
-                                                                @error('description')
-                                                                <div class="alert alert-danger">{{ $message }}</div>
-                                                                @enderror
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                
-                                            </div>
-                                            <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
-                                            <div class="ant-modal-footer">
-                                                <div class="row">
-                                                    
-                                                    <div class="col-8">
-                                                        <button type="button" id="cancelNewfarmFormOnMobile" class="ant-btn ant-btn-secondary">
-                                                            <span class="font-prompt">ยกเลิก</span>
-                                                        </button>
-                                                        <button type="submit" class="ant-btn ant-btn-primary">
-                                                            <span class="font-prompt">ยืนยัน</span>
-                                                        </button>
-                                                    </div>
-                                                    
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
             </div>
 
             @else

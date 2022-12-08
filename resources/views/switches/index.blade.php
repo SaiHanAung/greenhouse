@@ -114,27 +114,8 @@
                                                 </div>
                                                 <div class="row">
                                                     <div class="center">
-                                                        <p id="port-normal{{$value->id}}" class="mt-3 font-prompt">พอร์ต : {{ $value->port }}</p>
                                                         <input type="hidden" id="plot_id" value="{{ $value->plot_id }}">
-                                                        @foreach($get_port as $key_port => $value_port)
-                                                            @foreach($get_data_switch_time_set as $key_status => $value_status)
-                                                                @if($value_port->port == $value->port && $value_status->status == 1)
-                                                                <script>
-                                                                    $('#port-normal{{$value->id}}').hide();
-                                                                    $('#switch{{$value->id}}').hide();
-                                                                </script>
-                                                                @endif
-                                                                @if($value_port->port == $value->port)
-                                                                <script>
-                                                                    $('#tttt').show();
-                                                                </script>
-                                                                @endif
-                                                            @endforeach
-                                                        @endforeach
-                                                        <div id="tttt" style="display: none;">
-                                                            <p class="mt-3 font-prompt" style="color:#24C48E;">พอร์ต : {{ $value->port }}</p>
-                                                            <p class="font-prompt" style="color:#24C48E; margin-top:-.3em; margin-bottom:2em;">พอร์ตนี้กำลังเปิดแบบตั้งเวลา</p>
-                                                        </div>
+                                                        <p id="port-normal{{$value->id}}" class="mt-3 font-prompt">พอร์ต : {{ $value->port }}</p>
                                                     </div>
                                                 </div>
                                             </div>

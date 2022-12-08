@@ -6,30 +6,39 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <link rel="icon" type="image/x-icon" href="{{ asset('imgs/green-house.png') }}">
     <title>
-        @include('layouts.titles') @yield('title.settings.index')Green House
+        @yield('title.savenote.historyPlant')
+        Green House
     </title>
-    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400&display=swap" rel="stylesheet">
+    <link href="{{ asset('css/waiting_loading_page.css') }}" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link href="{{ asset('css/spacing.css') }}" rel="stylesheet">
     <link href="{{ asset('css/switch.css') }}" rel="stylesheet">
-
     <link href="{{ asset('css/light-bootstrap-dashboard.css') }}" rel="stylesheet">
     <link href="{{ asset('css/deleteModal.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/waiting_loading_page.css') }}" rel="stylesheet">
     <link href="{{ asset('css/plot/tab.css') }}" rel="stylesheet">
     <link href="{{ asset('css/sidenave.css') }}" rel="stylesheet">
-
-
-    <link href="{{ asset('/css/731bfdf3d0cb0f734453.css') }}" rel="stylesheet">
-    <link href="{{ asset('/css/ab3606d21984a57939eb.css') }}" rel="stylesheet">
-    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-    <script src="{{ asset('js/ajax.js') }}"></script>
+    <link href="{{ asset('css/back-to-top.css') }}" rel="stylesheet">
     <script>
         function slider(x) {
             document.getElementById("mySidenav").classList.toggle("open");
             x.classList.toggle("change");
         }
     </script>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="{{ asset('js/ajax.js') }}"></script>
+    <link href="{{ asset('/css/731bfdf3d0cb0f734453.css') }}" rel="stylesheet">
+    <link href="{{ asset('/css/ab3606d21984a57939eb.css') }}" rel="stylesheet">
+
+    <!-- CSS & JS Pie charts -->
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> -->
+    <link href="{{asset('assets/css/components.min.css')}}" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="{{asset('assets/js/jquery.min.js')}}"></script>
+    <!-- <script type="text/javascript" src="{{asset('assets/js/bootstrap.bundle.min.js')}}"></script>	 -->
+    <script type="text/javascript" src="{{asset('assets/js/echarts.min.js')}}"></script>
+
     <style>
         body {
             font-family: 'Prompt', sans-serif;
@@ -38,11 +47,21 @@
         .font-prompt {
             font-family: 'Prompt', sans-serif;
         }
+
+        .special {
+            font-size: large !important;
+            border-top: #fff !important;
+        }
+
+        .special:hover {
+            background: #fff !important;
+            color: #000 !important;
+        }
     </style>
 </head>
 
-<body>
-
+<body style="overflow-x:auto;">
+    <button id="back-to-top-btn"><i class="fas fa-angle-double-up text-center"></i></button>
     <div class="content">
         <div id="app">
             @if(Auth::check())
@@ -59,7 +78,11 @@
                                         <li class="ant-menu-item ant-menu-item-selected" data-toggle="tooltip" data-placement="right" title="จัดการฟาร์ม"><span class="ant-menu-title-content"><a href="{{ route('plots.index') }}"></a><span class="linearicon linearicon-grid2 undefined"></span><span>ฟาร์ม</span></span></li>
                                         <!-- <li class="ant-menu-item" data-toggle="tooltip" data-placement="right" title="ตั้งค่า"><a href="{{ route('setting') }}"></a><span class="ant-menu-title-content"><span class="linearicon linearicon-cog undefined"></span><span>Settings</span></span></li> -->
                                         <li class="ant-menu-item" data-toggle="tooltip" data-placement="right" title="โปรไฟล์ผู้ใช้"><a href="{{ route('profile') }}"></a><span class="ant-menu-title-content"><span class="linearicon linearicon-user undefined"></span><span>User Profile</span></span></li>
-
+                                        <script>
+                                            $(document).ready(function() {
+                                                $('[data-toggle="tooltip"]').tooltip();
+                                            });
+                                        </script>
                                     </ul>
                                     <div aria-hidden="true" style="display: none;">
                                         <div class="user-layout-left-navigation-organization"></div>
@@ -76,114 +99,7 @@
                 </div>
             </div>
 
-            @include('settings.res_mobile')
-
-            <!-- <div class="ant-modal-root-1" style="display: none;">
-                <form action="{{ route('plots.store') }}" method="POST" enctype="multipart/form-data">
-                    <div class="ant-modal-mask"></div>
-                    <div class="ant-modal-wrap ant-modal-centered">
-                        <div class="ant-modal">
-                            <div class="ant-modal-content">
-                                <div class="ant-modal-header">
-                                    <div class="font-prompt" style="font-size: x-large;">สร้างแปลงใหม่</div>
-                                </div>
-                                <div class="ant-modal-body">
-                                    @csrf
-
-                                    <div class="ant-row" style="margin-left: -4px; margin-right: -4px; row-gap: 0px;">
-                                        <div class="ant-col ant-col-12" style="padding-left: 4px; padding-right: 4px;">
-                                            <div class="ant-row ant-form-item normal-offset undefined" style="row-gap: 0px;">
-                                                <label class="font-prompt">ชื่อ</label>
-                                                <div class="ant-col ant-form-item-control">
-                                                    <div class="ant-form-item-control-input">
-                                                        <div class="ant-form-item-control-input-content">
-                                                            <input type="text" name="name" class="ant-input font-prompt" value="" placeholder="ชื่อแปลง" required autofocus>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="ant-col ant-col-12" style="padding-left: 4px; padding-right: 4px;">
-                                            <div class="ant-row ant-form-item normal-offset undefined">
-                                                <label class="font-prompt">Host</label>
-                                                <div class="ant-col ant-form-item-control">
-                                                    <div class="ant-form-item-control-input">
-                                                        <div class="ant-form-item-control-input-content">
-                                                            <input type="text" name="host" class="ant-input font-prompt" value="" placeholder="Host ผู้ให้บริการ" required>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="ant-row" style="margin-left: -4px; margin-right: -4px; row-gap: 0px;">
-                                        <div class="ant-col ant-col-12" style="padding-left: 4px; padding-right: 4px;">
-                                            <div class="ant-row ant-form-item normal-offset undefined" style="row-gap: 0px;">
-                                                <label class="font-prompt">Topic send</label>
-                                                <div class="ant-col ant-form-item-control">
-                                                    <div class="ant-form-item-control-input">
-                                                        <div class="ant-form-item-control-input-content">
-                                                            <input type="text" name="topic_send" class="ant-input font-prompt" value="" placeholder="Topic ผู้ให้บริการ" required>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="ant-col ant-col-12" style="padding-left: 4px; padding-right: 4px;">
-                                            <div class="ant-row ant-form-item normal-offset undefined">
-                                                <label class="font-prompt">Topic sub</label>
-                                                <div class="ant-col ant-form-item-control">
-                                                    <div class="ant-form-item-control-input">
-                                                        <div class="ant-form-item-control-input-content">
-                                                            <input type="text" name="topic_sub" class="ant-input font-prompt" value="" placeholder="Topic ผู้ให้บริการ" required>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="ant-row" style="margin-left: -4px; margin-right: -4px; row-gap: 0px;">
-                                        <div class="ant-col ant-col-12" style="padding-left: 4px; padding-right: 4px;">
-                                            <div class="ant-row ant-form-item normal-offset undefined" style="row-gap: 0px;">
-                                                <label class="font-prompt">รูปภาพ</label>
-                                                <div class="ant-col ant-form-item-control">
-                                                    <div class="ant-form-item-control-input">
-                                                        <div class="ant-form-item-control-input-content">
-                                                            <input class="font-prompt" type="file" name="file" required>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="ant-row ant-form-item large-offset">
-                                        <label class="font-prompt">รายละเอียด</label>
-                                        <div class="ant-col ant-form-item-control">
-                                            <div class="ant-form-item-control-input">
-                                                <div class="ant-form-item-control-input-content">
-                                                    <textarea type="text" rows="5" name="description" class="font-prompt ant-input @error('description') is-invalid @enderror" placeholder="บอกรายละเอียดของแปลงนี้สักหน่อยสิ..." required></textarea>
-                                                    @error('description')
-                                                    <div class="alert alert-danger">{{ $message }}</div>
-                                                    @enderror
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
-                                    <div class="ant-modal-footer">
-                                        <button type="button" id="cancelNewfarmForm" class="ant-btn ant-btn-secondary">
-                                            <span class="font-prompt">ยกเลิก</span>
-                                        </button>
-                                        <button type="submit" class="ant-btn ant-btn-primary">
-                                            <span class="font-prompt">ยืนยัน</span>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </form>
-            </div> -->
+            @include('savenotes.hist_res_mobile')
 
             @else
 
@@ -222,45 +138,18 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="{{ asset('js/ajax.js') }}"></script>
 
+    <script src="https://kit.fontawesome.com/a54d2cbf95.js"></script>
+    <script src="{{ asset('js/back-to-top.js') }}"></script>
     <script>
         $(window).on("load", function() {
             $(".loader-wrapper").fadeOut("slow");
         });
-    </script>
 
-    <script>
-        setTimeout(function() {
-            $('#alert').alert('close');
-        }, 3000);
-    </script>
-
-    <script>
-        $(document).ready(function() {
-            $('[data-toggle="tooltip"]').tooltip();
-        });
         $(document).ready(function() {
             $('div.container').click(function() {
                 $('#plotName').toggle(300);
             });
-        });
-        $(document).ready(function() {
-            $('#openFormEditPlot').click(function() {
-                $(".edit-plot").show();
-            });
-            $('#cancelEditPlotForm').click(function() {
-                $('.edit-plot').hide();
-            });
-
-            $('#openFormEditPlotOnMobile').click(function() {
-                $('.edit-plot-mobile').show();
-            });
-            $('#cancelFormEditPlotMobile').click(function() {
-                $('.edit-plot-mobile').hide();
-            });
-
         });
     </script>
 </body>

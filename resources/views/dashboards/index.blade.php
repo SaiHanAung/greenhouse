@@ -198,7 +198,6 @@
                                                 <div class="row">
                                                     <div class="center">
                                                         <h3 class="mt-2 font-prompt" id="temp">
-                                                            {{$get_temps}}
                                                             <!-- 0.0 -->
                                                              ํC</h3>
                                                     </div>
@@ -220,7 +219,6 @@
                                                 <div class="row">
                                                     <div class="center">
                                                         <h3 class="mt-2 font-prompt" id="humid">
-                                                            {{$get_humids}}
                                                             <!-- 0.0  -->
                                                             %</h3>
                                                     </div>
@@ -254,40 +252,6 @@
                                     </div>
                                 </div>
                             </div>
-                            <!-- <div class="row">
-                                <div class="col-sm-6">
-                                    <div class="width-border p-4" style="overflow-x:auto;">
-                                        <h4 class="m-4 font-prompt mb-5">MQTT Protocol</h4>
-                                        <p>&nbsp;</p>
-                                        <div class="row">
-                                            <div class="col-sm-12">
-                                                <div class="chart-container">
-                                                    <div class="chart has-fixed-height" id="line_temp" style="margin-bottom: 1rem; margin-top: -5rem;"></div>
-                                                    <center>
-                                                        <span>เวลา</span>
-                                                    </center>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="width-border p-4" style="overflow-x:auto;">
-                                        <h4 class="m-4 font-prompt mb-5">MQTT Protocol</h4>
-                                        <p>&nbsp;</p>
-                                        <div class="row">
-                                            <div class="col-sm-12">
-                                                <div class="chart-container">
-                                                    <div class="chart has-fixed-height" id="line_humid" style="margin-bottom: 1rem; margin-top: -5rem;"></div>
-                                                    <center>
-                                                        <span>เวลา</span>
-                                                    </center>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div> -->
                             <div class="row">
                                 <div class="col-sm-6">
                                     <div class="width-border">
@@ -949,6 +913,420 @@
                                             dateHumidChart.data.labels = parsed.cc;
                                             dateHumidChart.data.datasets[0].data = data.humidVals;
                                             dateHumidChart.update();
+                                        },
+                                        error: function(data){
+                                            console.log(data);
+                                        }
+                                    })
+                                }
+                            </script>
+
+                            <!-- ********** Temp and humid chart for  ********** -->
+                            <!-- Temp -->
+                            <script>
+                                var tcm = document.getElementById("tempChart_mobile");
+                                var tempChart_mobile = new Chart(tcm, {
+                                    type: 'line',
+                                    data: {
+                                        labels: [],
+                                        datasets: [{
+                                            label: 'อุณหภูมิ',
+                                            data: [],
+                                            borderWidth: 1,
+                                            backgroundColor: 'rgba(255, 0, 0, 0.1)',
+                                            borderColor: 'rgb(255, 0, 0)',
+                                        }]
+                                    },
+                                    options: {
+                                        scales: {
+                                            xAxes: [],
+                                            yAxes: [{
+                                                ticks: {
+                                                    beginAtZero:false
+                                                }
+                                            }],
+                                        },
+                                        tooltips: {
+                                            callbacks: {
+                                                title: function(tooltipItem, data) {
+                                                    return "เวลา"+" "+ data['labels'][tooltipItem[0]['index']];
+                                                },
+                                                label: function(tooltipItem, data) {
+                                                    return "อุณหภูมิ"+": "+ data['datasets'][0]['data'][tooltipItem['index']];
+                                                }
+                                            },
+                                            backgroundColor: 'rgba(0,0,0,0.75)',
+                                            titleFontSize: 14,
+                                            titleFontFamily: 'Prompt, sans-serif',
+                                            titleFontColor: '#fff',
+                                            bodyFontColor: '#fff',
+                                            bodyFontSize: 14,
+                                            bodyFontFamily: 'Prompt, sans-serif',
+                                            displayColors: false
+                                        },
+                                        legend: {
+                                            labels: {
+                                                fontFamily: 'Prompt, sans-serif',
+                                                fontSize: 14
+                                            }
+                                        }
+                                    }
+                                });
+                                
+                                // console.log(parsed.b); // // Fri Jul 14 2017, etc...
+                                var plot_id = document.getElementById('plot_id').value;
+                                var updateChart = function() { 
+                                    $.ajax({
+                                    url: "{{ route('api.chart') }}",
+                                    type: 'GET',
+                                    dataType: 'json',
+                                    headers: {
+                                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                    },
+                                    data: {
+                                        'value': plot_id
+                                    },
+                                    success: function(data) {
+                                        const isoDatePattern = new RegExp(/\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d\.\d+([+-][0-2]\d:[0-5]\d|Z)/);
+
+                                        const obj = {
+                                        a: 'foo',
+                                        b: new Date(1500000000000), // Fri Jul 14 2017, etc...
+                                        cc: data.timeTemp_mobile
+                                        }
+                                        const json = JSON.stringify(obj);
+
+                                        const zeroFill = n => {
+                                            return ('0' + n).slice(-2);
+                                        }
+                                        const now = new Date();
+                                        const dateTime = now.toLocaleDateString() + ' ' + zeroFill(now.getHours()) + ':' + zeroFill(now.getMinutes()) + ':' + zeroFill(now.getSeconds());
+
+                                        // Convert back, use reviver function:
+                                        const parsed = JSON.parse(json, (key, value) => {
+                                            if (typeof value === 'string' &&  value.match(isoDatePattern)){
+                                                 dateTemp = new Date(value);
+
+                                                 resultTemp = zeroFill(dateTemp.getHours()) + ":" + zeroFill(dateTemp.getMinutes()) + ":" + zeroFill(dateTemp.getSeconds());
+                                                return resultTemp; // isostring, so cast to js date
+                                            }
+                                            return value; // leave any other value as-is
+                                        });
+                                        tempChart_mobile.data.labels = parsed.cc;
+                                        tempChart_mobile.data.datasets[0].data = data.tempVals_mobile;
+                                        tempChart_mobile.update();
+                                    },
+                                    error: function(data){
+                                        console.log(data);
+                                    }
+                                    });
+                                }
+                                
+                                updateChart();
+                                setInterval(() => {
+                                    updateChart();
+                                }, 1000);
+                            </script>
+                            <script>
+                                function dateShowTempOnMobile(){
+                                    var dtcm = document.getElementById("dateTempChart_mobile");
+                                    var tempChartSixHour = new Chart(dtcm, {
+                                        type: 'line',
+                                        data: {
+                                            labels: [],
+                                            datasets: [{
+                                                label: 'อุณหภูมิ',
+                                                data: [],
+                                                borderWidth: 1,
+                                                backgroundColor: 'rgba(255, 0, 0, 0.1)',
+                                                borderColor: 'rgb(255, 0, 0)',
+                                            }]
+                                        },
+                                        options: {
+                                            scales: {
+                                                xAxes: [],
+                                                yAxes: [{
+                                                    ticks: {
+                                                        beginAtZero:false
+                                                    }
+                                                }],
+                                            },
+                                            tooltips: {
+                                                callbacks: {
+                                                    title: function(tooltipItem, data) {
+                                                        return "เวลา"+" "+ data['labels'][tooltipItem[0]['index']];
+                                                    },
+                                                    label: function(tooltipItem, data) {
+                                                        return "อุณหภูมิ"+": "+ data['datasets'][0]['data'][tooltipItem['index']];
+                                                    }
+                                                },
+                                                backgroundColor: 'rgba(0,0,0,0.75)',
+                                                titleFontSize: 14,
+                                                titleFontFamily: 'Prompt, sans-serif',
+                                                titleFontColor: '#fff',
+                                                bodyFontColor: '#fff',
+                                                bodyFontSize: 14,
+                                                bodyFontFamily: 'Prompt, sans-serif',
+                                                displayColors: false
+                                            },
+                                            legend: {
+                                                labels: {
+                                                    fontFamily: 'Prompt, sans-serif',
+                                                    fontSize: 14
+                                                }
+                                            }
+                                        }
+                                    });
+                                    var plotIdTemp = document.getElementById('plot_id').value;
+                                    var dateTemp = document.getElementById('datePicker_show_temp_mobile').value;
+                                    $.ajax({
+                                        url: "{{ route('dateShowTemp') }}",
+                                        type: 'GET',
+                                        dataType: 'json',
+                                        headers: {
+                                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                        },
+                                        data: {
+                                            'value': plotIdTemp, dateTemp
+                                        },
+                                        success: function(data) {
+                                            $('#tempChart_mobile').hide();
+                                            $('.dateShowTemps_mobile').hide();
+                                            $('#dateTempChart_mobile').show();
+                                            const isoDatePattern = new RegExp(/\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d\.\d+([+-][0-2]\d:[0-5]\d|Z)/);
+
+                                            const obj = {
+                                            a: 'foo',
+                                            b: new Date(1500000000000), // Fri Jul 14 2017, etc...
+                                            cc: data.timeTemp
+                                            }
+                                            const json = JSON.stringify(obj);
+
+                                            const zeroFill = n => {
+                                                return ('0' + n).slice(-2);
+                                            }
+                                            const now = new Date();
+                                            const dateTime = now.toLocaleDateString() + ' ' + zeroFill(now.getHours()) + ':' + zeroFill(now.getMinutes()) + ':' + zeroFill(now.getSeconds());
+
+                                            // Convert back, use reviver function:
+                                            const parsed = JSON.parse(json, (key, value) => {
+                                                if (typeof value === 'string' &&  value.match(isoDatePattern)){
+                                                    dateTemp = new Date(value);
+
+                                                    resultTemp = zeroFill(dateTemp.getHours()) + ":" + zeroFill(dateTemp.getMinutes()) + ":" + zeroFill(dateTemp.getSeconds());
+                                                    return resultTemp; // isostring, so cast to js date
+                                                }
+                                                return value; // leave any other value as-is
+                                            });
+                                            tempChartSixHour.data.labels = parsed.cc;
+                                            tempChartSixHour.data.datasets[0].data = data.tempVals;
+                                            tempChartSixHour.update();
+                                        },
+                                        error: function(data){
+                                            console.log(data);
+                                        }
+                                    })
+                                }
+                            </script>
+                            <!-- Humid -->
+                            <script>
+                                var hmcm = document.getElementById("humidChart_mobile");
+                                var humidChart_mobile = new Chart(hmcm, {
+                                    type: 'line',
+                                    data: {
+                                        labels: [],
+                                        datasets: [{
+                                            label: 'ความชื้น',
+                                            data: [],
+                                            borderWidth: 1,
+                                            backgroundColor: 'rgba(0, 0, 255, 0.1)',
+                                            borderColor: 'rgb(0, 0, 255)',
+                                        }]
+                                    },
+                                    options: {
+                                        scales: {
+                                            xAxes: [],
+                                            yAxes: [{
+                                                ticks: {
+                                                    beginAtZero:false
+                                                }
+                                            }],
+                                        },
+                                        tooltips: {
+                                            callbacks: {
+                                                title: function(tooltipItem, data) {
+                                                    return "เวลา"+" "+ data['labels'][tooltipItem[0]['index']];
+                                                },
+                                                label: function(tooltipItem, data) {
+                                                    return "ความชื้น"+": "+ data['datasets'][0]['data'][tooltipItem['index']];
+                                                }
+                                            },
+                                            backgroundColor: 'rgba(0,0,0,0.75)',
+                                            titleFontSize: 14,
+                                            titleFontFamily: 'Prompt, sans-serif',
+                                            titleFontColor: '#fff',
+                                            bodyFontColor: '#fff',
+                                            bodyFontSize: 14,
+                                            bodyFontFamily: 'Prompt, sans-serif',
+                                            displayColors: false
+                                        },
+                                        legend: {
+                                            labels: {
+                                                fontFamily: 'Prompt, sans-serif',
+                                                fontSize: 14
+                                            }
+                                        }
+                                    }
+                                });
+                                
+                                // console.log(parsed.b); // // Fri Jul 14 2017, etc...
+                                var plot_id = document.getElementById('plot_id').value;
+                                var updateChartHumid = function() { 
+                                    $.ajax({
+                                    url: "{{ route('api.chart') }}",
+                                    type: 'GET',
+                                    dataType: 'json',
+                                    headers: {
+                                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                    },
+                                    data: {
+                                        'value': plot_id
+                                    },
+                                    success: function(data) {
+                                        const isoDatePattern = new RegExp(/\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d\.\d+([+-][0-2]\d:[0-5]\d|Z)/);
+
+                                        const obj = {
+                                        a: 'foo',
+                                        b: new Date(1500000000000), // Fri Jul 14 2017, etc...
+                                        cc: data.timeHumid
+                                        }
+                                        const json = JSON.stringify(obj);
+
+                                        const zeroFill = n => {
+                                            return ('0' + n).slice(-2);
+                                        }
+                                        const now = new Date();
+                                        const dateTime = now.toLocaleDateString() + ' ' + zeroFill(now.getHours()) + ':' + zeroFill(now.getMinutes()) + ':' + zeroFill(now.getSeconds());
+
+                                        // Convert back, use reviver function:
+                                        const parsed = JSON.parse(json, (key, value) => {
+                                            if (typeof value === 'string' &&  value.match(isoDatePattern)){
+                                                 dateHumid = new Date(value);
+
+                                                 resultHumid = zeroFill(dateHumid.getHours()) + ":" + zeroFill(dateHumid.getMinutes()) + ":" + zeroFill(dateHumid.getSeconds());
+                                                return resultHumid; // isostring, so cast to js date
+                                            }
+                                            return value; // leave any other value as-is
+                                        });
+                                        humidChart_mobile.data.labels = parsed.cc;
+                                        humidChart_mobile.data.datasets[0].data = data.humidVals;
+                                        humidChart_mobile.update();
+                                    },
+                                    error: function(data){
+                                        console.log(data);
+                                    }
+                                    });
+                                }
+                                
+                                updateChartHumid();
+                                setInterval(() => {
+                                    updateChartHumid();
+                                }, 1000);
+                            </script>
+                            <script>
+                                function dateShowHumidOnMobile(){
+                                    var dhmc = document.getElementById("dateHumidChart_mobile");
+                                    var dateHumidChart_mobile = new Chart(dhmc, {
+                                        type: 'line',
+                                        data: {
+                                            labels: [],
+                                            datasets: [{
+                                                label: 'ความชื้น',
+                                                data: [],
+                                                borderWidth: 1,
+                                                backgroundColor: 'rgba(0, 0, 255, 0.1)',
+                                                borderColor: 'rgb(0, 0, 255)',
+                                            }]
+                                        },
+                                        options: {
+                                            scales: {
+                                                xAxes: [],
+                                                yAxes: [{
+                                                    ticks: {
+                                                        beginAtZero:false
+                                                    }
+                                                }],
+                                            },
+                                            tooltips: {
+                                                callbacks: {
+                                                    title: function(tooltipItem, data) {
+                                                        return "เวลา"+" "+ data['labels'][tooltipItem[0]['index']];
+                                                    },
+                                                    label: function(tooltipItem, data) {
+                                                        return "ความชื้น"+": "+ data['datasets'][0]['data'][tooltipItem['index']];
+                                                    }
+                                                },
+                                                backgroundColor: 'rgba(0,0,0,0.75)',
+                                                titleFontSize: 14,
+                                                titleFontFamily: 'Prompt, sans-serif',
+                                                titleFontColor: '#fff',
+                                                bodyFontColor: '#fff',
+                                                bodyFontSize: 14,
+                                                bodyFontFamily: 'Prompt, sans-serif',
+                                                displayColors: false
+                                            },
+                                            legend: {
+                                                labels: {
+                                                    fontFamily: 'Prompt, sans-serif',
+                                                    fontSize: 14
+                                                }
+                                            }
+                                        }
+                                    });
+                                    var plotIdHumid = document.getElementById('plot_id').value;
+                                    var dateHumid = document.getElementById('datePicker_show_humid_mobile').value;
+                                    $.ajax({
+                                        url: "{{ route('dateShowHumid') }}",
+                                        type: 'GET',
+                                        dataType: 'json',
+                                        headers: {
+                                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                        },
+                                        data: {
+                                            'value': plotIdHumid, dateHumid
+                                        },
+                                        success: function(data) {
+                                            $('#humidChart_mobile').hide();
+                                            $('.dateShowHumids_mobile').hide();
+                                            $('#dateHumidChart_mobile').show();
+                                            const isoDatePattern = new RegExp(/\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d\.\d+([+-][0-2]\d:[0-5]\d|Z)/);
+                                            
+                                            const obj = {
+                                            a: 'foo',
+                                            b: new Date(1500000000000), // Fri Jul 14 2017, etc...
+                                            cc: data.timeHumid
+                                            }
+                                            const json = JSON.stringify(obj);
+
+                                            const zeroFill = n => {
+                                                return ('0' + n).slice(-2);
+                                            }
+                                            const now = new Date();
+                                            const dateTime = now.toLocaleDateString() + ' ' + zeroFill(now.getHours()) + ':' + zeroFill(now.getMinutes()) + ':' + zeroFill(now.getSeconds());
+
+                                            // Convert back, use reviver function:
+                                            const parsed = JSON.parse(json, (key, value) => {
+                                                if (typeof value === 'string' &&  value.match(isoDatePattern)){
+                                                    dateTemp = new Date(value);
+
+                                                    resultTemp = zeroFill(dateTemp.getHours()) + ":" + zeroFill(dateTemp.getMinutes()) + ":" + zeroFill(dateTemp.getSeconds());
+                                                    return resultTemp; // isostring, so cast to js date
+                                                }
+                                                return value; // leave any other value as-is
+                                            });
+                                            dateHumidChart_mobile.data.labels = parsed.cc;
+                                            dateHumidChart_mobile.data.datasets[0].data = data.humidVals;
+                                            dateHumidChart_mobile.update();
                                         },
                                         error: function(data){
                                             console.log(data);

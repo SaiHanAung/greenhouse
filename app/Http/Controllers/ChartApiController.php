@@ -17,37 +17,18 @@ class ChartApiController extends Controller
         $temps = Temp::latest()->take(30)->where('plot_id', $plot_id)->get()->sortBy('id');
         $timeTemp = $temps->pluck('created_at');
         $tempVals = $temps->pluck('temp');
+        $timeTemp_mobile = $temps->pluck('created_at');
+        $tempVals_mobile = $temps->pluck('temp');
         
         $humids = Humid::latest()->take(30)->where('plot_id', $plot_id)->get()->sortBy('id');
         $timeHumid = $humids->pluck('created_at');
         $humidVals = $humids->pluck('humid');
+        $timeHumid_mobile = $humids->pluck('created_at');
+        $humidVals_mobile = $humids->pluck('humid');
 
-        return response()->json(compact('timeTemp', 'tempVals', 'timeHumid', 'humidVals'));
-    }
-
-    public function storeTemp(Request $request)
-    {
-        $temp_val = $request->input('value');
-        $plotID = $request->input('plot_id');
-        $temps = Temp::where('plot_id', $plotID)->get();
-        foreach($temps as $kk => $vv){}
-        $tempVals = $temps->pluck('temp');
-        if($vv->temp != $tempVals){
-            // Temp::create([
-            //     'temp' => $temp_val,
-            //     'plot_id' => $plotID,
-            // ]);
-        }
-    }
-
-    public function storeHumid(Request $request)
-    {
-        $humid_val = $request->input('value');
-        $plotID = $request->input('plot_id');
-        // Humid::create([
-        //     'humid' => $humid_val,
-        //     'plot_id' => $plotID,
-        // ]);
+        return response()->json(compact('timeTemp', 'tempVals', 'timeHumid', 'humidVals',
+                'timeTemp_mobile', 'tempVals_mobile', 'timeHumid_mobile', 'humidVals_mobile',
+        ));
     }
 
     public function showTempSixHour(Request $request)

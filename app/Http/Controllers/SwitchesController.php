@@ -41,7 +41,6 @@ class SwitchesController extends Controller
         foreach($get_switch_log as $key_switch_log => $value_switch_log){}
         $get_switch_time_set_log = DB::table('switch_time_set_logs')->where('plot_id', $plotID)->where('history_plant_id', null)->latest()->paginate(10);
         
-        
         $get_data_switch_time_set = Switch_time_set::where('plot_id', $plotID)->get()->all();
 
         $get_port = DB::table('switches')

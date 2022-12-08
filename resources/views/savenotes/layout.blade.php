@@ -8,7 +8,7 @@
     <title>
         @yield('title.savenote.index')
         @yield('title.savenote.historyPlant')
-         Green House 
+        Green House
     </title>
     <link href="{{ asset('css/waiting_loading_page.css') }}" rel="stylesheet">
 
@@ -34,11 +34,11 @@
     <link href="{{ asset('/css/ab3606d21984a57939eb.css') }}" rel="stylesheet">
 
     <!-- CSS & JS Pie charts -->
-	<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> -->
-	<link href="{{asset('assets/css/components.min.css')}}" rel="stylesheet" type="text/css">	
-	<script type="text/javascript" src="{{asset('assets/js/jquery.min.js')}}"></script>
-	<!-- <script type="text/javascript" src="{{asset('assets/js/bootstrap.bundle.min.js')}}"></script>	 -->
-	<script type="text/javascript" src="{{asset('assets/js/echarts.min.js')}}"></script>
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> -->
+    <link href="{{asset('assets/css/components.min.css')}}" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="{{asset('assets/js/jquery.min.js')}}"></script>
+    <!-- <script type="text/javascript" src="{{asset('assets/js/bootstrap.bundle.min.js')}}"></script>	 -->
+    <script type="text/javascript" src="{{asset('assets/js/echarts.min.js')}}"></script>
 
     <style>
         body {
@@ -100,6 +100,8 @@
                 </div>
             </div>
 
+            @include('savenotes.res_mobile')
+
             <script>
                 $(document).ready(function() {
                     $('#FarmInputRecordTypeAndSourceOnMobile').click(function() {
@@ -129,264 +131,7 @@
                     });
                 });
             </script>
-            {{--
-            <div class="side-mobile">
-                <div id="mySidenav" class="sidenav">
-                    <a href="{{ route('plots.index') }}" class="font-prompt">จัดการฟาร์ม</a>
-                    <ul>
-                        <li style="list-style-type: none;"><a href="{{ route('dashboard.index', $plotID) }}" class="font-prompt">แผงควบคุม</a></li>
-                        <li style="list-style-type: none;"><a href="javascript:void(0)" style="color: #49cea1;" class="font-prompt">จดบันทึก</a></li>
-                        <li style="list-style-type: none;"><a href="{{ route('setting.index', $plotID) }}" class="font-prompt">ตั้งค่า</a></li>
-                        <li style="list-style-type: none;"><a href="{{ route('qrcode.index', $plotID) }}" class="font-prompt">QR Code</a></li>
-                    </ul>
-                    <a href="{{ route('profile') }}" class="font-prompt">โปรไฟล์</a>
-                    <a href="{{ route('logout.perform') }}" class="font-prompt">ออกจากระบบ</a>
-                </div>
 
-                <div id="main" style="position:relative;">
-                    <div class="row">
-                        <div class="col-6">
-                            <span style="cursor:pointer;">
-                                <div class="container hideHead" onclick="slider(this)" style="width:fit-content;">
-                                    <div class="bar1-x"></div>
-                                    <div class="bar2-x"></div>
-                                    <div class="bar3-x"></div>
-                                </div>
-                            </span>
-                        </div>
-                        <div class="col-6">
-                            <label class="font-prompt vertical-center"><strong id="plotName" style="font-size: x-large;font-weight:bolder;"> แปลง : {{$value_name_sub}}</strong></label>
-                        </div>
-                    </div>
-                </div>
-                <div class="row" style="margin: -0.5em 0 0.5em 0;">
-                    <hr>
-                    @if ($message = Session::get('success'))
-                    <div id="alert" class="alert alert-success">
-                        <span class="font-prompt" style="font-size: medium;">{{ $message }}</span>
-                    </div>
-                    @endif
-                    @php $i = 0; $j = 0; $k = 0; $s = 0;@endphp
-                    <div class="mb-4">
-                        <div class="row">
-                            <div class="col-12">
-                                <label onclick="myFunction('Demo1')" id="name-savenote" class="ml-2" style="font-size:large;">ปัจจัยการผลิต</label>
-                                @if($check_tract_total_price == 0)
-                                @else
-                                <a href="{{ route('TracFactExcel') }}" class="ant-btn ml-3 font-prompt">ดาวน์โหลด Excel</a>
-                                @endif
-                                <button type="submit" id="FarmInputRecordTypeAndSourceOnMobile" class="bt-create-farm-record btn-sm">จด</button>
-                            </div>
-                        </div>
-                        <!-- <div id="Demo1" style="overflow-x:auto;"> -->
-                        <div id="Demo1" style="overflow-x:auto;">
-                            <table id="customers" style="font-family: 'Prompt', sans-serif;">
-                                <tr>
-                                    <th style="text-align: center;">#</th>
-                                    <th style="text-align: center;">วันที่ซื้อ / ได้มา</th>
-                                    <th style="text-align: center;">รายการปัจจัยการผลิต</th>
-                                    <th style="text-align: center;">ประเภท</th>
-                                    <th style="text-align: center;">ปริมาณ</th>
-                                    <th style="text-align: center;">ราคา</th>
-                                    <th style="text-align: center;">หน่วย</th>
-                                    <th style="text-align: center;">แหล่งที่มา</th>
-                                    <th style="text-align: center;">รวมเป็นเงิน(บาท)</th>
-                                    <th style="text-align: center;">ผู้บันทึก</th>
-                                    <th style="text-align: center;">ลบ</th>
-                                </tr>
-                                @foreach($get_data_trac as $key_data_trac_fact => $value_data_trac_fact)
-                                <tr>
-                                    <?php
-                                    $received_date = thaidate('d-m-Y', strtotime($value_data_trac_fact->received_date));
-                                    // dd($value_data_trac_fact);
-                                    ?>
-                                    <td class="font-prompt" style="text-align: center;">{{ ++$i }}</td>
-                                    <td class="font-prompt" style="text-align: center;">{{$received_date}}</td>
-                                    <td class="font-prompt">{{ $value_data_trac_fact->name }}</td>
-                                    <td class="font-prompt" style="text-align: center;">{{ $value_data_trac_fact->type }}</td>
-                                    <td class="font-prompt" style="text-align: center;">{{ $value_data_trac_fact->amount }}</td>
-                                    <td class="font-prompt" style="text-align: center;">{{ $value_data_trac_fact->price }}</td>
-                                    <td class="font-prompt" style="text-align: center;">{{ $value_data_trac_fact->unit }}</td>
-                                    <td class="font-prompt">{{ $value_data_trac_fact->source }}</td>
-                                    <td class="font-prompt total_price" style="text-align: center;">{{ $value_data_trac_fact->total_price }}</td>
-                                    <td class="font-prompt" style="text-align: center;">{{ $value_data_trac_fact->recorder }}</td>
-                                    <td class="center">
-                                        <form action="{{ route('destroyTracFact', $value_data_trac_fact->id) }}" method="post">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn-secondary btn-sm center-sub">X</button>
-                                        </form>
-                                    </td>
-                                </tr>
-                                @endforeach
-                            </table>
-                            <div class="row mt-2">
-                                <div class="col-sm-6">
-                                    <label>ค่าใช้จ่ายทั้งหมดตอนนี้ :
-                                        <span>
-                                            @if($check_tract_total_price == 0)
-                                            0
-                                            @else
-                                            {{$tract_total_price}}
-                                            @endif
-                                        </span> บาท
-                                    </label>
-                                    {{ $get_data_trac->links() }}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <hr>
-                    <div class="mb-4">
-                        <div class="row">
-                            <div class="col-12">
-                                <label onclick="myFunction('Demo2')" id="name-savenote" class="ml-2" style="font-size:large;">การใช้ปัจจัยการผลิต</label>
-                            </div>
-                        </div>
-                        <div class="row mb-2">
-                            <div class="col-6">
-                                @if($check_data_trac_use_fact == 0)
-                                @else
-                                <a href="{{ route('TracUseFactExcel') }}" class="ant-btn ml-3 font-prompt">ดาวน์โหลด Excel</a>
-                                @endif
-                            </div>
-                            <div class="col-6">
-                                <button type="submit" id="RecordOfFarmInputTheUtilizationOnMobile" class="bt-create-farm-record btn-sm mr-1" style="float: right;">จด</button>
-                            </div>
-                        </div>
-                        <div id="Demo2" style="overflow-x:auto;">
-                            <table id="customers" style="font-family: 'Prompt', sans-serif;">
-                                <tr>
-                                    <th style="text-align: center;">#</th>
-                                    <th style="text-align: center;">วันที่ใช้</th>
-                                    <th style="text-align: center;">รายการการใช้ปัจจัยการผลิต</th>
-                                    <th style="text-align: center;">ปริมาณ</th>
-                                    <th style="text-align: center;">หน่วย</th>
-                                    <th style="text-align: center;">ผู้บันทึก</th>
-                                    <th style="text-align: center;">ลบ</th>
-                                </tr>
-                                @foreach($get_data_trac_use_fact as $key_data_trac_use_fact => $value_data_trac_use_fact)
-                                <tr>
-                                    <?php
-                                    $date_of_use = thaidate('d-m-Y', strtotime($value_data_trac_use_fact->date_of_use));
-                                    ?>
-                                    <td class="font-prompt" style="text-align: center;">{{ ++$j }}</td>
-                                    <td class="font-prompt" style="text-align: center;">{{$date_of_use}}</td>
-                                    <td class="font-prompt">{{ $value_data_trac_use_fact->name_of_use }}</td>
-                                    <td class="font-prompt" style="text-align: center;">{{ $value_data_trac_use_fact->amount }}</td>
-                                    <td class="font-prompt" style="text-align: center;">{{ $value_data_trac_use_fact->unit }}</td>
-                                    <td class="font-prompt" style="text-align: center;">{{ $value_data_trac_use_fact->recorder }}</td>
-                                    <td class="center">
-                                        <form action="{{ route('destroyTracUseFact', $value_data_trac_use_fact->id) }}" method="post">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn-secondary btn-sm center-sub">X</button>
-                                        </form>
-                                    </td>
-                                </tr>
-                                @endforeach
-                            </table>
-                        </div>
-                    </div>
-                    <hr>
-                    <div class="mb-4">
-                        <div class="row">
-                            <div class="col-12">
-                                <label onclick="myFunction('Demo3')" id="name-savenote" class="ml-2" style="font-size:large;">การเก็บเกี่ยวผลผลิต</label>
-                            </div>
-                        </div>
-                        <div class="row mb-2">
-                            <div class="col-6">
-                                @if($check_data_trac_harv == 0)
-                                @else
-                                <a href="{{ route('TracHarvExcel') }}" class="ant-btn ml-3 font-prompt">ดาวน์โหลด Excel</a>
-                                @endif
-                            </div>
-                            <div class="col-6">
-                                <button type="submit" id="OrganicProduceHarvestRecordOnMobile" class="bt-create-farm-record btn-sm" style="float: right;">จด</button>
-                            </div>
-                        </div>
-                        <div id="Demo3" style="overflow-x:auto;">
-                            <table id="customers" style="font-family: 'Prompt', sans-serif;">
-                                <tr>
-                                    <th style="text-align: center;">#</th>
-                                    <th style="text-align: center;">วันที่เก็บเกี่ยว</th>
-                                    <th style="text-align: center;">ผลผลิต</th>
-                                    <th style="text-align: center;">ปริมาณผลผลิตรวม</th>
-                                    <th style="text-align: center;">หน่วย</th>
-                                    <th style="text-align: center;">ผู้บันทึก</th>
-                                    <th style="text-align: center;">ลบ</th>
-                                </tr>
-                                @foreach($get_data_trac_harv as $key_data_trac_harv => $value_data_trac_harv)
-                                <tr>
-                                    <?php
-                                    $harvest_date = thaidate('d-m-Y', strtotime($value_data_trac_harv->harvest_date));
-                                    ?>
-                                    <td class="font-prompt" style="text-align: center;">{{ ++$k }}</td>
-                                    <td class="font-prompt" style="text-align: center;">{{ $harvest_date }}</td>
-                                    <td class="font-prompt">{{ $value_data_trac_harv->product }}</td>
-                                    <td class="font-prompt" style="text-align: center;">{{ $value_data_trac_harv->total_product }}</td>
-                                    <td class="font-prompt" style="text-align: center;">{{ $value_data_trac_harv->unit }}</td>
-                                    <td class="font-prompt" style="text-align: center;">{{ $value_data_trac_harv->recorder }}</td>
-                                    <td class="center">
-                                        <form action="{{ route('destroyTracHarv', $value_data_trac_harv->id) }}" method="post">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn-secondary btn-sm center-sub">X</button>
-                                        </form>
-                                    </td>
-                                </tr>
-                                @endforeach
-                            </table>
-                        </div>
-                    </div>
-                    <div class="mb-4">
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <label onclick="myFunction('Demo3')" id="name-savenote" class="ml-2" style="font-size:large;">การจำหน่ายผลผลิต</label>
-
-                                <button type="submit" id="sellProduceRecordOnMobile" class="bt-create-farm-record btn-sm">จด</button>
-                            </div>
-                        </div>
-                        <div id="Demo4" style="overflow-x:auto;">
-                            <table id="customers" style="font-family: 'Prompt', sans-serif;">
-                                <tr>
-                                    <th style="text-align: center;">#</th>
-                                    <th style="text-align: center;">วันที่จำหน่าย</th>
-                                    <th style="text-align: center;">ผลผลิต</th>
-                                    <th style="text-align: center;">จำนวน</th>
-                                    <th style="text-align: center;">หน่วย</th>
-                                    <th style="text-align: center;">ราคา</th>
-                                    <th style="text-align: center;">ผู้บันทึก</th>
-                                    <th style="text-align: center;">ลบ</th>
-                                </tr>
-                                @foreach($get_data_sell_produce as $key_sell_produce => $value_sell_produce)
-                                <tr>
-                                    <?php
-                                    $sale_date = thaidate('d-m-Y', strtotime($value_sell_produce->sale_date));
-                                    ?>
-                                    <td class="font-prompt" style="text-align: center;">{{ ++$s }}</td>
-                                    <td class="font-prompt" style="text-align: center;">{{ $sale_date }}</td>
-                                    <td class="font-prompt">{{ $value_sell_produce->produce }}</td>
-                                    <td class="font-prompt" style="text-align: center;">{{ $value_sell_produce->amount }}</td>
-                                    <td class="font-prompt" style="text-align: center;">{{ $value_sell_produce->unit }}</td>
-                                    <td class="font-prompt" style="text-align: center;">{{ $value_sell_produce->price }}</td>
-                                    <td class="font-prompt" style="text-align: center;">{{ $value_sell_produce->recorder }}</td>
-                                    <td class="center">
-                                        <form action="{{ route('destroySellProduce', $value_sell_produce->id) }}" method="post">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn-secondary btn-sm center-sub">X</button>
-                                        </form>
-                                    </td>
-                                </tr>
-                                @endforeach
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            --}}
             <div class="ant-modal-root-3" style="display: none;">
                 <div class="ant-modal-mask"></div>
                 <div tabindex="-1" class="ant-modal-wrap modal-window vertical-center-modal create-tag-modal vertical-center-modal ant-modal-centered" role="dialog" aria-labelledby="rcDialogTitle0" style="">
@@ -398,7 +143,7 @@
                             </div>
                             <div class="ant-modal-body">
                                 <style>
-                                    .text-vertical-center{
+                                    .text-vertical-center {
                                         transform: translate(0%, -50%);
                                     }
                                 </style>
@@ -824,730 +569,6 @@
                     </div>
                 </form>
             </div>
-            {{--$_ENV
-            <div class="modal-mobile-3-1" style="display:none;">
-                <div class="row">
-                    <div class="col-8">
-                        <form action="{{ route('savenote.storeTracFact') }}" method="POST">
-                            @csrf
-                            <div class="ant-modal-mask"></div>
-                            <div class="ant-modal-wrap">
-                                <div class="ant-modal">
-                                    <div class="ant-modal-content">
-                                        <div class="ant-modal-header">
-                                            <div class="row">
-                                                <div class="col-8">
-                                                    <div class="ant-modal-title" style="font-size:large;font-weight:bolder;">จดบันทึก - ปัจจัยการผลิต</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="ant-modal-body" id="FarmInputRecordTypeAndSourceShow">
-                                            <div class="row">
-                                                <div class="col-8">
-                                                    <div class="ant-form-item ant-form-item-with-help own-custom-form-field normal-offset normal-offset ant-form-item-has-success" style="row-gap: 0px;">
-                                                        <!-- <hr> -->
-                                                        <div class="font-prompt">วันที่ซื้อ / ได้มา</div>
-                                                        <div class="ant-form-item-control">
-                                                            <div class="ant-form-item-control-input">
-                                                                <input class="ant-input font-prompt" type="date" name="received_date" placeholder="dd-mm-yyyy" value="" min="2022-01-01" max="2050-12-31" required>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-8">
-                                                    <div class="ant-form-item ant-form-item-with-help own-custom-form-field normal-offset normal-offset ant-form-item-has-success" style="row-gap: 0px;">
-                                                        <div class="font-prompt">ประเภท</div>
-                                                        <div class="ant-form-item-control">
-                                                            <div class="ant-form-item-control-input">
-                                                                <div class="ant-select ant-select-single">
-                                                                    <select class="ant-select-selector font-prompt" name="type">
-                                                                        <option class="special" value="เมล็ด">
-                                                                            <span class="">เมล็ด</span>
-                                                                        </option>
-                                                                        <option class="special" value="ปุ๋ย">
-                                                                            <span class="">ปุ๋ย</span>
-                                                                        </option>
-                                                                        <option class="special" value="ค่าแรง">
-                                                                            <span class="">ค่าแรง</span>
-                                                                        </option>
-                                                                        <option class="special" value="ค่าอื่นๆ">
-                                                                            <span class="">ค่าอื่น ๆ </span>
-                                                                        </option>
-                                                                    </select>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-8">
-                                                    <div class="ant-form-item ant-form-item-with-help own-custom-form-field normal-offset normal-offset ant-form-item-has-success" style="row-gap: 0px;">
-                                                        <div class="font-prompt">รายการปัจจัยการผลิต</div>
-                                                        <div class="ant-form-item-control">
-                                                            <div class="ant-form-item-control-input">
-                                                                <div class="ant-form-item-control-input-content"><input name="name" type="text" class="ant-input" required></div>
-                                                            </div>
-                                                            <div class="ant-form-item-explain ant-form-item-explain-success">
-                                                                <!-- <div role="alert">Use only letters, digits, and spaces</div> -->
-                                                                <div role="alert" class="font-prompt">ใช้เฉพาะตัวอักษร, ยัติภังค์, จุด, และช่องว่าง</div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-8">
-                                                    <div class="ant-form-item ant-form-item-with-help own-custom-form-field normal-offset normal-offset ant-form-item-has-success" style="row-gap: 0px;">
-                                                        <div class="font-prompt">ปริมาณ</div>
-                                                        <div class="ant-form-item-control">
-                                                            <div class="ant-form-item-control-input">
-                                                                <div class="ant-form-item-control-input-content"><input name="amount" type="number" class="ant-input"></div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-8">
-                                                    <div class="ant-form-item ant-form-item-with-help own-custom-form-field normal-offset normal-offset ant-form-item-has-success" style="row-gap: 0px;">
-                                                        <div class="font-prompt">ราคา</div>
-                                                        <div class="ant-form-item-control">
-                                                            <div class="ant-form-item-control-input">
-                                                                <div class="ant-form-item-control-input-content"><input name="price" type="number" class="ant-input" required></div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-8">
-                                                    <div class="ant-form-item ant-form-item-with-help own-custom-form-field normal-offset normal-offset ant-form-item-has-success" style="row-gap: 0px;">
-                                                        <div class="font-prompt">หน่วย</div>
-                                                        <div class="ant-form-item-control">
-                                                            <div class="ant-form-item-control-input">
-                                                                <div class="ant-select ant-select-single">
-                                                                    <select class="ant-select-selector font-prompt" name="unit">
-                                                                        <option class="special" value="กิโลกรัม">
-                                                                            <span class="">กิโลกรัม</span>
-                                                                        </option>
-                                                                        <option class="special" value="กรัม">
-                                                                            <span class="">กรัม</span>
-                                                                        </option>
-                                                                        <option class="special" value="ขีด">
-                                                                            <span class="">ขีด</span>
-                                                                        </option>
-                                                                        <option class="special" value="ลิตร">
-                                                                            <span class="">ลิตร</span>
-                                                                        </option>
-                                                                        <option class="special" value="มิลลิลิตร">
-                                                                            <span class="">มิลลิลิตร</span>
-                                                                        </option>
-                                                                        <option class="special" value="ถัง">
-                                                                            <span class="">ถัง</span>
-                                                                        </option>
-                                                                        <option class="special" value="ถุง">
-                                                                            <span class="">ถุง</span>
-                                                                        </option>
-                                                                        <option class="special" value="กระสอบ">
-                                                                            <span class="">กระสอบ</span>
-                                                                        </option>
-                                                                        <option class="special" value="ขวด">
-                                                                            <span class="">ขวด</span>
-                                                                        </option>
-                                                                        <option class="special" value="กล่อง">
-                                                                            <span class="">กล่อง</span>
-                                                                        </option>
-                                                                        <option class="special" value="หน่อ">
-                                                                            <span class="">หน่อ</span>
-                                                                        </option>
-                                                                        <option class="special" value="เครื่อง">
-                                                                            <span class="">เครื่อง</span>
-                                                                        </option>
-                                                                        <option class="special" value="ใบ">
-                                                                            <span class="">ใบ</span>
-                                                                        </option>
-                                                                        <option class="special" value="อัน">
-                                                                            <span class="">อัน</span>
-                                                                        </option>
-                                                                        <option class="special" value="ด้าม">
-                                                                            <span class="">ด้าม</span>
-                                                                        </option>
-                                                                        <option class="special" value="เมตร">
-                                                                            <span class="">เมตร</span>
-                                                                        </option>
-                                                                        <option class="special" value="คน">
-                                                                            <span class="">คน</span>
-                                                                        </option>
-                                                                    </select>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-8">
-                                                    <div class="ant-form-item ant-form-item-with-help own-custom-form-field normal-offset normal-offset ant-form-item-has-success" style="row-gap: 0px;">
-                                                        <div class="font-prompt">แหล่งที่มา</div>
-                                                        <div class="ant-form-item-control">
-                                                            <div class="ant-form-item-control-input">
-                                                                <div class="ant-form-item-control-input-content"><input name="source" type="text" class="ant-input"></div>
-                                                            </div>
-                                                            <div class="ant-form-item-explain ant-form-item-explain-success">
-                                                                <!-- <div role="alert">Use only letters, digits, and spaces</div> -->
-                                                                <div role="alert" class="font-prompt">ใช้เฉพาะตัวอักษร, ยัติภังค์, จุด, และช่องว่าง</div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-8">
-                                                    <div class="ant-form-item ant-form-item-with-help own-custom-form-field normal-offset normal-offset ant-form-item-has-success" style="row-gap: 0px;">
-                                                        <div class="font-prompt">รวมเป็นเงิน(บาท)</div>
-                                                        <div class="ant-form-item-control">
-                                                            <div class="ant-form-item-control-input">
-                                                                <div class="ant-form-item-control-input-content"><input name="total_price" type="number" class="ant-input"></div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-8">
-                                                    <div class="ant-form-item ant-form-item-with-help own-custom-form-field normal-offset normal-offset ant-form-item-has-success" style="row-gap: 0px;">
-                                                        <div class="font-prompt">ผู้บันทึก</div>
-                                                        <div class="ant-form-item-control">
-                                                            <div class="ant-form-item-control-input">
-                                                                <div class="ant-form-item-control-input-content"><input name="recorder" type="text" class="ant-input" required></div>
-                                                            </div>
-                                                            <div class="ant-form-item-explain ant-form-item-explain-success">
-                                                                <!-- <div role="alert">Use only letters, digits, and spaces</div> -->
-                                                                <div role="alert" class="font-prompt">ใช้เฉพาะตัวอักษร, ยัติภังค์, จุด, และช่องว่าง</div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <input type="hidden" name="plot_id" value="{{$plotID}}">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="ant-modal-footer">
-                                            <div class="row">
-                                                <div class="col-8">
-                                                    <button type="button" class="ant-btn ant-btn-secondary" id="cancelFormCreateFarmRecordOnMobile" ant-click-animating-without-extra-node="false">
-                                                        <span>ยกเลิก</span>
-                                                    </button>
-                                                    <button type="submit" class="ant-btn ant-btn-primary">
-                                                        <span>ยืนยัน</span>
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-mobile-3-2" style="display:none;">
-                <div class="row">
-                    <div class="col-8">
-                        <form action="{{ route('savenote.storeTracUseFact') }}" method="POST">
-                            @csrf
-                            <div class="ant-modal-mask"></div>
-                            <div class="ant-modal-wrap">
-                                <div class="ant-modal">
-                                    <div class="ant-modal-content">
-                                        <div class="ant-modal-header">
-                                            <div class="row">
-                                                <div class="col-8">
-                                                    <div class="ant-modal-title" style="font-size:large;font-weight:bolder;">จดบันทึก - การใช้ปัจจัยการผลิต</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="ant-modal-body" id="FarmInputRecordTypeAndSourceShow">
-                                            <div class="row">
-                                                <div class="col-8">
-                                                    <div class="ant-form-item ant-form-item-with-help own-custom-form-field normal-offset normal-offset ant-form-item-has-success" style="row-gap: 0px;">
-                                                        <div class="font-prompt">วันที่ใช้</div>
-                                                        <div class="ant-form-item-control">
-                                                            <div class="ant-form-item-control-input">
-                                                                <input class="ant-input font-prompt" type="date" name="date_of_use" placeholder="dd-mm-yyyy" value="" min="2022-01-01" max="2050-12-31" required>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-8">
-                                                    <div class="ant-form-item ant-form-item-with-help own-custom-form-field normal-offset normal-offset ant-form-item-has-success" style="row-gap: 0px;">
-                                                        <!-- <hr> -->
-                                                        <div class="font-prompt">รายการการใช้ปัจจัยการผลิต</div>
-                                                        <div class="ant-form-item-control">
-                                                            <div class="ant-form-item-control-input">
-                                                                <div class="ant-form-item-control-input-content"><input name="name_of_use" type="text" class="ant-input" required></div>
-                                                            </div>
-                                                            <div class="ant-form-item-explain ant-form-item-explain-success">
-                                                                <!-- <div role="alert">Use only letters, digits, and spaces</div> -->
-                                                                <div role="alert" class="font-prompt">ใช้เฉพาะตัวอักษร, ยัติภังค์, จุด, และช่องว่าง</div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-8">
-                                                    <div class="ant-form-item ant-form-item-with-help own-custom-form-field normal-offset normal-offset ant-form-item-has-success" style="row-gap: 0px;">
-                                                        <div class="font-prompt">ปริมาณ</div>
-                                                        <div class="ant-form-item-control">
-                                                            <div class="ant-form-item-control-input">
-                                                                <div class="ant-form-item-control-input-content"><input name="amount" type="number" class="ant-input" required></div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-8">
-                                                    <div class="ant-form-item ant-form-item-with-help own-custom-form-field normal-offset normal-offset ant-form-item-has-success" style="row-gap: 0px;">
-                                                        <div class="font-prompt">หน่วย</div>
-                                                        <div class="ant-form-item-control">
-                                                            <div class="ant-form-item-control-input">
-                                                                <div class="ant-select ant-select-single">
-                                                                    <select class="ant-select-selector font-prompt" name="unit" required>
-                                                                        <option class="special" value="กิโลกรัม">
-                                                                            <span class="">กิโลกรัม</span>
-                                                                        </option>
-                                                                        <option class="special" value="กรัม">
-                                                                            <span class="">กรัม</span>
-                                                                        </option>
-                                                                        <option class="special" value="ขีด">
-                                                                            <span class="">ขีด</span>
-                                                                        </option>
-                                                                        <option class="special" value="ลิตร">
-                                                                            <span class="">ลิตร</span>
-                                                                        </option>
-                                                                        <option class="special" value="มิลลิลิตร">
-                                                                            <span class="">มิลลิลิตร</span>
-                                                                        </option>
-                                                                        <option class="special" value="ถัง">
-                                                                            <span class="">ถัง</span>
-                                                                        </option>
-                                                                        <option class="special" value="ถุง">
-                                                                            <span class="">ถุง</span>
-                                                                        </option>
-                                                                        <option class="special" value="กระสอบ">
-                                                                            <span class="">กระสอบ</span>
-                                                                        </option>
-                                                                        <option class="special" value="ขวด">
-                                                                            <span class="">ขวด</span>
-                                                                        </option>
-                                                                        <option class="special" value="กล่อง">
-                                                                            <span class="">กล่อง</span>
-                                                                        </option>
-                                                                        <option class="special" value="หน่อ">
-                                                                            <span class="">หน่อ</span>
-                                                                        </option>
-                                                                        <option class="special" value="เครื่อง">
-                                                                            <span class="">เครื่อง</span>
-                                                                        </option>
-                                                                        <option class="special" value="ใบ">
-                                                                            <span class="">ใบ</span>
-                                                                        </option>
-                                                                        <option class="special" value="อัน">
-                                                                            <span class="">อัน</span>
-                                                                        </option>
-                                                                        <option class="special" value="ด้าม">
-                                                                            <span class="">ด้าม</span>
-                                                                        </option>
-                                                                        <option class="special" value="เมตร">
-                                                                            <span class="">เมตร</span>
-                                                                        </option>
-                                                                        <option class="special" value="คน">
-                                                                            <span class="">คน</span>
-                                                                        </option>
-                                                                    </select>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-8">
-                                                    <div class="ant-form-item ant-form-item-with-help own-custom-form-field normal-offset normal-offset ant-form-item-has-success" style="row-gap: 0px;">
-                                                        <div class="font-prompt">ผู้บันทึก</div>
-                                                        <div class="ant-form-item-control">
-                                                            <div class="ant-form-item-control-input">
-                                                                <div class="ant-form-item-control-input-content"><input name="recorder" type="text" class="ant-input" required></div>
-                                                            </div>
-                                                            <div class="ant-form-item-explain ant-form-item-explain-success">
-                                                                <!-- <div role="alert">Use only letters, digits, and spaces</div> -->
-                                                                <div role="alert" class="font-prompt">ใช้เฉพาะตัวอักษร, ยัติภังค์, จุด, และช่องว่าง</div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <input type="hidden" name="plot_id" value="{{$plotID}}">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="ant-modal-footer">
-                                            <div class="row">
-                                                <div class="col-8">
-                                                    <button type="button" class="ant-btn ant-btn-secondary" id="cancelRecordOfFarmInputTheUtilizationOnMobile" ant-click-animating-without-extra-node="false">
-                                                        <span>ยกเลิก</span>
-                                                    </button>
-                                                    <button type="submit" class="ant-btn ant-btn-primary">
-                                                        <span>ยืนยัน</span>
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-mobile-3-3" style="display:none;">
-                <div class="row">
-                    <div class="col-8">
-                        <form action="{{ route('savenote.storeTracHarv') }}" method="POST">
-                            @csrf
-                            <div class="ant-modal-mask"></div>
-                            <div class="ant-modal-wrap">
-                                <div class="ant-modal">
-                                    <div class="ant-modal-content">
-                                        <div class="ant-modal-header">
-                                            <div class="row">
-                                                <div class="col-8">
-                                                    <div class="ant-modal-title" style="font-size:large;font-weight:bolder;">จดบันทึก - การเก็บเกี่ยวผลผลิต</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="ant-modal-body" id="FarmInputRecordTypeAndSourceShow">
-                                            <div class="row">
-                                                <div class="col-8">
-                                                    <div class="ant-form-item ant-form-item-with-help own-custom-form-field normal-offset normal-offset ant-form-item-has-success" style="row-gap: 0px;">
-                                                        <div class="font-prompt">วันที่เก็บเกี่ยว</div>
-                                                        <div class="ant-form-item-control">
-                                                            <div class="ant-form-item-control-input">
-                                                                <input class="ant-input font-prompt" type="date" name="harvest_date" placeholder="dd-mm-yyyy" value="" min="2022-01-01" max="2050-12-31" required>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-8">
-                                                    <div class="ant-form-item ant-form-item-with-help own-custom-form-field normal-offset normal-offset ant-form-item-has-success" style="row-gap: 0px;">
-                                                        <div class="font-prompt">ผลผลิต</div>
-                                                        <div class="ant-form-item-control">
-                                                            <div class="ant-form-item-control-input">
-                                                                <div class="ant-form-item-control-input-content"><input name="product" type="text" class="ant-input" required></div>
-                                                            </div>
-                                                            <div class="ant-form-item-explain ant-form-item-explain-success">
-                                                                <!-- <div role="alert">Use only letters, digits, and spaces</div> -->
-                                                                <div role="alert" class="font-prompt">ใช้เฉพาะตัวอักษร, ยัติภังค์, จุด, และช่องว่าง</div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-8">
-                                                    <div class="ant-form-item ant-form-item-with-help own-custom-form-field normal-offset normal-offset ant-form-item-has-success" style="row-gap: 0px;">
-                                                        <div class="font-prompt">ปริมาณผลผลิตรวม</div>
-                                                        <div class="ant-form-item-control">
-                                                            <div class="ant-form-item-control-input">
-                                                                <div class="ant-form-item-control-input-content"><input name="total_product" type="number" class="ant-input" required></div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-8">
-                                                    <div class="ant-form-item ant-form-item-with-help own-custom-form-field normal-offset normal-offset ant-form-item-has-success" style="row-gap: 0px;">
-                                                        <div class="font-prompt">หน่วย</div>
-                                                        <div class="ant-form-item-control">
-                                                            <div class="ant-form-item-control-input">
-                                                                <div class="ant-select ant-select-single">
-                                                                    <select class="ant-select-selector font-prompt" name="unit" required>
-                                                                        <option class="special" value="กิโลกรัม">
-                                                                            <span class="">กิโลกรัม</span>
-                                                                        </option>
-                                                                        <option class="special" value="กรัม">
-                                                                            <span class="">กรัม</span>
-                                                                        </option>
-                                                                        <option class="special" value="ขีด">
-                                                                            <span class="">ขีด</span>
-                                                                        </option>
-                                                                        <option class="special" value="ลิตร">
-                                                                            <span class="">ลิตร</span>
-                                                                        </option>
-                                                                        <option class="special" value="มิลลิลิตร">
-                                                                            <span class="">มิลลิลิตร</span>
-                                                                        </option>
-                                                                        <option class="special" value="ถัง">
-                                                                            <span class="">ถัง</span>
-                                                                        </option>
-                                                                        <option class="special" value="ถุง">
-                                                                            <span class="">ถุง</span>
-                                                                        </option>
-                                                                        <option class="special" value="กระสอบ">
-                                                                            <span class="">กระสอบ</span>
-                                                                        </option>
-                                                                        <option class="special" value="ขวด">
-                                                                            <span class="">ขวด</span>
-                                                                        </option>
-                                                                        <option class="special" value="กล่อง">
-                                                                            <span class="">กล่อง</span>
-                                                                        </option>
-                                                                        <option class="special" value="หน่อ">
-                                                                            <span class="">หน่อ</span>
-                                                                        </option>
-                                                                        <option class="special" value="เครื่อง">
-                                                                            <span class="">เครื่อง</span>
-                                                                        </option>
-                                                                        <option class="special" value="ใบ">
-                                                                            <span class="">ใบ</span>
-                                                                        </option>
-                                                                        <option class="special" value="อัน">
-                                                                            <span class="">อัน</span>
-                                                                        </option>
-                                                                        <option class="special" value="ด้าม">
-                                                                            <span class="">ด้าม</span>
-                                                                        </option>
-                                                                        <option class="special" value="เมตร">
-                                                                            <span class="">เมตร</span>
-                                                                        </option>
-                                                                        <option class="special" value="คน">
-                                                                            <span class="">คน</span>
-                                                                        </option>
-                                                                    </select>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-8">
-                                                    <div class="ant-form-item ant-form-item-with-help own-custom-form-field normal-offset normal-offset ant-form-item-has-success" style="row-gap: 0px;">
-                                                        <!-- <hr> -->
-                                                        <div class="font-prompt">ผู้บันทึก</div>
-                                                        <div class="ant-form-item-control">
-                                                            <div class="ant-form-item-control-input">
-                                                                <div class="ant-form-item-control-input-content"><input name="recorder" type="text" class="ant-input" required></div>
-                                                            </div>
-                                                            <div class="ant-form-item-explain ant-form-item-explain-success">
-                                                                <!-- <div role="alert">Use only letters, digits, and spaces</div> -->
-                                                                <div role="alert" class="font-prompt">ใช้เฉพาะตัวอักษร, ยัติภังค์, จุด, และช่องว่าง</div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <input type="hidden" name="plot_id" value="{{$plotID}}">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="ant-modal-footer">
-                                            <div class="row">
-                                                <div class="col-8">
-                                                    <button type="button" class="ant-btn ant-btn-secondary" id="cancelOrganicProduceHarvestRecordOnMobile" ant-click-animating-without-extra-node="false">
-                                                        <span>ยกเลิก</span>
-                                                    </button>
-                                                    <button type="submit" class="ant-btn ant-btn-primary">
-                                                        <span>ยืนยัน</span>
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-mobile-3-4" style="display:none;">
-                <div class="row">
-                    <div class="col-8">
-                        <form action="{{ route('savenote.storeSellProduce') }}" method="POST">
-                            @csrf
-                            <div class="ant-modal-mask"></div>
-                            <div class="ant-modal-wrap">
-                                <div class="ant-modal">
-                                    <div class="ant-modal-content">
-                                        <div class="ant-modal-header">
-                                            <div class="row">
-                                                <div class="col-8">
-                                                    <div class="ant-modal-title" style="font-size:large;font-weight:bolder;">จดบันทึก - การจำหน่ายผลผลิต</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="ant-modal-body" id="FarmInputRecordTypeAndSourceShow">
-                                            <div class="row">
-                                                <div class="col-8">
-                                                    <div class="ant-form-item ant-form-item-with-help own-custom-form-field normal-offset normal-offset ant-form-item-has-success" style="row-gap: 0px;">
-                                                        <div class="font-prompt">วันที่จำหน่าย</div>
-                                                        <div class="ant-form-item-control">
-                                                            <div class="ant-form-item-control-input">
-                                                                <input class="ant-input font-prompt" type="date" name="sale_date" placeholder="dd-mm-yyyy" value="" min="2022-01-01" max="2050-12-31" required>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-8">
-                                                    <div class="ant-form-item ant-form-item-with-help own-custom-form-field normal-offset normal-offset ant-form-item-has-success" style="row-gap: 0px;">
-                                                        <div class="font-prompt">ผลผลิต</div>
-                                                        <div class="ant-form-item-control">
-                                                            <div class="ant-form-item-control-input">
-                                                                <div class="ant-form-item-control-input-content"><input name="produce" type="text" class="ant-input" required></div>
-                                                            </div>
-                                                            <div class="ant-form-item-explain ant-form-item-explain-success">
-                                                                <div role="alert" class="font-prompt">ใช้เฉพาะตัวอักษร, ยัติภังค์, จุด, และช่องว่าง</div>
-                                                            </div>
-                                                        </div>
-                                                    </div>                                                    
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-8">
-                                                    <div class="ant-form-item ant-form-item-with-help own-custom-form-field normal-offset normal-offset ant-form-item-has-success" style="row-gap: 0px;">
-                                                        <div class="font-prompt">จำนวน</div>
-                                                        <div class="ant-form-item-control">
-                                                            <div class="ant-form-item-control-input">
-                                                                <div class="ant-form-item-control-input-content"><input name="amount" type="number" class="ant-input" required></div>
-                                                            </div>
-                                                        </div>
-                                                    </div>                                                    
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-8">
-                                                    <div class="ant-form-item ant-form-item-with-help own-custom-form-field normal-offset normal-offset ant-form-item-has-success" style="row-gap: 0px;">
-                                                        <div class="font-prompt">หน่วย</div>
-                                                        <div class="ant-form-item-control">
-                                                            <div class="ant-form-item-control-input">
-                                                                <div class="ant-select ant-select-single">
-                                                                    <select class="ant-select-selector font-prompt" name="unit" required>
-                                                                        <option class="special" value="กิโลกรัม">
-                                                                            <span class="">กิโลกรัม</span>
-                                                                        </option>
-                                                                        <option class="special" value="กรัม">
-                                                                            <span class="">กรัม</span>
-                                                                        </option>
-                                                                        <option class="special" value="ขีด">
-                                                                            <span class="">ขีด</span>
-                                                                        </option>
-                                                                        <option class="special" value="ลิตร">
-                                                                            <span class="">ลิตร</span>
-                                                                        </option>
-                                                                        <option class="special" value="มิลลิลิตร">
-                                                                            <span class="">มิลลิลิตร</span>
-                                                                        </option>
-                                                                        <option class="special" value="ถัง">
-                                                                            <span class="">ถัง</span>
-                                                                        </option>
-                                                                        <option class="special" value="ถุง">
-                                                                            <span class="">ถุง</span>
-                                                                        </option>
-                                                                        <option class="special" value="กระสอบ">
-                                                                            <span class="">กระสอบ</span>
-                                                                        </option>
-                                                                        <option class="special" value="ขวด">
-                                                                            <span class="">ขวด</span>
-                                                                        </option>
-                                                                        <option class="special" value="กล่อง">
-                                                                            <span class="">กล่อง</span>
-                                                                        </option>
-                                                                        <option class="special" value="หน่อ">
-                                                                            <span class="">หน่อ</span>
-                                                                        </option>
-                                                                        <option class="special" value="เครื่อง">
-                                                                            <span class="">เครื่อง</span>
-                                                                        </option>
-                                                                        <option class="special" value="ใบ">
-                                                                            <span class="">ใบ</span>
-                                                                        </option>
-                                                                        <option class="special" value="อัน">
-                                                                            <span class="">อัน</span>
-                                                                        </option>
-                                                                        <option class="special" value="ด้าม">
-                                                                            <span class="">ด้าม</span>
-                                                                        </option>
-                                                                        <option class="special" value="เมตร">
-                                                                            <span class="">เมตร</span>
-                                                                        </option>
-                                                                        <option class="special" value="คน">
-                                                                            <span class="">คน</span>
-                                                                        </option>
-                                                                    </select>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>                                                    
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-8">
-                                                    <div class="ant-form-item ant-form-item-with-help own-custom-form-field normal-offset normal-offset ant-form-item-has-success" style="row-gap: 0px;">
-        
-                                                        <div class="font-prompt">ราคา</div>
-                                                        <div class="ant-form-item-control">
-                                                            <div class="ant-form-item-control-input">
-                                                                <div class="ant-form-item-control-input-content"><input name="price" type="number" class="ant-input" required></div>
-                                                            </div>
-                                                        </div>
-                                                    </div>                                                    
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-8">
-                                                    <div class="ant-form-item ant-form-item-with-help own-custom-form-field normal-offset normal-offset ant-form-item-has-success" style="row-gap: 0px;">
-        
-                                                        <div class="font-prompt">ผู้บันทึก</div>
-                                                        <div class="ant-form-item-control">
-                                                            <div class="ant-form-item-control-input">
-                                                                <div class="ant-form-item-control-input-content"><input name="recorder" type="text" class="ant-input" required></div>
-                                                            </div>
-                                                            <div class="ant-form-item-explain ant-form-item-explain-success">
-                                                                <div role="alert" class="font-prompt">ใช้เฉพาะตัวอักษร, ยัติภังค์, จุด, และช่องว่าง</div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <input type="hidden" name="plot_id" value="{{$plotID}}">                                                    
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="ant-modal-footer">
-                                            <div class="row">
-                                                <div class="col-8">
-                                                    <button type="button" class="ant-btn ant-btn-secondary" id="cancelSellProduceRecordOnMobile" ant-click-animating-without-extra-node="false">
-                                                        <span>ยกเลิก</span>
-                                                    </button>
-                                                    <button type="submit" class="ant-btn ant-btn-primary">
-                                                        <span>ยืนยัน</span>
-                                                    </button>                                                    
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-            --}}
 
             @else
 
@@ -1587,8 +608,8 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.min.js"></script>
 
-    <script  src="https://kit.fontawesome.com/a54d2cbf95.js"></script>
-    <script  src="{{ asset('js/back-to-top.js') }}"></script>
+    <script src="https://kit.fontawesome.com/a54d2cbf95.js"></script>
+    <script src="{{ asset('js/back-to-top.js') }}"></script>
     <script>
         $(window).on("load", function() {
             $(".loader-wrapper").fadeOut("slow");
@@ -1612,7 +633,50 @@
         document.getElementById('datePicker_harvest').valueAsDate = new Date();
         document.getElementById('datePicker_sell').valueAsDate = new Date();
     </script>
-    
+
+    <script>
+        $('#openModalSaveNoteMobile').click(function() {
+            $('.modal-savenote-mobile').show();
+        });
+        $('#cancelModalSaveNoteMobile').click(function() {
+            $('.modal-savenote-mobile').hide();
+        });
+        $('#openFormPlantingAreaMobile').click(function() {
+            $('.modal-savenote-mobile').hide();
+            $('.form-plant-area-mobile').show();
+        });
+        $('#cancelFormPlantingAreaMobile').click(function() {
+            $('.form-plant-area-mobile').hide();
+        });
+        $('#openFormPlantMobile').click(function() {
+            $('.modal-savenote-mobile').hide();
+            $('.form-plant-mobile').show();
+        });
+        $('#cancelFormPlantMobile').click(function() {
+            $('.form-plant-mobile').hide();
+        });
+        $('#openFormMaintenanceMobile').click(function() {
+            $('.modal-savenote-mobile').hide();
+            $('.form-maintenance-mobile').show();
+        });
+        $('#cancelFormMaintenanceMobile').click(function() {
+            $('.form-maintenance-mobile').hide();
+        });
+        $('#openFormHarvestMobile').click(function() {
+            $('.modal-savenote-mobile').hide();
+            $('.form-harvest-mobile').show();
+        });
+        $('#cancelFormHarvestMobile').click(function() {
+            $('.form-harvest-mobile').hide();
+        });
+        $('#openFormSellMobile').click(function() {
+            $('.modal-savenote-mobile').hide();
+            $('.form-sell-mobile').show();
+        });
+        $('#cancelFormSellMobile').click(function() {
+            $('.form-sell-mobile').hide();
+        });
+    </script>
 </body>
 
 </html>

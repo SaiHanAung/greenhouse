@@ -129,107 +129,9 @@
                     });
                 });
             </script>
-            {{--
-            <div class="side-mobile">
-                <div id="mySidenav" class="sidenav">
-                    <a href="{{ route('plots.index') }}" class="font-prompt">จัดการฟาร์ม</a>
-                    <ul>
-                        <li style="list-style-type: none;"><a href="javascript:void(0)" style="color: #49cea1;" class="font-prompt">แผงควบคุม</a></li>
-                        <li style="list-style-type: none;"><a href="{{ route('savenote.index', $plotID) }}" class="font-prompt">จดบันทึก</a></li>
-                        <li style="list-style-type: none;"><a href="{{ route('setting.index', $plotID) }}" class="font-prompt">ตั้งค่า</a></li>
-                        <li style="list-style-type: none;"><a href="{{ route('qrcode.index', $plotID) }}" class="font-prompt">QR Code</a></li>
-                    </ul>
-                    <a href="{{ route('profile') }}" class="font-prompt">โปรไฟล์</a>
-                    <a href="{{ route('logout.perform') }}" class="font-prompt">ออกจากระบบ</a>
-                </div>
-
-                <div id="main" style="position:relative;">
-                    <div class="row">
-                        <div class="col-6">
-                            <span style="cursor:pointer;">
-                                <div class="container" onclick="slider(this)" style="width:fit-content;">
-                                    <div class="bar1-x"></div>
-                                    <div class="bar2-x"></div>
-                                    <div class="bar3-x"></div>
-                                </div>
-                            </span>
-                        </div>
-                        <div class="col-6">
-                            <label class="font-prompt vertical-center"><strong id="plotName" style="font-size: x-large;font-weight:bolder;"> แปลง : {{$value_name_sub}}</strong></label>
-                        </div>
-                    </div>
-                </div>
-                <div class="row" style="margin: -0.5em 0 2em 0;">
-                    <hr>
-                    <div class="col-4">
-                        <a href="{{ route('dashboard.index', $plotID) }}" class="bt-w-bg btn-sm font-prompt" style="color: #000;float:right;margin-top:-.4em;">
-                            โดยรวม
-                        </a>
-                    </div>
-                    <div class="col-3">
-                        <a href="javascript:void(0)" class="bt-green font-prompt btn-sm">สวิตซ์</a>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-12">
-                        <button  id="openFormCreateSwitchOnMobile" class="bt-create-farm-record btn-sm font-black" style="float:right;margin:-1em .5em 1em 0;">
-                            + สร้างสวิตซ์
-                        </button>
-                    </div>
-                </div>
-                @if ($message = Session::get('success'))
-                <div id="alert-mobile" class="alert alert-success">
-                    <span class="font-prompt" style="font-size: medium;">{{ $message }}</span>
-                </div>
-                @endif
-
-                @foreach ($get_host_topic as $keyht => $valueht)
-                <input id="input_host" type="hidden" value="{{$valueht->host}}">
-                <input id="input_topic" type="hidden" value="{{$valueht->topic_sub}}">
-                @endforeach
-                <div class="row">
-                    @foreach ($get_data_switches as $key => $value)
-                    <input type="hidden" id="s_{{$value->id}}" value="{{$value->port}}">
-                    <center>
-                        <div class="col-10">
-                            <div class="width-border">
-                                <div class="row">
-                                    <div class="col-6">
-                                        <h4 class="m-3 font-prompt" style="vertical-align: middle;"><img src="/imgs/power-off.png" class="mr-1" width="25%" alt="icon">{{ $value->name }}</h4>
-                                    </div>
-                                    <div class="col-6">
-                                        <div class="bt-last" style="margin: .5em .5em 0 0;">
-                                            <form action="{{ route('switch.destroy', $value->id) }}" method="post">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn-secondary btn-sm">X</button>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <center>
-                                        <label class="switch">
-                                            <input id="port_{{$value->id}}" data-id="{{$value->id}}" onchange=myFunction({{$value->id}}) onchange=sub({{$value->id}}) value={{$value->status}} class="toggle-class switch_off" type="checkbox" data-onstyle="success" data-offstyle="danger" data-toggle="toggle" data-on="Active" data-off="InActive" {{ $value->status ? 'checked' : '' }}>
-
-                                            <span class="slider round">
-                                                <p class="text-off"></p>
-                                            </span>
-                                        </label>
-                                    </center>
-                                </div>
-                                <div class="row">
-                                    <div class="center">
-                                        <p class="mt-3 font-prompt">พอร์ต : {{ $value->port }}</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </center>
-                    @endforeach
-                </div>
-            </div>
-            --}}
+            
+            @include('switches.res_mobile')
+            
             <div class="createSwitch" style="display: none;">
                 <div class="ant-modal-mask"></div>
                 <div tabindex="-1" class="ant-modal-wrap modal-window vertical-center-modal create-tag-modal vertical-center-modal ant-modal-centered" role="dialog" aria-labelledby="rcDialogTitle0" style="">
@@ -703,6 +605,27 @@
             });
             $('#cancelFormEditSwitchTimeSet').click(function() {
                 $('.editSwitchTimeSet').hide();
+            });
+
+            $('#openFormCreateSwitchMobile').click(function() {
+                $('.createSwitchMobile').show();
+            });
+            $('#cancelCreateSwitchMobile').click(function() {
+                $('.createSwitchMobile').hide();
+            });
+            $('#openFormSwitchManualMobile').click(function() {
+                $('.createSwitchMobile').hide();
+                $('.switchManualMobile').show();
+            });
+            $('#cancelSwitchManualMobile').click(function() {
+                $('.switchManualMobile').hide();
+            });
+            $('#openFormSwitchTimeSetMobile').click(function() {
+                $('.createSwitchMobile').hide();
+                $('.switchTimeSetMobile').show();
+            });
+            $('#cancelSwitchTimeSetMobile').click(function() {
+                $('.switchTimeSetMobile').hide();
             });
         });
     </script>

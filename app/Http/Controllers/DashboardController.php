@@ -269,7 +269,7 @@ class DashboardController extends Controller
         DB::table('switch_logs')->where('plot_id', $plotID)->update(
             array('history_plant_id' => $value_new_plant_id->id)
         );
-        DB::table('switch_set_time_logs')->where('plot_id', $plotID)->update(
+        DB::table('switch_time_set_logs')->where('plot_id', $plotID)->update(
             array('history_plant_id' => $value_new_plant_id->id)
         );
         

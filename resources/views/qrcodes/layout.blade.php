@@ -84,6 +84,9 @@
                     </div>
                 </div>
             </div>
+
+            @include('qrcodes.res_mobile')
+
             {{--
             <div class="side-mobile">
                 <div id="mySidenav" class="sidenav">

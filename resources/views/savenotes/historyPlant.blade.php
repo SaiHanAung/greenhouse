@@ -1,4 +1,4 @@
-@extends('savenotes.layout')
+@extends('savenotes.hist_layout')
 
 @section('content')
 

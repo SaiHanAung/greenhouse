@@ -97,80 +97,10 @@
                         </div>
                     </div>
                 </div>
-                <!-- <div class="privacy-policy"><span class="privacy-policy__region">Region: sgp1</span><a href="/dashboard/privacy-policy" target="_blank">Privacy Policy</a></div> -->
             </div>
 
-            {{--
-            <div class="side-mobile">
-                <div id="mySidenav" class="sidenav">
-                    <a href="{{ route('plots.index') }}" class="font-prompt">จัดการฟาร์ม</a>
-                    <ul>
-                        <li style="list-style-type: none;"><a href="{{ route('dashboard.index', $value_plot_id->id) }}" class="font-prompt">แผงควบคุม</a></li>
-                        <li style="list-style-type: none;"><a href="{{ route('savenote.index', $value_plot_id->id) }}" class="font-prompt">จดบันทึก</a></li>
-                        <li style="list-style-type: none;"><a href="{{ route('setting.index', $value_plot_id->id) }}" class="font-prompt">ตั้งค่า</a></li>
-                        <li style="list-style-type: none;"><a href="{{ route('qrcode.index', $value_plot_id->id) }}" class="font-prompt">QR Code</a></li>
-                    </ul>
-                    <a href="javascript:void(0)" style="color: #49cea1;" class="font-prompt">โปรไฟล์</a>
-                    <a href="{{ route('logout.perform') }}" class="font-prompt">ออกจากระบบ</a>
-                </div>
+            @include('profile_res_mobile')
 
-                <div id="main" style="position:relative;">
-                    <div class="row">
-                        <div class="col-6">
-                            <span style="cursor:pointer;">
-                                <div class="container" onclick="slider(this)" style="width:fit-content;">
-                                    <div class="bar1-x"></div>
-                                    <div class="bar2-x"></div>
-                                    <div class="bar3-x"></div>
-                                </div>
-                            </span>
-                        </div>
-                        <div class="col-6" style="display:flex;justify-content:flex-end;">
-                            <label class="font-prompt vertical-center"><strong id="plotName" style="font-size: x-large;font-weight:bolder;">โปรไฟล์</strong></label>
-                        </div>
-                    </div>
-                </div>
-                <hr>
-                <div class="row" style="margin: 2em 0 2em 0;">
-                    <div class="col-1"></div>
-                    <div class="col-10">
-                        <div class="width-border p-4" style="font-size: large;">
-                            <div class="row mb-4">
-                                <div class="dropdown">
-                                    <button type="button" class="ant-btn"><span class="linearicon linearicon-dots undefined"></span></button>
-                                    <div class="dropdown-content" style="">
-                                        <a href="javascript:void(0)" id="openFormEditUserProfile"><img src="{{ asset('/imgs/writing.png') }}" alt="icon" width="12%"><span style="margin-left: 1rem;">แก้ไข</span></a>
-                                        <script>
-                                            $(document).ready(function() {
-                                                $('#openFormEditUserProfile').click(function() {
-                                                    $('.ant-modal-root-1').show();
-                                                });
-                                                $('#cancelEditUserProfile').click(function() {
-                                                    $('.ant-modal-root-1').hide();
-                                                });
-                                                $('#openFormResetPassword').click(function() {
-                                                    $('.ant-modal-root-2').show();
-                                                });
-                                                $('#cancelResetPassword').click(function() {
-                                                    $('.ant-modal-root-2').hide();
-                                                });
-                                            });
-                                        </script>
-                                        <a href="javascript:void(0)" id="openFormResetPassword"><img src="{{ asset('/imgs/lock.png') }}" alt="icon" width="12%"><span style="margin-left: 1rem;">ตั้งรหัสผ่านใหม่</span></a>
-                                        <a href="javascript:void(0)" style="color: red;"><img src="{{ asset('/imgs/trash.png') }}" alt="icon" width="12%"><span style="margin-left: 1rem;">ลบบัญชี</span></a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <span>ชื่อผู้ใช้ : {{ Auth::user()->name }}</span>
-                                <span>อีเมล : {{ Auth::user()->email }}</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-1"></div>
-                </div>
-            </div>
-            --}}
             <div class="ant-modal-root-1" style="display: none;">
                 <div class="ant-modal-mask"></div>
                 <div tabindex="-1" class="ant-modal-wrap modal-window vertical-center-modal organization-settings-users-edit-modal ant-modal-centered" role="dialog" aria-labelledby="rcDialogTitle0" style="">

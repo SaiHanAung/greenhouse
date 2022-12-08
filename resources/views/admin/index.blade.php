@@ -44,7 +44,7 @@ $get_data_plot = DB::table('plots')
                 <table id="customers" style="font-family: 'Prompt', sans-serif;">
                     <tr>    
                         <th style="text-align: center;">#</th>
-                        <th style="text-align: center;">ชื่อ</th>
+                        <th style="text-align: center;">ชื่อผู้ใช้</th>
                         <th style="text-align: center;">ที่อยู่</th>
                         <th style="text-align: center;">อีเมล</th>
                         <th style="text-align: center;">ดู</th>

@@ -48,8 +48,14 @@ class QrcodeController extends Controller
 
         $check_trac_harv = DB::table('traceability_harvests')->select('id')
         ->where('plot_id', '=', $plotID)->where('deleted_at',null)->count();
+        $get_data_plot = DB::table('plots')
+            ->select('id', 'name', 'host', 'topic_send', 'topic_sub', 
+                    'rai_size', 'ngan_size', 'square_wah_size', 'latitude', 'longitude', 'description', 'img_name')
+            ->where('id', '=', $plotID)->get();
+            foreach($get_data_plot as $key_data_plot => $value_data_plot){}
 
         return view('qrcodes.index', compact(
+            'value_data_plot',
             'value_name_sub',
             'plotID',
             'qrcode',

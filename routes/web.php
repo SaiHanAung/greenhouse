@@ -145,8 +145,7 @@ Route::delete('/note-sell.destroy/{note_sell}', 'SaveNoteController@destroyNoteS
 
 Route::get('/clear-cache', function() {
     Artisan::call('cache:clear');
-    // return "Cache is cleared";
-    return back();
+    return "Cache is cleared";
 });
 
 //หาข้อมูลไม่เจอระบบจะแจ้ง หน้า error 404 อัตโนมัติ
@@ -165,6 +164,6 @@ Route::get('/request-mqtt', 'DashboardController@reciveMqtt')->name('reciveMqtt'
 Route::get('settime/{id}', 'DashboardController@st')->name('st');
 
 
-Route::get('switch1/{switchID}', 'SwitchesController@da')->name('da');
+Route::get('switch1/{switchID}', 'SwitchesController@da')->name('da'); 
 Route::get('switch-time-set-update/{switchID}', 'SwitchesController@switchTimeSetUpdate')->name('switchTimeSetUpdate');
 Route::get('stop-time-set/{switchID}', 'SwitchesController@stopTimeSet')->name('stopTimeSet');
